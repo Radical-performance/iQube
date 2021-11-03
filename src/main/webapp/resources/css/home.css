@@ -9,6 +9,15 @@ body{
     z-index: 100;
 }
 
+.stars{
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 70%;
+    background: cyan;
+    box-shadow: 0px 0px 16px 0px cyan, 0px 0px 7px 0px cyan;
+}
+
 #mainPane{
     position: absolute;
     width: 130%;
@@ -16,8 +25,21 @@ body{
     left: -5%;
     top: -5%;
     perspective: 3000px;
-    transition: 0.8s  ease-out;
+    transition: 1.5s  ease-out;
     z-index: 101;
+}
+
+#light{
+    position: absolute;
+    height: 319px;
+    border-radius: 17%;
+    width: 572px;
+    top: -29%;
+    box-shadow: -213px 138px 996px 396px #007cff;
+    left: 67%;
+}
+#secondPane{
+    transition: 1.5s ease-out;
 }
 
 #innerPane1{
@@ -29,6 +51,14 @@ body{
 
 }
 
+
+#innerPane1sub{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: 0.9s ease-out;
+}
+
 #innerPane2{
     position: absolute;
     width: 100%;
@@ -38,7 +68,5 @@ body{
     background-size: 120% 130%;
     transition:1.3s ease-out;
     transform-style: preserve-3d;
-    filter: blur(1px) ;
-
 
 }

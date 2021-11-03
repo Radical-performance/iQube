@@ -1,65 +1,21 @@
 @keyframes spincube {
-    0% {
-        transform:  rotateY(-1481deg) rotateX(-24deg) rotateZ(3deg);
-    }
-
-    50% {
-        transform:  rotateY(1390deg) rotateX(-430deg) rotateZ(40deg);
-    }
-
-    100% {
-        transform:  rotateY(-1481deg) rotateX(-24deg) rotateZ(3deg);
-
-    }
+    0% {transform:  rotateY(-1481deg) rotateX(-24deg) rotateZ(3deg);}
+    50% {transform:  rotateY(1390deg) rotateX(-430deg) rotateZ(40deg);}
+    100% {transform:  rotateY(-1481deg) rotateX(-24deg) rotateZ(3deg);}
 }
 
 #cube {
-    z-index: 2222;
+    z-index: 22222;
     top: 43%;
     position: absolute;
-    transition: 1s ease-out;
+    transition: 5.5s ease-in-out;
     width: 160px;
     height: 160px;
-     /*animation: 60s spincube linear infinite;*/
+    transform: rotateY(-448deg) rotateX(-128deg) rotateZ(172deg);
+     /*animation: 160s spincube linear infinite;*/
     float: left;
-    left: 50%;
+    left: 45%;
     transform-style: preserve-3d;
-    transform: rotateY(-1128deg) rotateX(239deg);
-}
-
-.side{
-    transition: 1s ease-out;
-    overflow: hidden;
-    border-radius: 5px;
-    outline: none;
-    position: absolute;
-    opacity: 100%;
-    height: 110px;
-    width: 110px;
-    text-align: center;
-    font-weight: bolder;
-    transform-style: preserve-3d;
-    background:black;
-    border: 1px solid white;
-    box-shadow:cyan 0px 0px 1px 1px inset, cyan 0px 0px 4px 1px;
-}
-
-#login{
-    position: relative;
-    color: #00fdff;
-    font-size: 22px;
-    top: 40%;
-    font-family: monospace;
-    text-shadow: 0px 0px 4px;
-}
-
-#registration{
-    position: relative;
-    color: #00fdff;
-    font-size: 19px;
-    top: 40%;
-    font-family: monospace;
-    text-shadow: 0px 0px 4px;
 }
 
 
@@ -70,178 +26,199 @@
 #left{transform:translateZ(55px) rotateY(-270deg) translateZ(58px) rotateZ(0deg);cursor: pointer;}
 #right{transform: translateZ(55px) rotateY(90deg) translateZ(-58px)}
 
-.curcube {
+.side{
+    transition: 1s ease-out;
+    overflow: hidden;
+    border-radius: 10px;
+    outline: none;
+    position: absolute;
+    opacity: 100%;
+    height: 110px;
+    width: 110px;
+    text-align: center;
+    font-weight: bolder;
+    transform-style: preserve-3d;
+    background:black;
+    border: 1px solid white;
+    box-shadow:cyan 0 0 1px 1px inset, cyan 0 0 4px 1px;
+}
+
+#login{
+    transition: 0.5s linear;
+    position: relative;
+    color: #00fdff;
+    font-size: 22px;
+    top: 40%;
+    font-family: monospace;
+    text-shadow: 0 0 4px;
+    z-index: 1111;
+    cursor: pointer;
+    outline: none;
+}
+
+#registration{
+    z-index: 1111;
+    transition: 0.5s linear;
+    position: relative;
+    color: #00fdff;
+    font-size: 21px;
+    top: 40%;
+    font-family: monospace;
+    text-shadow: 0 0 4px;
+    cursor: pointer;
+}
+
+
+
+.miniCube1 {
     position: relative;
     float: left;
 
     width: 13px;
     height: 13px;
-    left: 0%;
-    bottom: 0%;
+    left: 0;
+    bottom: 20%;
+    background: none;
+    padding: 1px;
+    opacity: 100%;
+    transition: 2.1s ease-out;
+}
+
+.miniCube1:hover {
+    transition: 0s;
+
+    box-shadow: 0 0 13px 5px purple inset , 0 0 5px 2px crimson, 0 0 1px 1px white;
+
+    position: relative;
+    float: left;
+
+    width: 13px;
+    height: 13px;
+    left: 0;
+    bottom: 20%;
+    background: none;
+    padding: 1px;
+    opacity: 100%;
+}
+
+.miniCube4{
+    position: relative;
+    float: left;
+    width: 13px;
+    height: 13px;
+    left: 0;
+    bottom: 20%;
     background: none;
     padding: 1px;
     opacity: 100%;
     transition: 1.7s;
 }
 
-.curcube:hover {
-    transition: 0.1s linear;
-
-    box-shadow: 0px 0px 13px 5px purple inset , 0px 0px 5px 2px crimson;
-
-    position: relative;
-    float: left;
-
-    width: 13px;
-    height: 13px;
-    left: 0%;
-    bottom: 0%;
-    background: none;
-    padding: 1px;
-    opacity: 100%;
-}
-
-.curcube4 {
-    position: relative;
-    float: left;
-
-    width: 13px;
-    height: 13px;
-    left: 0%;
-    bottom: 0%;
-    background: none;
-    padding: 1px;
-    opacity: 100%;
-    transition: 1.7s;
-}
-
-.curcube4:hover {
+.miniCube4:hover {
     transition: 0.1s;
-    box-shadow: 0px 0px 5px 1px cyan inset, 0px 1px 20px 4px blue;
+    box-shadow: 0 0 5px 1px cyan inset, 0 1px 20px 4px blue;
     position: relative;
     float: left;
     width: 13px;
     height: 13px;
-    left: 0%;
-    bottom: 0%;
+    left: 0;
+    bottom: 20%;
     background: none;
     padding: 1px;
     opacity: 100%;
 }
 
 
-.curcube5 {
+.miniCube5 {
     position: relative;
     float: left;
     width: 13px;
     height: 13px;
-    left: 0%;
-    bottom: 0%;
+    left: 0;
+    bottom: 20%;
     background: none;
-    padding: 0px;
+    padding: 1px;
     opacity: 100%;
     transition: 1.7s;
 }
 
-.curcube5:hover {
-    transition: 0.0s;
-    box-shadow:0px 0px 0px 1px white inset, 0px 0px 3px 2px cyan inset,0px 1px 16px 1px blue;
+.miniCube5:hover {
+    transition: 0.1s;
+    box-shadow:0 0 0 1px white inset, 0 0 3px 2px cyan inset,0 1px 16px 1px blue;
     position: relative;
     float: left;
     width: 13px;
     height: 13px;
-    left: 0%;
-    bottom: 0%;
+    left: 0;
+    bottom: 20%;
     background: none;
-    padding: 0px;
+    padding: 1px;
     opacity: 100%;
 }
 
 
 
-.curcube6 {
+.miniCube6 {
     position: relative;
     float: left;
     transition: 1.4s ease-out;
-
     width: 13px;
     height: 13px;
-    left: 0%;
-    bottom: 0%;
+    left: 0;
+    bottom: 20%;
     background: none;
     padding: 1px;
     opacity: 100%;
 }
 
-.curcube6:hover {
+.miniCube6:hover {
     transition: 0.0s;
-    box-shadow:0px 0px 0px 1px black inset, 0px 0px 13px 1px white inset, 0px 0px 3px 1px white;
+    box-shadow:0 0 0 1px black inset, 0 0 13px 1px white inset, 0 0 3px 1px white;
     position: relative;
     float: left;
     width: 13px;
     height: 13px;
-    left: 0%;
-    bottom: 0%;
+    left: 0;
+    bottom: 20%;
     background: none;
     padding: 1px;
     opacity: 100%;
 }
 
 
-.curcube2 {
+.miniCube2{
     position: relative;
     transition: 1.4s ease-out;
     float: left;
 
     width: 13px;
     height: 13px;
-    left: 0%;
-    bottom: 0%;
+    left: 0;
+    bottom: 20%;
     background: none;
     padding: 1px;
     opacity: 100%;
 }
 
-.curcube2:hover {
+.miniCube2:hover {
     transition: 0s linear;
-    position: relative;
-    float: left;
-
-    width: 13px;
-    height: 13px;
-    left: 0%;
-    bottom: 0%;
-    padding: 1px;
-    opacity: 100%;
-    box-shadow: 0px 0px 11px 1px red, 0px 0px 1px 1px #ccff0af9, 0px 0px 13px 1px orange;
-
+    box-shadow: 0 0 11px 1px red, 0 0 1px 1px #ccff0af9, 0 0 13px 1px orange;
 }
 
-.curcube3 {
+.miniCube3 {
     transition: 1.6s linear;
-
     position: relative;
     float: left;
-
     width: 13px;
     height: 13px;
-    left: 0%;
-    bottom: 0%;
+    left: 0;
+    bottom: 10%;
     background: none;
     padding: 1px;
     opacity: 100%;
 }
 
-.curcube3:hover {
+.miniCube3:hover {
     transition: 0.1s;
-    position: relative;
-    float: left;
-    box-shadow: 0px 0px 1px 1px  white, 0px 0px 5px 3px purple;
-    width: 13px;
-    height: 13px;
-    left: 0%;
-    bottom: 0%;
-    padding: 1px;
-
-    opacity: 100%;
+    box-shadow: 0 0 1px 1px  white, 0 0 5px 3px purple;
 }
