@@ -1,5 +1,3 @@
-
-
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 
@@ -13,7 +11,6 @@
     <servlet-class>com.radical.iqube.controller.servlets.HomePageServlet</servlet-class>
   </servlet>
 
-
   <filter-mapping>
     <filter-name>homeFilter</filter-name>
     <url-pattern>/home</url-pattern>
@@ -24,5 +21,10 @@
     <url-pattern>/home</url-pattern>
   </servlet-mapping>
 
-
+  <resource-ref>
+    <description>DB Connection</description>
+    <res-ref-name>jdbc/iqubedb</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
 </web-app>
