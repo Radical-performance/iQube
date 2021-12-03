@@ -30,8 +30,9 @@ public class ConnectorTest {
     public Connection connect() throws SQLException {
         ds = new MysqlDataSource();
         ds.setDatabaseName("iqubedbtest");
-        ds.setUser("root");
-        ds.setURL("jdbc:mysql://localhost:3306/iqubedbtest");
+        ds.setUser("test");
+        ds.setPassword("test");
+        ds.setURL("jdbc:mysql://localhost/iqubedbtest");
 
         connection = ds.getConnection();
         connection.setAutoCommit(false);
@@ -45,10 +46,11 @@ public class ConnectorTest {
         Mockito.verify(context,Mockito.times(1)).lookup(dbPath);
 
         ds.setDatabaseName("iqubedbtest");
-        ds.setUser("root");
+        ds.setUser("test");
+        ds.setPassword("test");
         ds.setURL("jdbc:mysql://localhost:3306/iqubedbtest");
 
-        Assert.assertEquals("root",ds.getUser());
+        Assert.assertEquals("test",ds.getUser());
         Assert.assertEquals("jdbc:mysql://localhost:3306/iqubedbtest",ds.getURL());
         Assert.assertEquals("iqubedbtest",ds.getDatabaseName());
 
