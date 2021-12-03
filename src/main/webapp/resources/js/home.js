@@ -15,4 +15,4 @@ window.addEventListener("mousemove", function (e){
         "rotateZ("+rotateX/12+"deg) rotateY("+rotateY/10 +"deg) rotateX("+rotateY/2+"deg)"+
         " translateX(-"+ e.pageX/10+"px) translateY(-"+e.pageY/10+"px) translateZ("+e.pageX/10+"px)";
     innerPane1.style.transform="translateX(-"+e.pageX/18+"px) translateZ("+e.pageX/8+"px)";
-    innerPane1sub.style.filter="hue-rotate("+e.pageX/45 +"deg)";})
+    innerPane1sub.style.filter="hue-rotate("+e.pageX/45 +"deg)";});

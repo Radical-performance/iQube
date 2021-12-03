@@ -32,17 +32,17 @@ var anima2 =[{transform: cube.style.transform}, {transform: 'rotateY(-1481deg) r
 
    let frontE = function () {
        register.style.opacity = "0";
-
+       document.querySelectorAll(".stars").forEach((e) => {
+           setTimeout(function () {
+               e.style.transition = "1.5s linear";
+               e.style.background = "pink";
+               e.style.boxShadow = "0px 0px 7px 1px #f60228,0px 0px 8px 0px crimson";
+           }, 220);
+       });
        if(hovered === 1){ }else if(hovered === 0){audio2.play();hovered = 1;}
        cube.animate(anima1, {duration: 2500, easing: "linear", fill: 'forwards'});
 
-       // document.querySelectorAll(".stars").forEach((e) => {
-       //      setTimeout(function () {
-       //          e.style.transition = "1.5s linear";
-       //          e.style.background = "red";
-       //          e.style.boxShadow = "0px 0px 7px 0px orangered,0px 0px 8px 0px blue"
-       //      }, 220);
-       // });
+
    };
 
 front.addEventListener("mouseleave", function (){
