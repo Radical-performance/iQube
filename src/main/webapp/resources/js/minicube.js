@@ -34,15 +34,13 @@ var anima2 =[{transform: cube.style.transform}, {transform: 'rotateY(-1481deg) r
        register.style.opacity = "0";
        document.querySelectorAll(".stars").forEach((e) => {
            setTimeout(function () {
-               e.style.transition = "1.5s linear";
+               e.style.transition = "0.7s ease-out";
                e.style.background = "pink";
                e.style.boxShadow = "0px 0px 7px 1px #f60228,0px 0px 8px 0px crimson";
-           }, 220);
+           }, 190);
        });
        if(hovered === 1){ }else if(hovered === 0){audio2.play();hovered = 1;}
-       cube.animate(anima1, {duration: 2500, easing: "linear", fill: 'forwards'});
-
-
+       cube.animate(anima1, {duration: 2500, easing: "ease-out", fill: 'forwards'});
    };
 
 front.addEventListener("mouseleave", function (){
@@ -53,9 +51,9 @@ front.addEventListener("mouseleave", function (){
   let  leftE =  function (e) {
       document.querySelectorAll(".stars").forEach((e) => {
           setTimeout(function () {
-                    e.style.transition = "1.4s linear";
+                    e.style.transition = "0.8s ease-out";
                     e.style.background = "cyan";
-                    e.style.boxShadow = "0px 0px 5px 0px blue,0px 0px 6px 0px purple"}, 320);
+                    e.style.boxShadow = "0px 0px 5px 0px blue,0px 0px 6px 0px purple"}, 170);
       });
       login.style.opacity = "0";
           if (hovered1 === 0) {audio2.play();hovered1 = 1;}
@@ -101,12 +99,11 @@ let over = function (e) {
 }
 
     login.addEventListener("click", function () {
-        sides.forEach((e)=>{e.style.opacity = "20%"})
+        sides.forEach((e)=>{e.style.opacity = "90%"})
         pressed = 1;
         audio1.src = "resources/content/sound/choose2.mp3";
         audio1.play();
-        setTimeout(function (){            labelWrapper.style.height = "0px"; labelWrapper.style.top = "50%"
-        },2450)
+        setTimeout(function (){labelWrapper.style.height = "0px"; labelWrapper.style.top = "50%"},2450);
         setTimeout(function () {
             labelWrapper.style.background = "white";
             labelWrapper.style.height = "110px";
@@ -123,7 +120,7 @@ let over = function (e) {
             labelWrapper.removeChild(performance);}, 500);
 
         labelWrapper.style.overflow = "visible";
-        radical.style.transition = "3s ease-out";
+        radical.style.transition = "3s linear";
         radical.style.top = "100%";
         labelWrapper.style.top = "50%";
         labelWrapper.style.height = "1%";
