@@ -9,7 +9,7 @@ public class UserDaoService {
     private final UserDaoImpl userDaoImpl;
 
     public UserDaoService(){this.userDaoImpl = new UserDaoImpl();}
-    public void createUser(UserEntity user){userDaoImpl.create(user);}
+    public boolean createUser(UserEntity user){return userDaoImpl.create(user);}
     public boolean removeUser(UserEntity user){return userDaoImpl.remove(user);}
     public boolean updateLogin(UserEntity user,String value) {
        return userDaoImpl.update(user.getLogin(),"login",value);

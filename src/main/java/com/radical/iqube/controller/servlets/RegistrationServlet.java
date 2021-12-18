@@ -3,6 +3,7 @@ package com.radical.iqube.controller.servlets;
 import com.radical.iqube.model.dao.UserDaoService;
 import com.radical.iqube.model.entity.UserEntity;
 import com.radical.iqube.model.entity.UserEntityBuilderImpl;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -15,21 +16,22 @@ public class RegistrationServlet extends HttpServlet {
     private UserDaoService service = null;
 
     @Override
-    public void init() throws ServletException {
-        service = new UserDaoService();
-    }
+    public void init() throws ServletException {service = new UserDaoService();}
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        JSONObject userJson = new JSONObject(req.getParameter("userData"));
-
-
-        UserEntity user = new UserEntityBuilderImpl()
-                .setLogin(userJson.getString("login"))
-                .setPassword(userJson.getString("password"))
-                .setEmail(userJson.getString("email"))
-                .setNickName(userJson.getString("nickname"))
+        JSONObject object = (JSONObject) req.getAttribute("userData");
+        UserEntity newUser = new UserEntityBuilderImpl()
+                .setLogin(object.getString("login"))
+                .setPassword(object.getString("password"))
+                .setEmail(object.getString("email1"))
+                .setNickName(object.getString("nickname"))
                 .build();
+
+        if(service.createUser(newUser)){
+
+        };
+
 
 //        if(!service.createUser(user).equals(false)){
 //
@@ -38,5 +40,10 @@ public class RegistrationServlet extends HttpServlet {
 //        }
 
 
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/registration.html").forward(req,resp);
     }
 }
