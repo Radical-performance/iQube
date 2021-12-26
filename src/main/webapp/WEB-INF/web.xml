@@ -13,6 +13,12 @@
     <servlet-class>com.radical.iqube.controller.servlets.HomePageServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>auth</servlet-name>
+    <servlet-class>com.radical.iqube.controller.servlets.AuthServlet</servlet-class>
+  </servlet>
+
+
 
   <filter-mapping>
     <filter-name>homeFilter</filter-name>
@@ -23,6 +29,21 @@
     <servlet-name>home</servlet-name>
     <url-pattern>/home</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>auth</servlet-name>
+    <url-pattern>/auth</url-pattern>
+  </servlet-mapping>
 
 
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Pages requiring HTTPS</web-resource-name>
+      <url-pattern>/auth</url-pattern>
+      <url-pattern>/registration</url-pattern>
+      <url-pattern>/userPage</url-pattern>
+    </web-resource-collection>
+    <user-data-constraint>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
 </web-app>

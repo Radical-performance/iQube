@@ -102,7 +102,6 @@ label{
 }
 
 #secondPane{
-    background: url("resources/content/img/331.jpg"); background-size: cover;
     position: absolute;
     opacity: 0;
     width: 100%;

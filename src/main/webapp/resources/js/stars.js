@@ -19,14 +19,14 @@ window.onload = function (){
                 {transform: 'translateX(500px)  translateY(-1500px) translateZ(400px)'}],
                 {duration: Math.floor(Math.random() * 92000) + 25200, iterations: Infinity });
         }else{
-            star.style.width = "3px";
-            star.style.height = "3px";
+            star.style.width = "2px";
+            star.style.height = "2px";
             star.style.zIndex = "121211";
             innerPane1sub.appendChild(star);
             star.animate(
                 [{ transform: 'translateX(' + Math.floor(Math.random() * innerHeight) + 'px) translateZ(500px)'},
                 { transform: 'translateX(-2000px) translateY(900px) translateZ(-1605px)' }],
-                { duration: Math.floor(Math.random() * 182000) + 55600, iterations: Infinity });
+                { duration: Math.floor(Math.random() * 102000) + 55600, iterations: Infinity });
         }
     }
 

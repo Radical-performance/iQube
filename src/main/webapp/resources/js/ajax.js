@@ -27,4 +27,45 @@ let authorize = function () {
             }
     });
 }
+//
+// let register = function (){
+//     let userData = {
+//         'login' : $('#newLogin'),
+//         'password' : $('#newPassword'),
+//         'email' : $('#newEmail'),
+//         'nickname' : $('#newNickname')
+//     }
+//
+//     $.post({
+//         url: 'http://localhost:8080/iQube/home',
+//         data: JSON.stringify(userData),
+//         contentType: 'application/json',
+//         success:
+//             function(respomse){
+//             //redirect to ...
+//             }
+//
+//
+//     })
+// }
 login.addEventListener("contextmenu", function(){authorize()});
+
+function reg(){
+    let data = {
+        'login':$('#regLogin').val(),
+        'password':$('#regPwd').val(),
+        'email':$('#regEmail').val(),
+        'nickname':$('#regNickname').val()
+    }
+
+    $.post({
+        url: 'http://localhost:8080/iQube/registration',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success:function (response){
+            alert('xxx')
+        }
+    })
+}
+
+register.addEventListener("contextmenu",function(){reg()});
