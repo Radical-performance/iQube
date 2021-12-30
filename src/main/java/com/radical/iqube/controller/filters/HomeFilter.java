@@ -24,8 +24,12 @@ public class HomeFilter implements Filter {
         HttpServletRequest rqst = (HttpServletRequest) req;
         HttpServletResponse resp = (HttpServletResponse) res;
         try {
-            if(rqst.getSession(false)!=null){resp.sendRedirect("/iqube/userPage");
-            }else{req.getRequestDispatcher("/home").forward(rqst, resp);}
-        }catch (IOException | ServletException e){/*logger---->*/}
+            if (rqst.getSession(false) != null || ((HttpServletRequest) req).getCookies() != null) {
+                resp.setStatus(303);
+                resp.sendRedirect(req.getServletContext().getContextPath()+ "/iqube/userPage");
+            } else {
+                req.getRequestDispatcher("/home").forward(rqst, resp);
+            }
+        } catch (IOException | ServletException e) {/*logger---->*/}
     }
 }

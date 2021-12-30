@@ -19,18 +19,22 @@ public class RegistrationServlet extends HttpServlet {
     public void init() throws ServletException {service = new UserDaoService();}
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONObject object = (JSONObject) req.getAttribute("userData");
         UserEntity newUser = new UserEntityBuilderImpl()
                 .setLogin(object.getString("login"))
                 .setPassword(object.getString("password"))
-                .setEmail(object.getString("email1"))
+                .setEmail(object.getString("email"))
                 .setNickName(object.getString("nickname"))
                 .build();
 
         if(service.createUser(newUser)){
-
-        };
+            resp.setStatus(303);
+            resp.sendRedirect(req.getServletContext().getContextPath()+"/userPage");
+        }else{
+            resp.addHeader("isRegistered", "false");
+            resp.sendRedirect(req.getServletContext().getContextPath()+"/hom");
+        }
 
 
 //        if(!service.createUser(user).equals(false)){
@@ -44,6 +48,7 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         req.getRequestDispatcher("/registration.html").forward(req,resp);
     }
 }

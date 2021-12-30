@@ -22,9 +22,10 @@ public class UserDaoImpl implements UserDao {
     public boolean create(UserEntity user) {
         boolean created = false;
         Savepoint savepoint;
-        Connection con;
+        Connection con = null;
 
-        try { con = getConnection();PreparedStatement st = con.prepareStatement(CREATE);
+        try {
+            con = getConnection();PreparedStatement st = con.prepareStatement(CREATE);
             savepoint =con.setSavepoint();
             st.setString(1, user.getLogin());
             st.setString(2, user.getPassword());
@@ -32,7 +33,11 @@ public class UserDaoImpl implements UserDao {
             st.setString(4, user.getEmail());
             if(st.executeUpdate() != 0){con.commit(); created = true;}
             else{rollback(st.getConnection(), savepoint);}
-        } catch (SQLException e) {log.warn("Exception sql: "+e.getMessage());}
+            connector.close(con);
+        } catch (SQLException e) {log.warn("Exception sql: "+e.getMessage());
+        } finally {
+            if(con != null){connector.close(con);}
+        }
         return created;
     }
 
@@ -41,8 +46,10 @@ public class UserDaoImpl implements UserDao {
     public boolean update(String login,String updateValueName,String value) {
         boolean updated = false;
         Savepoint savepoint;
+        Connection con = null;
         PreparedStatement statement = null;
-        try(Connection con = connector.connect()){
+        try{
+            con = connector.connect();
             savepoint = con.setSavepoint();
             switch (updateValueName){
                 case "login":
@@ -69,29 +76,35 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             log.warn(e.getMessage());
             e.printStackTrace();
-        }
+        } finally { if(con != null) {connector.close(con);}}
         return updated;
     }
 
     @Override
     public boolean remove(UserEntity user) {
         Savepoint savepoint;
+        Connection con = null;
         int removed = 0;
-        try(Connection con = getConnection();PreparedStatement st = con.prepareStatement(DELETE)){
+        try{
+            con = connector.connect();
+            PreparedStatement st = con.prepareStatement(DELETE);
             savepoint = con.setSavepoint();
             st.setString(1,user.getLogin());
             if(st.executeUpdate()==0){con.rollback(savepoint);}
             else{con.commit(); removed = 1;}
-        } catch (SQLException e) {log.warn(e.getCause());} //<=======LOGGER
+        } catch (SQLException e) {log.warn(e.getCause());//<=======LOGGER
+        } finally { if(con != null){ connector.close(con);}}
         return removed != 0;
     }
 
     @Override
     public UserEntity get(String valueName,String value) {
+        Connection con = null;
         UserEntity user = null;
         ResultSet rs;
         PreparedStatement st = null;
-        try(Connection con = getConnection()) {
+        try {
+            con = connector.connect();
             switch (valueName)
             {
                 case "login": st = con.prepareStatement(GET.replace("val","login"));break;
@@ -114,7 +127,9 @@ public class UserDaoImpl implements UserDao {
                 st.close();
                 rs.close();
             }
-        } catch (SQLException e) {e.printStackTrace();}//<=======LOGGER
+        } catch (SQLException e) {e.printStackTrace();//<=======LOGGER
+        } finally { if(con != null){connector.close(con);}
+        }
         return user;
     }
     public Connection getConnection() {

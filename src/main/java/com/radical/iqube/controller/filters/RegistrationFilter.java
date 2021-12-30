@@ -30,29 +30,39 @@ public class RegistrationFilter implements Filter {
         StringBuilder sb = new StringBuilder();
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-        String line = null;
+        String line;
 
-        try {
-            BufferedReader reader = req.getReader();
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-            JSONObject object = new JSONObject(sb.toString());
-            JSONArray array = new JSONArray();
-            array.put(object);
+            try {
+                if (request.getRequestURI().endsWith("/registration") && request.getCookies() == null) {
 
-            for(int i=0; i< array.length(); i++){
-                if (array.get(i) == null || array.get(i).toString().isEmpty()) {
-                    response.sendRedirect(req.getServletContext().getContextPath() + "/home");
-                } else {
-                    request.setAttribute("userData", object);
-                    request.getRequestDispatcher("/registration").forward(request,response);
-                }
+                    BufferedReader reader = req.getReader();
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line);
+                    }
+                    JSONObject obj = new JSONObject(sb.toString());
+                    for (int i = 0; i < obj.length(); i++) {
+                        if (
+                                obj.getString("login").isEmpty() ||
+                                        obj.getString("password").isEmpty() ||
+                                        obj.getString("email").isEmpty() ||
+                                        obj.getString("nickName").isEmpty()
+                        )
+                        {response.sendRedirect(req.getServletContext().getContextPath() + "/home");}
+                        else {
+                            request.setAttribute("userData", obj);
+                            request.getRequestDispatcher("/registration").forward(request, response);
+                        }
+                    }
+                }else{
+                    response.setStatus(303);
+                    response.addHeader("Connection","Keep-Alive");
+                    response.sendRedirect(req.getServletContext().getContextPath() + "/home");}
+
+            } catch (IOException | ServletException e) {
+                logger = Logger.getLogger(RegistrationFilter.class);
+                logger.warn(new Date() + " : " + new Date().getTime() + ": " + e.getMessage());
             }
-        } catch (IOException | ServletException e) {
-            logger = Logger.getLogger(RegistrationFilter.class);
-            logger.warn(new Date() + " : "+ new Date().getTime() + ": "+ e.getMessage());
         }
     }
-}
+
 

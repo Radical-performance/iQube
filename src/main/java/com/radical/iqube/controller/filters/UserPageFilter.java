@@ -14,8 +14,9 @@ public class UserPageFilter implements Filter {
         HttpServletRequest rqst= (HttpServletRequest) req;
         HttpServletResponse rspns = (HttpServletResponse) resp;
         try {
-            if (rqst.getSession(false) == null) {
+            if (rqst.getSession(false) == null || ((HttpServletRequest) req).getCookies() == null) {
                 System.out.println("your session is NULL, redirect to /home");
+                rspns.getWriter().write("not authorized");
                 rspns.sendRedirect("/iqube/home");
             }else{req.getRequestDispatcher("/userPage").forward(req,resp);}
         }catch (IOException | ServletException e){/*log---->*/}

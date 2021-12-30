@@ -2,19 +2,14 @@ package com.radical.iqube.controller.filters;
 
 import com.radical.iqube.optional.Listener;
 import org.apache.log4j.Logger;
+import org.json.CookieList;
 import org.json.JSONObject;
 
 import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.*;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class AuthFilter implements Filter {
     private Logger logger;
@@ -33,7 +28,8 @@ public class AuthFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) resp;
         HttpSession session = request.getSession(false);
 
-        if (session == null) {
+        //
+        if (session == null || request.getCookies() == null && request.getRequestURI().endsWith("auth")) {
             StringBuilder sb = new StringBuilder();
             String line;
             try {
@@ -41,12 +37,21 @@ public class AuthFilter implements Filter {
                 while ((line = reader.readLine()) != null) {
                     sb.append(line);
                     JSONObject user = new JSONObject(sb.toString());
+
                     if (!user.getString("login").isEmpty() && !user.getString("password").isEmpty()) {
                         request.setAttribute("credentials", user);
-                        request.getRequestDispatcher("/auth").forward(request, response);}
-                    else {request.getRequestDispatcher("/home").forward(request, response);}
+                        request.getRequestDispatcher("/auth").forward(request, response);
+                    } else {
+                        request.getRequestDispatcher("/home").forward(request, response);
+                    }
                 }
-            } catch (Exception e) {System.out.println(e.getMessage());}
-        } else {response.sendRedirect("/iqube/userPage");}
+            } catch (Exception e) {
+                //log
+                System.out.println(e.getMessage());
+            }
+        } else {
+            response.setStatus(303);
+            response.sendRedirect(req.getServletContext().getContextPath()+"/iqube/userPage");
+        }
     }
 }

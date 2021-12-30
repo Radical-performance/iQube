@@ -11,6 +11,7 @@ public class UserPageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         //todo: edit url with appending user nikname to him
         try {
+            resp.setStatus(200);
             req.getRequestDispatcher("/userPage.html").forward(req, resp);
         }catch (ServletException | IOException e){/*log--->*/}
     }
