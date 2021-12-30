@@ -27,22 +27,21 @@ let hovered1 = 0;
 let pressed;
 
 
-var anima1 = [{transform: cube.style.transform}, {transform: 'rotateY(-1449deg) rotateX(-17deg) rotateZ(3deg)'}];
-var anima2 =[{transform: cube.style.transform}, {transform: 'rotateY(-1481deg) rotateX(-24deg) rotateZ(3deg)'}];
 
    let frontE = function () {
        register.style.opacity = "0";
        document.querySelectorAll(".stars").forEach((e) => {
            setTimeout(function () {
-               e.style.transition = "1.5s linear";
+               e.style.transition = "0.7s ease-out";
                e.style.background = "pink";
                e.style.boxShadow = "0px 0px 7px 1px #f60228,0px 0px 8px 0px crimson";
-           }, 220);
+           }, 10);
        });
        if(hovered === 1){ }else if(hovered === 0){audio2.play();hovered = 1;}
-       cube.animate(anima1, {duration: 2500, easing: "linear", fill: 'forwards'});
-
-
+       cube.animate(
+           [{transform: window.getComputedStyle(cube).getPropertyValue('transform')}, {transform: 'rotateY(-1449deg) rotateX(-17deg) rotateZ(3deg)'}],
+           {duration: 2500, easing: "ease-out", fill: 'forwards'}
+       );
    };
 
 front.addEventListener("mouseleave", function (){
@@ -53,16 +52,16 @@ front.addEventListener("mouseleave", function (){
   let  leftE =  function (e) {
       document.querySelectorAll(".stars").forEach((e) => {
           setTimeout(function () {
-                    e.style.transition = "1.4s linear";
+                    e.style.transition = "0.8s linear";
                     e.style.background = "cyan";
-                    e.style.boxShadow = "0px 0px 5px 0px blue,0px 0px 6px 0px purple"}, 320);
+                    e.style.boxShadow = "0px 0px 5px 0px blue,0px 0px 6px 0px purple"}, 170);
       });
       login.style.opacity = "0";
           if (hovered1 === 0) {audio2.play();hovered1 = 1;}
           if (e.currentTarget.id === "left") {
               cube.animate(
                         [
-                            {transform: cube.style.transform},
+                            {transform: window.getComputedStyle(cube).getPropertyValue("transform")},
                             {transform: 'rotateY(-1512deg) rotateX(-17deg) rotateZ(3deg)'}
                         ],
                   {duration: 2500, easing: "linear"});
@@ -92,7 +91,7 @@ let over = function (e) {
         bgPane.style.filter = "brightness(0.5) opacity(0.7)";
         radical.style.textShadow = "0px 0px 12px white, 5px 3px 2px black";
 
-        cube.animate(anima2,{duration:7000,fill:'forwards'});
+        cube.animate([{transform:window.getComputedStyle(cube).getPropertyValue("transform")}, {transform: 'rotateY(-1481deg) rotateX(-24deg) rotateZ(3deg)'}],{duration:2000,fill:'forwards'});
         sides.forEach((e) => {
             e.style.background = "rgba(0,0,0,0.76)";
             e.style.border = "2px solid #00ffd2";
@@ -101,12 +100,11 @@ let over = function (e) {
 }
 
     login.addEventListener("click", function () {
-        sides.forEach((e)=>{e.style.opacity = "20%"})
+        sides.forEach((e)=>{e.style.opacity = "90%"})
         pressed = 1;
         audio1.src = "resources/content/sound/choose2.mp3";
         audio1.play();
-        setTimeout(function (){            labelWrapper.style.height = "0px"; labelWrapper.style.top = "50%"
-        },2450)
+        setTimeout(function (){labelWrapper.style.height = "0px"; labelWrapper.style.top = "50%"},2450);
         setTimeout(function () {
             labelWrapper.style.background = "white";
             labelWrapper.style.height = "110px";
@@ -123,7 +121,7 @@ let over = function (e) {
             labelWrapper.removeChild(performance);}, 500);
 
         labelWrapper.style.overflow = "visible";
-        radical.style.transition = "3s ease-out";
+        radical.style.transition = "3s linear";
         radical.style.top = "100%";
         labelWrapper.style.top = "50%";
         labelWrapper.style.height = "1%";
@@ -168,6 +166,37 @@ let over = function (e) {
             passwordInputBox.style.overflow = "visible"},6000)
     });
 
+register.onclick = function () {
+    let form = document.createElement('div');
+    let regLogin = document.createElement('input');
+    let regPwd = document.createElement('input');
+    let regEmail = document.createElement('input');
+    let regNickname = document.createElement('input');
+    form.id = 'regForm';
+    regLogin.id = 'regLogin';
+    regPwd.id = 'regPwd';
+    regEmail.id = 'regEmail';
+    regNickname.id = 'regNickname';
+
+
+    mainPane.appendChild(form);
+    $('#regForm').append(
+        $("<label for='regLogin' class='regLbl'>Login:</label>"),
+        $('<input />', {id: 'regLogin', class: 'data', type: 'text'}),
+        $("<label for='regPwd' class='regLbl'>Paswd:</label>"),
+        $('<input />', {id: 'regPwd', class: 'data', type: 'text'}),
+        $("<label for='regEmail' class='regLbl'>E-mail:</label>"),
+        $('<input />', {id: 'regEmail',class: 'data', type: 'text'}),
+        $("<label for='regNickname' class='regLbl' id='nickLbl'>Nickname:</label>"),
+        $('<input />', {id: 'regNickname', class: 'data', type: 'text'}),
+    )
+
+
+
+
+
+}
+
     let leave = function leave(e) {
 
         sides.forEach((e) =>
@@ -178,9 +207,9 @@ let over = function (e) {
         });
         if(pressed !==1){bgPane.style.filter = "";}else{bgPane.style.filter = "brightness(0.5) opacity(0.7)";}
         cube.animate(
-                [{transform: cube.style.transform},
+                [{transform: window.getComputedStyle(cube).getPropertyValue("transform")},
                  {transform: 'rotateY(1481deg) rotateX(-24deg) rotateZ(3deg)'}],
-                 {duration: 75000, iterations: Infinity});
+                 {duration: 2000, iterations: Infinity});
 
         front.style.transform = "translateZ(60px)";
         topp.style.transform = "rotateX(90deg) translateZ(60px)";

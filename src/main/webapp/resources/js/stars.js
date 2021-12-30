@@ -16,21 +16,21 @@ window.onload = function (){
             innerPane2.appendChild(star);
             star.animate(
                 [{ transform: 'translateX(-' + Math.floor(Math.random() + innerWidth) + 'px) translateY(1000px)' },
-                {transform: 'translateX(500px)  translateY(-1000px)'}],
+                {transform: 'translateX(500px)  translateY(-1500px) translateZ(400px)'}],
                 {duration: Math.floor(Math.random() * 92000) + 25200, iterations: Infinity });
         }else{
-            star.style.width = "3px";
-            star.style.height = "3px";
+            star.style.width = "2px";
+            star.style.height = "2px";
             star.style.zIndex = "121211";
             innerPane1sub.appendChild(star);
             star.animate(
                 [{ transform: 'translateX(' + Math.floor(Math.random() * innerHeight) + 'px) translateZ(500px)'},
-                { transform: 'translateX(-1000px) translateY(700px) translateZ(-1605px)' }],
-                { duration: Math.floor(Math.random() * 182000) + 55600, iterations: Infinity });
+                { transform: 'translateX(-2000px) translateY(900px) translateZ(-1605px)' }],
+                { duration: Math.floor(Math.random() * 102000) + 55600, iterations: Infinity });
         }
     }
 
-    for (let v = 0; v < 95; v++) {
+    for (let v = 0; v < 45; v++) {
         let miniCube1 = document.createElement("div");
         let miniCube2 = document.createElement("div");
         let miniCube3 = document.createElement("div");
