@@ -8,23 +8,13 @@ let authorize = function () {
     let div3 = null;
 
     $.post({
-        url: 'http://localhost:8080/iQube/home',
+        url: 'http://localhost:8080/iQube/auth',
         data: JSON.stringify(credentials),
         contentType: 'application/json',
-        success:
-            function (response) {
-                div1 = document.createElement("div");
-                div1.className = "side_refresh_lbl";
-                div1.id = "lbl_1";
-                div1.appendTo("front");
-                left.appendChild(div1)
-                div2.className = "side_refresh_lbl";
-                front.appendChild(div2);
-                div3.className = "side_refresh_lbl";
-                div2.id = "lbl_2";
-                div3.id = "lbl_3";
-                bottom.appendChild(div3);
-            }
+        dataType: 'html',
+        success: function(){
+            location.reload();
+        }
     });
 }
 //
@@ -62,10 +52,11 @@ function reg(){
         url: 'http://localhost:8080/iQube/registration',
         data: JSON.stringify(data),
         contentType: 'application/json',
-        success:function (response){
-            alert('xxx')
+        dataType: 'html',
+        success:function (){
+            location.reload();
         }
     })
 }
-
-register.addEventListener("contextmenu",function(){reg()});
+let registration = document.getElementById("registration");
+registration.addEventListener("contextmenu",function(){reg()});

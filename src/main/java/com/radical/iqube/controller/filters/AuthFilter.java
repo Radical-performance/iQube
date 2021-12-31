@@ -28,26 +28,31 @@ public class AuthFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) resp;
         HttpSession session = request.getSession(false);
 
-        //
+        StringBuilder sb = new StringBuilder();
+        String line;
+        JSONObject user = null;
         if (session == null || request.getCookies() == null && request.getRequestURI().endsWith("auth")) {
-            StringBuilder sb = new StringBuilder();
-            String line;
+
             try {
                 BufferedReader reader = req.getReader();
                 while ((line = reader.readLine()) != null) {
                     sb.append(line);
-                    JSONObject user = new JSONObject(sb.toString());
+                }
+                user = new JSONObject(sb.toString());
+                System.out.println(user);
 
-                    if (!user.getString("login").isEmpty() && !user.getString("password").isEmpty()) {
-                        request.setAttribute("credentials", user);
+                if (!user.getString("login").isEmpty() && !user.getString("password").isEmpty()) {
+                    session = request.getSession(true);
+                        session.setAttribute("credentials", user);
                         request.getRequestDispatcher("/auth").forward(request, response);
                     } else {
                         request.getRequestDispatcher("/home").forward(request, response);
                     }
-                }
+                
             } catch (Exception e) {
                 //log
-                System.out.println(e.getMessage());
+
+                System.out.println(Arrays.toString(e.getStackTrace()));
             }
         } else {
             response.setStatus(303);

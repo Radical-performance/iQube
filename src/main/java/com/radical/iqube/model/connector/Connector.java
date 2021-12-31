@@ -10,12 +10,14 @@ import java.sql.SQLException;
 import java.sql.Savepoint;
 
 public class Connector {
+    public      Connection con;
+
     private static final Logger log = Logger.getLogger(Connector.class);
-    private Connection con;
     public Connection connect(){
+
         try {
             InitialContext ctx = new InitialContext();
-            DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/iqubedb");
+            DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/iqubedbtest");
             con =  ds.getConnection();
             con.setAutoCommit(false);
         } catch (SQLException | NamingException e) {

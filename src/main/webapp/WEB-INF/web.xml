@@ -31,7 +31,6 @@
     <servlet-class>com.radical.iqube.controller.servlets.AuthServlet</servlet-class>
   </servlet>
 
-<<<<<<< HEAD
   <servlet>
     <servlet-name>registration</servlet-name>
     <servlet-class>com.radical.iqube.controller.servlets.RegistrationServlet</servlet-class>
@@ -41,8 +40,6 @@
     <servlet-name>userPage</servlet-name>
     <servlet-class>com.radical.iqube.controller.servlets.UserPageServlet</servlet-class>
   </servlet>
-=======
->>>>>>> view
 
 
   <filter-mapping>
@@ -69,10 +66,6 @@
     <servlet-name>home</servlet-name>
     <url-pattern>/home</url-pattern>
   </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>auth</servlet-name>
-    <url-pattern>/auth</url-pattern>
-  </servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>registration</servlet-name>
@@ -97,33 +90,22 @@
     <res-auth>Container</res-auth>
   </resource-ref>
 
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>Pages requiring HTTPS</web-resource-name>
-      <url-pattern>/auth</url-pattern>
-      <url-pattern>/registration</url-pattern>
-      <url-pattern>/userPage</url-pattern>
-    </web-resource-collection>
-    <user-data-constraint>
-      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-    </user-data-constraint>
-  </security-constraint>
+<!--  <security-constraint>-->
+<!--    <web-resource-collection>-->
+<!--      <web-resource-name>Pages requiring HTTPS</web-resource-name>-->
+<!--      <url-pattern>/auth</url-pattern>-->
+<!--      <url-pattern>/registration</url-pattern>-->
+<!--      <url-pattern>/userPage</url-pattern>-->
+<!--    </web-resource-collection>-->
+<!--    <user-data-constraint>-->
+<!--      <transport-guarantee>CONFIDENTIAL</transport-guarantee>-->
+<!--    </user-data-constraint>-->
+<!--  </security-constraint>-->
 
-  <session-config>
-    <cookie-config>
-      <secure>`true`</secure>
-    </cookie-config>
-  </session-config>
+<!--  <session-config>-->
+<!--    <cookie-config>-->
+<!--      <secure>`true`</secure>-->
+<!--    </cookie-config>-->
+<!--  </session-config>-->
 
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>Pages requiring HTTPS</web-resource-name>
-      <url-pattern>/auth</url-pattern>
-      <url-pattern>/registration</url-pattern>
-      <url-pattern>/userPage</url-pattern>
-    </web-resource-collection>
-    <user-data-constraint>
-      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-    </user-data-constraint>
-  </security-constraint>
 </web-app>

@@ -17,12 +17,11 @@ public class HomePageServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Enumeration<String> headers= req.getHeaderNames();
-        String cur;
-        while(headers.hasMoreElements()){
-            cur = headers.nextElement();
-            System.out.println( cur+ " : " +req.getHeader(cur));
-        }
+       System.out.println("home servlet");
+        resp.setStatus(200);
+        resp.setHeader("Connection","close");
+        resp.addHeader("Cache-Control","private; max-age=14000");//<---
+
         req.getRequestDispatcher("/home.html").forward(req,resp);
     }
 }

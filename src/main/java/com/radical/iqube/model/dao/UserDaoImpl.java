@@ -12,10 +12,10 @@ public class UserDaoImpl implements UserDao {
         this.connector = new Connector();
     }
 
-    private final String CREATE = "INSERT INTO users(login,password,email,nickname) VALUES(?,?,?,?)";
+    private final String CREATE = "INSERT INTO userstest(login,password,email,nickname) VALUES(?,?,?,?)";
     private final String DELETE = "DELETE FROM users WHERE login = (?)";
     private final String UPDATE= "UPDATE users SET value=(?) WHERE login = (?)";
-    private final String GET = "SELECT * FROM users WHERE val = (?)";
+    private  String GET = "SELECT * FROM userstest WHERE value = (?)";
 
 
     @Override
@@ -102,15 +102,21 @@ public class UserDaoImpl implements UserDao {
         Connection con = null;
         UserEntity user = null;
         ResultSet rs;
-        PreparedStatement st = null;
         try {
             con = connector.connect();
+
             switch (valueName)
             {
-                case "login": st = con.prepareStatement(GET.replace("val","login"));break;
-                case "email": st = con.prepareStatement(GET.replace("val","email"));break;
-                case "nickName": st = con.prepareStatement(GET.replace("val","nickName"));break;
+                case "login": GET = GET.replace("value",valueName); break;
+                case "email": GET.replace("val","email");break;
+                case "nickName": GET.replace("val","nickname");break;
             }
+            System.out.println(con);
+
+            PreparedStatement st = con.prepareStatement(GET);
+            st.setString(1,value);
+            System.out.println(st);
+
             if(st!=null)
             {
                 st.setString(1, value);
@@ -135,6 +141,6 @@ public class UserDaoImpl implements UserDao {
     public Connection getConnection() {
         return connector.connect();
     }
-    public void rollback(Connection connection, Savepoint savepoint){};
+    public void rollback(Connection connection, Savepoint savepoint){}
 
 }

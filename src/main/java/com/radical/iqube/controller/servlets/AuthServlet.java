@@ -18,10 +18,14 @@ public class AuthServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        JSONObject credentials = (JSONObject) req.getAttribute("credentials");
+        HttpSession session = req.getSession(false);
+        JSONObject credentials = (JSONObject)session.getAttribute("credentials");
         String login = credentials.getString("login");
         String pwd = credentials.getString("password");
         UserEntity user = service.getByLogin(login);
+        System.out.println(session + "  ses from auth servlet");
+
+
 
         try {
             if (user != null) {
@@ -33,13 +37,13 @@ public class AuthServlet extends HttpServlet {
                     // that's why i'll use cookie to auth below and replace it on jwt later..'i believe :D'
                     Cookie usrLogin = new Cookie("userNickname",user.getNickname());
                     Cookie usrPwd = new Cookie("userPassword",user.getPassword());
-                    req.getSession(true);
                     resp.setStatus(303);
                     resp.addHeader("Access-Control-Allow-Origin","origin");
                     resp.addHeader("Connection","Keep-Alive");
                     resp.addHeader("accepted","logged in");
                     resp.addCookie(usrLogin);
                     resp.addCookie(usrPwd);
+                    System.out.println("redir");
                     resp.sendRedirect(req.getServletContext().getContextPath() + "/userPage");
 
                 } else {

@@ -7,9 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 public class RegistrationServlet extends HttpServlet {
@@ -20,20 +18,32 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        JSONObject object = (JSONObject) req.getAttribute("userData");
+        HttpSession session = req.getSession(false);
+        JSONObject object = (JSONObject) session.getAttribute("userData");
+
+        System.out.println("from registration servlet");
         UserEntity newUser = new UserEntityBuilderImpl()
                 .setLogin(object.getString("login"))
                 .setPassword(object.getString("password"))
                 .setEmail(object.getString("email"))
                 .setNickName(object.getString("nickname"))
                 .build();
+        Cookie usrLogin = new Cookie("userNickname",newUser.getNickname());
+        Cookie usrPwd = new Cookie("userPassword",newUser.getPassword());
 
         if(service.createUser(newUser)){
-            resp.setStatus(303);
+
+            resp.setStatus(200);
+            resp.setHeader("Connection", "Keep-Alive");
+            resp.setHeader("Access-Control-Allow-Origin","same-origin");
+            resp.addCookie(usrLogin);
+            resp.addCookie(usrPwd);
             resp.sendRedirect(req.getServletContext().getContextPath()+"/userPage");
         }else{
+            resp.setStatus(303);
+
             resp.addHeader("isRegistered", "false");
-            resp.sendRedirect(req.getServletContext().getContextPath()+"/hom");
+            resp.sendRedirect(req.getServletContext().getContextPath()+"/home");
         }
 
 
@@ -46,9 +56,4 @@ public class RegistrationServlet extends HttpServlet {
 
     }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        req.getRequestDispatcher("/registration.html").forward(req,resp);
-    }
 }

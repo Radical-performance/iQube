@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.*;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,32 +32,38 @@ public class RegistrationFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
         String line;
-
+        JSONObject obj;
             try {
-                if (request.getRequestURI().endsWith("/registration") && request.getCookies() == null) {
-
+                if (request.getSession(false) == null && request.getCookies() == null) {
                     BufferedReader reader = req.getReader();
-                    while ((line = reader.readLine()) != null) {
-                        sb.append(line);
-                    }
-                    JSONObject obj = new JSONObject(sb.toString());
+                    while ((line = reader.readLine()) != null) {sb.append(line);}
+                     obj = new JSONObject(sb.toString());
+                    System.out.println(obj + "reg ffff");
                     for (int i = 0; i < obj.length(); i++) {
                         if (
                                 obj.getString("login").isEmpty() ||
                                         obj.getString("password").isEmpty() ||
                                         obj.getString("email").isEmpty() ||
-                                        obj.getString("nickName").isEmpty()
-                        )
-                        {response.sendRedirect(req.getServletContext().getContextPath() + "/home");}
+                                        obj.getString("nickname").isEmpty()
+                        ){
+                            response.setStatus(303);
+                        response.sendRedirect(req.getServletContext().getContextPath() + "/home");}
                         else {
-                            request.setAttribute("userData", obj);
+                            System.out.println(obj.getString("login"));
+                            System.out.println(obj.getString("password"));
+                            System.out.println(obj.getString("email"));
+                            System.out.println(obj.getString("nickname"));
+
+                            HttpSession ses =request.getSession(true);
+                            ses.setAttribute("userData", obj);
+
                             request.getRequestDispatcher("/registration").forward(request, response);
                         }
                     }
                 }else{
                     response.setStatus(303);
                     response.addHeader("Connection","Keep-Alive");
-                    response.sendRedirect(req.getServletContext().getContextPath() + "/home");}
+                    response.sendRedirect(req.getServletContext().getContextPath() + "/");}
 
             } catch (IOException | ServletException e) {
                 logger = Logger.getLogger(RegistrationFilter.class);
