@@ -37,16 +37,17 @@ public class RegistrationFilter implements Filter {
                 if (request.getSession(false) == null && request.getCookies() == null) {
                     BufferedReader reader = req.getReader();
                     while ((line = reader.readLine()) != null) {sb.append(line);}
-                     obj = new JSONObject(sb.toString());
-                    System.out.println(obj + "reg ffff");
-                    for (int i = 0; i < obj.length(); i++) {
+                    System.out.println(sb);
+
+                    obj = new JSONObject(sb.toString());
                         if (
                                 obj.getString("login").isEmpty() ||
                                         obj.getString("password").isEmpty() ||
                                         obj.getString("email").isEmpty() ||
                                         obj.getString("nickname").isEmpty()
                         ){
-                            response.setStatus(303);
+                            System.out.println("empty");
+                            response.setStatus(200);
                         response.sendRedirect(req.getServletContext().getContextPath() + "/home");}
                         else {
                             System.out.println(obj.getString("login"));
@@ -56,14 +57,17 @@ public class RegistrationFilter implements Filter {
 
                             HttpSession ses =request.getSession(true);
                             ses.setAttribute("userData", obj);
+                            response.setHeader("Access-Control-Allow-Origin", "*");
+                            response.setStatus(200);
 
                             request.getRequestDispatcher("/registration").forward(request, response);
                         }
-                    }
+
                 }else{
                     response.setStatus(303);
                     response.addHeader("Connection","Keep-Alive");
-                    response.sendRedirect(req.getServletContext().getContextPath() + "/");}
+                    response.addHeader("Access-Control-Allow-Origin","*");
+                    response.sendRedirect(req.getServletContext().getContextPath() + "/home");}
 
             } catch (IOException | ServletException e) {
                 logger = Logger.getLogger(RegistrationFilter.class);

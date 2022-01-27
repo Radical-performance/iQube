@@ -34,11 +34,11 @@ public class AuthServlet extends HttpServlet {
                     //юзать куки не вариант, так ка это может быть причиной CRSF атаки
                     //but i need to have 'dirt' working copy on 31.12..but using of jwt (refreshable) without normal
                     // understanding of that technoligy(+ssl)  not my choise
-                    // that's why i'll use cookie to auth below and replace it on jwt later..'i believe :D'
+                    // that's why i'll use cookie to auth below and replace it on jwt later..'i believe :D'...AGA SHAS!
                     Cookie usrLogin = new Cookie("userNickname",user.getNickname());
                     Cookie usrPwd = new Cookie("userPassword",user.getPassword());
-                    resp.setStatus(303);
-                    resp.addHeader("Access-Control-Allow-Origin","origin");
+                    resp.setStatus(200);
+                    resp.addHeader("Access-Control-Allow-Origin","*");
                     resp.addHeader("Connection","Keep-Alive");
                     resp.addHeader("accepted","logged in");
                     resp.addCookie(usrLogin);

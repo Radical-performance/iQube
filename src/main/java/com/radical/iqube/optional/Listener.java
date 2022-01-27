@@ -33,6 +33,8 @@ public class Listener implements ServletContextListener, HttpSessionListener {
     public void sessionCreated(HttpSessionEvent se) {
         openedSessions.put(se.getSession().getId(),se.getSession());
         System.out.println("HttpSession: "+ se.getSession().getId() + " successfully created");
+        openedSessions.put(se.getSession().getId(), se.getSession());
+        System.out.println(openedSessions.size());
     }
 
     @Override

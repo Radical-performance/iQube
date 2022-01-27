@@ -46,7 +46,6 @@
 .regLbl{
     position: relative;
     display: block;
-
-    height: 0%;
+    height: 0;
 }
 

@@ -49,7 +49,7 @@ function reg(){
     }
 
     $.post({
-        url: 'http://localhost:8080/iQube/registration',
+        url: 'http://3d69142f686e.ngrok.io/iQube/registration',
         data: JSON.stringify(data),
         contentType: 'application/json',
         dataType: 'html',

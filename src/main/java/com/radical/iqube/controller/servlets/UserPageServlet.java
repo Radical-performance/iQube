@@ -13,8 +13,10 @@ public class UserPageServlet extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         HttpSession ses =req.getSession(false);
-        System.out.println(req.getSession(false)+ "   ses from userpage serv");
+        System.out.println(ses+ "   ses from userpage serv");
         //todo: edit url with appending user nikname to him
+        resp.setStatus(200);
+
             req.getRequestDispatcher("/userPage.html").forward(req, resp);
     }
 

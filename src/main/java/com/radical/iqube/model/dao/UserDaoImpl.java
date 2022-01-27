@@ -38,6 +38,7 @@ public class UserDaoImpl implements UserDao {
         } finally {
             if(con != null){connector.close(con);}
         }
+        System.out.println(created);
         return created;
     }
 

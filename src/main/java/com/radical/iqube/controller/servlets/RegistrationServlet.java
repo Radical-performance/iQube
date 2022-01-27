@@ -34,8 +34,9 @@ public class RegistrationServlet extends HttpServlet {
         if(service.createUser(newUser)){
 
             resp.setStatus(200);
-            resp.setHeader("Connection", "Keep-Alive");
-            resp.setHeader("Access-Control-Allow-Origin","same-origin");
+//            resp.setHeader("Connection", "Keep-Alive");
+            resp.setHeader("Access-Control-Allow-Origin","*");
+            resp.setHeader("Connection","Close  ");
             resp.addCookie(usrLogin);
             resp.addCookie(usrPwd);
             resp.sendRedirect(req.getServletContext().getContextPath()+"/userPage");
@@ -45,15 +46,6 @@ public class RegistrationServlet extends HttpServlet {
             resp.addHeader("isRegistered", "false");
             resp.sendRedirect(req.getServletContext().getContextPath()+"/home");
         }
-
-
-//        if(!service.createUser(user).equals(false)){
-//
-//        }else{
-//            resp.getWriter().write("user with choosed login already exist");
-//        }
-
-
     }
 
 }
