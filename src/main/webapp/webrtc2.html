@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebRTC Audio/Video-Chat</title>
+</head>
+
+<body>
+<video id="remoteVideo" autoplay></video>
+<video id="localVideo" autoplay muted></video>
+<input id="videoCallButton" type="button" disabled value="Video Call"/>
+<input id="endCallButton" type="button" disabled value="End Call"/>
+<input type="button" id="connect" value="cnt"/>
+<script type="text/javascript">
+    window.addEventListener("load", pageReady);
+
+    let localVideoElem = null;
+    let remoteVideoElem = null;
+    let localVideoStream = null;
+    let remoteVideoStream = null;
+    let videoCallButton = null;
+    let endCallButton = null;
+    let peerConn = null;
+    let wsc;
+    document.getElementById("connect").addEventListener("click",function (){
+        wsc = new WebSocket('wss://85fd-213-24-132-239.ngrok.io/chat?'/*+getCookieValue("userNickname")*/);
+        wsc.onmessage = function (evt) {
+            console.log(evt.data);
+            let signal = JSON.parse(evt.data);
+            if (!peerConn)
+                answerCall();
+
+            if (signal.sdp) {
+                peerConn.setRemoteDescription(new RTCSessionDescription(signal.sdp));
+            } else if (signal.candidate) {
+                peerConn.addIceCandidate(new RTCIceCandidate(signal.candidate));
+            } else if (signal.closeConnection){
+                endCall();
+            }
+        };
+    })
+    let peerConnCfg = {'iceServers':
+                [{'urls': 'stun:stun.services.mozilla.com'},
+                    {'urls': "stun:openrelay.metered.ca:80"},
+                    {'urls': "turn:openrelay.metered.ca:80",
+                        username: "openrelayproject",
+                        credential: "openrelayproject",
+                    },
+                    {
+                        'urls': "turn:openrelay.metered.ca:443",
+                        username: "openrelayproject",
+                        credential: "openrelayproject",
+                     },
+                    {'urls': 'stun:stun.l.google.com:19302'}]
+        };
+
+    function pageReady() {
+
+        if(navigator.getUserMedia) {
+            videoCallButton = document.getElementById("videoCallButton");
+            endCallButton = document.getElementById("endCallButton");
+            localVideoElem = document.getElementById("localVideo");
+            remoteVideoElem = document.getElementById("remoteVideo");
+            videoCallButton.removeAttribute("disabled");
+            videoCallButton.addEventListener("click", initiateCall);
+            endCallButton.addEventListener("click", function (evt) {
+                wsc.send(JSON.stringify({"closeConnection": true }));
+                localVideoElem.srcObject = null;
+                remoteVideoElem.srcObject = null;
+
+                peerConn.close();
+
+                videoCallButton.removeAttribute("disabled");
+                endCallButton.setAttribute("disabled", true);
+                console.log('xxxx');
+                wsc.close()
+
+            });
+        } else {
+            alert("Sorry, your browser does not support WebRTC!");
+        }
+    };
+
+
+
+
+
+    var mediaConstraints = {
+        audio: {advanced: [
+                {
+                    echoCancellation: {exact: true}
+                },
+                {
+                    autoGainControl: {exact: true}
+                },
+                {
+                    noiseSuppression: {exact: true}
+                },
+                {
+                    highpassFilter: {exact: true}
+                }
+            ]
+        },
+        video: {
+            facingMode: "user",
+            width: { min: 160, ideal: 320, max: 640 },
+            height: { min: 120, ideal: 240, max: 480 },
+        }
+    };
+
+
+    function initiateCall() {
+        prepareCall();
+        navigator.getUserMedia(mediaConstraints, function (stream) {
+            localVideoElem.srcObject = stream;
+            peerConn.addStream(stream);
+
+            createAndSendOffer();
+        }, function(error) { console.log(error);});
+    };
+
+    function prepareCall() {
+        peerConn = new RTCPeerConnection(peerConnCfg);
+        peerConn.onicecandidate = onIceCandidateHandler;
+        peerConn.onaddstream = onAddStreamHandler;
+    };
+
+    function onIceCandidateHandler(evt) {
+        if (!evt || !evt.candidate) return;
+        wsc.send(JSON.stringify({"candidate": evt.candidate }));
+    };
+
+    function onAddStreamHandler(evt) {
+        videoCallButton.setAttribute("disabled", true);
+        endCallButton.removeAttribute("disabled");
+        remoteVideoElem.srcObject = evt.stream;
+    };
+
+    function createAndSendOffer() {
+        peerConn.createOffer(
+            function (offer) {
+                var off = new RTCSessionDescription(offer);
+                peerConn.setLocalDescription(new RTCSessionDescription(off),
+                    function() {
+                        // wsc.send(JSON.stringify({"sdp": off }));
+                        // wsc.send(JSON.stringify({"sdp": off }));
+                        wsc.send(JSON.stringify({
+                            "sdp": off,
+                            "target": "x"
+                        }));
+
+
+                    },
+                    function(error) {
+                        console.log(error);
+                    }
+                );
+            },
+            function (error) {
+                console.log(error);
+            }
+        );
+    };
+    function answerCall() {
+        prepareCall();
+        // get the local stream, show it in the local video element and send it
+        navigator.getUserMedia({ "audio": true, "video": true }, function (stream) {
+            localVideoElem.srcObject = stream;
+
+           //  let audioContext = new AudioContext();
+           //  var source = audioContext.createMediaStreamSource(stream);
+           //  let osc = audioContext.createOscillator();
+           // osc.frequency.value = 400;
+           // osc.type = "sinea";
+           // source.connect(osc);
+           // osc.connect(audioContext.destination);
+
+
+            peerConn.addStream(stream);
+            console.log(peerConn.getSenders())
+            createAndSendAnswer();
+        }, function(error) { console.log(error);});
+    };
+
+    function createAndSendAnswer() {
+        peerConn.createAnswer(
+            function (answer) {
+                var ans = new RTCSessionDescription(answer);
+                peerConn.setLocalDescription(ans, function() {
+                        wsc.send(JSON.stringify({"sdp": ans }));
+                    },
+                    function (error) {
+                        console.log(error);
+                    }
+                );
+            },
+            function (error) {
+                console.log(error);
+            }
+        );
+    }
+
+    function endCall() {
+
+
+        localVideoElem.srcObject = null;
+        remoteVideoElem.srcObject = null;
+
+        peerConn.close();
+
+        videoCallButton.removeAttribute("disabled");
+        endCallButton.setAttribute("disabled", true);
+        console.log('xxxx');
+        wsc.close()
+    };
+
+</script>
+</body>
+</html>
