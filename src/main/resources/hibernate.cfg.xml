@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "https://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/persistence</property>
+        <property name="hibernate.connection.datasource">java:comp/env/jdbc/persistence</property>
+        <property name="hibernate.current_session_context_class">thread</property><!-->????????????<-->
+        <property name="hibernate.generate_statistics">true</property>
+        <property name="hibernate.jdbc.batch_versioned_data">true</property>
+
+
+
+        <!--        <property name="hibernate.connection.pool_size">10</property>-->
+        <property name="hibernate.c3p0.min_size">5</property>
+        <property name="hibernate.c3p0.max_size">20</property>
+        <property name="hibernate.c3p0.acquire_increment">5</property>
+        <property name="hibernate.c3p0.timeout">1800</property>
+
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+
+<!--        <property name="hbm2ddl.auto">create-drop</property>-->
+        <property name="hibernate.show_sql">true</property>
+        <mapping class="com.radical.iqube.model.hibernate.Artist"/>
+        <mapping class="com.radical.iqube.model.hibernate.Album"/>
+        <mapping class="com.radical.iqube.model.hibernate.Song"/>
+        <mapping class="com.radical.iqube.model.hibernate.User"/>
+
+    </session-factory>
+</hibernate-configuration>

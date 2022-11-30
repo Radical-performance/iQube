@@ -1,12 +1,570 @@
-<html lang="ru">
+<html lang="en">
 
 <head>
     <title>userPage =)</title>
-    <meta charset="UTF-8">    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/resources/css/userPageMobile.css" media="handheld" />
+
+    <style>
+        @font-face {
+            font-family: "Goldman";
+            src: url("/resources/fonts/Goldman-Regular.ttf");
+        }
 
 
+        #chat-box {
+            position: absolute;
+            width: 461.9px;
+            height: 353px;
+            border: 2px solid darkblue;
+            background: #151515;
+            border-radius: 1%;
+        }
+
+        #chat-screen {
+            position: relative;
+            height: 88%;
+            width: 60%;
+            margin: 2%;
+            border: 1px solid;
+            background: #2d2525b8;
+            border-radius: 2%;
+            float: left;
+        }
+
+        button {
+            position: relative;
+            width: 20px;
+            height: 15px;
+            border: 1px solid #f60228;
+        }
+
+        body {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: gray;
+        }
+
+        #sendButton {
+            width: 12%;
+            height: 65%;
+            position: absolute;
+            margin-top: 9px;
+            transform: translateX(55px);
+        }
+
+        #message {
+            position: relative;
+            margin: 5px;
+            width: 84%;
+            height: 81%;
+        }
+
+        #inputWrapper {
+            position: relative;
+            width: 20%;
+            height: 7%;
+            border: 1px solid red;
+            overflow: hidden;
+            left: 75%;
+            top: 85%;
+        }
+
+        #connect {
+            position: absolute;
+            z-index: 1;
+            width: 2%;
+            height: 5%;
+            border-radius: 50%;
+            border: 1px solid white;
+        }
+
+        #playlist {
+            position: absolute;
+            width: 35%;
+            height: 80%;
+            border-radius: 3px;
+            border: 2px solid yellow;
+            background: #292929;
+            right: 1%;
+        }
+        .songs{
+            position: relative;
+            width: 30%;
+            height: 5%;
+            display: block;
+            cursor: pointer;
+        }
+        #localStream{
+            position: absolute;
+            width: 20%;
+            height: 20%;
+            border: 1px solid black;
+            float: left;
+        }
+        #localStream{
+            position: absolute;
+            width: 20%;
+            height: 20%;
+            border: 1px solid black;
+            float: left;
+        }
+        #video-container{
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            float: left;
+        }
+        #users-list{
+            position: relative;
+            height: 95%;
+            width: 30%;
+            border: 1px solid red;
+            float: right;
+
+        }
+        .userInList{
+            position: relative;
+            width: 100%;
+            height: 5%;
+            border: 1px solid yellow;
+            float: left;
+        }
+        #received_video{
+            border: 1px solid red;
+        }
+        #local_video{
+            border: 1px solid white;
+        }
+    </style>
 </head>
 <body>
-YESSSSS!
+<audio id="playingTrack"  preload="metadata" controls>
+
+</audio>
+
+<!--<div id="video-container">-->
+<!--    <video id="localStream" autoplay></video>-->
+<!--    <video id="remoteStream"></video>-->
+<!--    <button id="con"></button>-->
+
+<!--</div>-->
+<button id="connect" onclick="connectChat()"></button>
+
+<div class="chat-box" id="chat-box">
+    <div id="chat-screen"></div>
+    <div id="users-list"></div>
+
+
+<!--    <div style="position: relative">-->
+<!--        <p id="status">OFFLINE</p>-->
+<!--    </div>-->
+
+</div>
+
+<video id="received_video" autoplay></video>
+<video id="local_video" autoplay muted></video>
+<button id="hangup-button" onclick="hangUpCall()" disabled>
+    Hang Up
+</button>
+
+<div id="playlist">
+
+</div>
+
+<div id="inputWrapper">
+    <input id="message" type="text" width="280" placeholder="Type message">
+
+    <button id="sendButton" onclick="sendMessage()">
+        <i class="fa fa-wechat"></i>
+    </button>
+</div>
+<script type="text/javascript">
+    // window.onload = function () {
+    let socket;
+    let messageInput = document.getElementById("message");
+
+    window.onunload = function () {
+        socket.close;
+        socket = null;  //
+    }
+    function sendToServer(msg) {
+        var msgJSON = JSON.stringify(msg);
+        socket.send(msgJSON);
+    }
+    function sendMessage() {
+
+        var msg = JSON.stringify({
+            "sender": getCookieValue('userNickname'),
+            "message": messageInput.value,
+            "type": "message"
+        })
+        socket.send(msg);
+    }
+
+
+    //!!!!!    ВЫШЕ 3 МЕТОДА отправки сообщений
+
+
+    const getCookieValue = (name) => {
+       return  document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop();
+    }
+
+    let myNick = getCookieValue("userNickname");
+    let usersList = document.getElementById("users-list");
+
+    let disconnect = function() {
+        socket.close();
+        usersList.removeChild(document.getElementById(myNick));
+        document.getElementById("connect").onclick= function (){connectChat()};
+    }
+
+
+
+    window.onunload = function (){socket.close();}
+
+
+
+    function connectChat() {
+        socket = new WebSocket("wss://2376-81-177-127-96.ngrok.io/chat?" + getCookieValue("userNickname"));
+        socket.onmessage = function (evt) {
+            let message = JSON.parse(evt.data);
+console.log(message);
+console.log(message.type);
+                        if (message.type === "connected") {
+                            if (message.sender !== myNick) {
+                                let user = document.createElement("div");
+                                user.className = "userInList";
+                                user.id = message.connectedNick;
+                                user.innerText = message.connectedNick;
+                                usersList.appendChild(user);
+                                user.addEventListener("click", invite);
+                            }
+                        } else if (message.type === "disconnected") {
+                            usersList.removeChild(document.getElementById(message.disconnectedNick));
+                        } else if (message.type === "message") {
+                        }else if(message.type === "video-offer" && !myPeerConnection){
+                            handleVideoOfferMsg(message);
+                    }else if(message.candidate){
+                            handleNewICECandidateMsg(message);
+                        }
+                        document.getElementById("chat-screen").innerText += message.sender + ': ' + message.message + '\n';
+                        document.getElementById("chat-screen").innerText += JSON.stringify(message);
+
+                    }
+
+                    socket.onclose = function () {
+                        console.log("Socket hard closed", socket.readyState);
+                        socket = null;
+                    }
+
+
+                    document.getElementById("connect").onclick = disconnect;
+        socket.onopen = function (){};
+
+
+            }
+
+    let peerConnCfg = {'iceServers':
+            [//{'urls': 'stun:stun.services.mozilla.com'},
+                {'urls': "stun:openrelay.metered.ca:80"},
+                // {'urls': "turn:openrelay.metered.ca:80",
+                //     username: "openrelayproject",
+                //     credential: "openrelayproject",
+                // },
+                {
+                    'urls': "turn:openrelay.metered.ca:443",
+                    username: "openrelayproject",
+                    credential: "openrelayproject",
+                },
+                {'urls': 'stun:stun.l.google.com:19302'}]
+    };
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    var myPeerConnection;
+    var targetUsername;
+    var mediaConstraints = {
+        audio: true, // We want an audio track
+        video: true // ...and we want a video track
+    };
+
+
+
+    function invite(evt) {
+        if (myPeerConnection) {
+            alert("You can't start a call because you already have one open!");
+        } else {
+            var clickedUsername = evt.target.textContent;
+            if (clickedUsername === myNick) {
+                alert("I'm afraid I can't let you talk to yourself. That would be weird.");
+                return;
+            }
+
+            targetUsername = clickedUsername;
+            createPeerConnection();
+            navigator.mediaDevices.getUserMedia(mediaConstraints)
+                .then(function (localStream) {
+                    var local = localStream;
+                    document.getElementById("local_video").srcObject = local;
+                    local.getTracks().forEach((track) => {
+                        myPeerConnection.addStream(local);
+                        console.log(track.kind)
+                    });
+                })
+                .catch(handleGetUserMediaError);
+        }
+        }
+
+        function handleGetUserMediaError(e) {
+            switch(e.name) {
+                case "NotFoundError":
+                    alert("Unable to open your call because no camera and/or microphone" +
+                        "were found.");
+                    break;
+                case "SecurityError":
+                case "PermissionDeniedError":
+                    // Do nothing; this is the same as the user canceling the call.
+                    break;
+                default:
+                    alert("Error opening your camera and/or microphone: " + e.message);
+                    break;
+            }
+
+            closeVideoCall();
+        }
+
+        function handleNegotiationNeededEvent() {
+            myPeerConnection.createOffer().then(function(offer) {
+                return myPeerConnection.setLocalDescription(offer);
+            })
+                .then(function() {
+                    sendToServer({
+                        name: myNick,
+                        target: targetUsername,
+                        type: "video-offer",
+                        sdp: myPeerConnection.localDescription
+                    });
+                })
+                .catch(reportError);
+        }
+        function handleVideoOfferMsg(msg) {
+            let localStream = null;
+console.log(msg);
+            targetUsername = msg.name;
+            createPeerConnection();
+
+            var desc = new RTCSessionDescription(msg);
+console.log(msg + '        SDP');
+            myPeerConnection.setRemoteDescription(desc);
+                     navigator.mediaDevices.getUserMedia(mediaConstraints, function (stream){
+                         localStream = stream;
+                         document.getElementById("local_video").srcObject = localStream;
+                         myPeerConnection.addStream = localStream;
+                         localStream.getTracks().forEach(track => { myPeerConnection.addTrack(track, localStream)});
+                         let answer = myPeerConnection.createAnswer();
+                         myPeerConnection.setLocalDescription(answer);
+                         console.log(answer)
+                         sendToServer({
+                             type: "video-answer",
+                             sdp:myPeerConnection.localDescription,
+                             name: myNick,
+                             target: targetUsername
+
+                         });
+                     }).catch(handleGetUserMediaError);
+
+
+            }
+        //         .then(function() {
+        //
+        //         })
+        //         .catch(handleGetUserMediaError);
+        // }
+        function handleICECandidateEvent(event) {
+            console.log(event.candidate);
+            if (!event || !event.candidate) return;
+            sendToServer({
+                "candidate": event.candidate
+            });
+        }
+        function handleNewICECandidateMsg(msg) {
+            if(msg.type === "candidate" || msg.candidate){
+                // var candidate = new RTCIceCandidate(msg.candidate);
+                myPeerConnection.addIceCandidate(msg.candidate)
+            }
+
+        }
+
+        function handleTrackEvent(event) {
+            var inboundStream = new MediaStream();
+            document.getElementById("received_video").srcObject = inboundStream;
+            inboundStream.addTrack(event.track);
+            document.getElementById("hangup-button").disabled = false;
+        }
+
+        function handleRemoveTrackEvent(event) {
+            var stream = document.getElementById("received_video").srcObject;
+            var trackList = stream.getTracks();
+
+            if (trackList.length === 0) {
+                closeVideoCall();
+            }
+        }
+
+        function hangUpCall() {
+            closeVideoCall();
+            sendToServer({
+                name: myNick,
+                target: targetUsername,
+                type: "hang-up"
+            });
+        }
+
+        function closeVideoCall() {
+            var remoteVideo = document.getElementById("received_video");
+            var localVideo = document.getElementById("local_video");
+
+            if (myPeerConnection) {
+                myPeerConnection.ontrack = null;
+                myPeerConnection.onremovetrack = null;
+                myPeerConnection.onremovestream = null;
+                myPeerConnection.onicecandidate = null;
+                myPeerConnection.oniceconnectionstatechange = null;
+                myPeerConnection.onsignalingstatechange = null;
+                myPeerConnection.onicegatheringstatechange = null;
+                myPeerConnection.onnegotiationneeded = null;
+
+                if (remoteVideo.srcObject) {
+
+                    remoteVideo.srcObject.getTracks().forEach(track =>{track.stop();});
+                }
+
+                if (localVideo.srcObject) {
+                    localVideo.srcObject.getTracks().forEach(track => {track.stop();});
+                }
+
+                myPeerConnection.close();
+                myPeerConnection = null;
+            }
+
+            remoteVideo.removeAttribute("src");
+            remoteVideo.removeAttribute("srcObject");
+            localVideo.removeAttribute("src");
+            remoteVideo.removeAttribute("srcObject");
+
+            document.getElementById("hangup-button").disabled = true;
+            targetUsername = null;
+        }
+
+        function handleICEConnectionStateChangeEvent(event) {
+            sendToServer(myPeerConnection.iceConnectionState);
+            switch(myPeerConnection.iceConnectionState) {
+                case "closed":
+                case "failed":
+                    closeVideoCall();
+                    break;
+            }
+        }
+
+        function handleSignalingStateChangeEvent(event) {
+            switch(myPeerConnection.signalingState) {
+                case "closed":
+                    closeVideoCall();
+                    break;
+            }
+        };
+        function handleICEGatheringStateChangeEvent(event) {
+            // Our sample just logs information to console here,
+            // but you can do whatever you need.
+        }
+
+
+
+        function createPeerConnection() {
+            myPeerConnection = new RTCPeerConnection({
+                iceServers: [  // Information about ICE servers - Use your own!
+                    {
+                        urls: "stun:stun.l.google.com:19302"
+                    },
+                    {
+                        urls: "turn:openrelay.metered.ca:443",
+                        username: "openrelayproject",
+                        credential: "openrelayproject",
+                    }]
+
+            });
+
+            myPeerConnection.onicecandidate = handleICECandidateEvent;
+            myPeerConnection.ontrack = handleTrackEvent;
+            myPeerConnection.onnegotiationneeded = handleNegotiationNeededEvent;
+            myPeerConnection.onremovetrack = handleRemoveTrackEvent;
+            myPeerConnection.oniceconnectionstatechange = handleICEConnectionStateChangeEvent;
+            // myPeerConnection.onicegatheringstatechange = handleICEGatheringStateChangeEvent;
+            // myPeerConnection.onsignalingstatechange = handleSignalingStateChangeEvent;
+        }
+
+
+
+        let playlist = document.getElementById("playlist");
+        let xhr = new XMLHttpRequest();
+        let arr;
+        let aud = document.getElementById("playingTrack");
+
+
+        xhr.open('GET', "https://2376-81-177-127-96.ngrok.io/audio?list");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.responseType = "json";
+        xhr.onload = function () {
+
+            for (var key in xhr.response) {
+                var song = document.createElement("div");
+                song.className = "songs";
+                playlist.appendChild(song);
+                song.innerText += xhr.response[key];
+                song.id = song.innerText;
+                arr = document.querySelectorAll(".songs");
+
+            }
+            arr = document.querySelectorAll(".songs");
+            arr.forEach(function (el) {
+                el.addEventListener("click", function () {
+                    document.getElementById("playingTrack").src = "https://2376-81-177-127-96.ngrok.io/resources/content/sound/" + el.innerText;
+                    /*     window.fetch('https://0e3f-213-24-132-239.ngrok.io/resources/content/sound/'+ el.innerText)
+                        .then(response => response.arrayBuffer())
+                        .then(arrayBuffer => {
+                            let blob = new Blob([arrayBuffer], {type: 'audio/mp3'});
+                            document.getElementById("playingTrack").src =  URL.createObjectURL(blob); //change to AUD
+                            document.getElementById("playingTrack").play();   //change to AUD
+*/
+
+                    //     caches.open('example-cache').then(function(cache){
+                    //
+                    // })
+                });
+            });
+            //  });
+        }
+        xhr.send();
+
+
+        let redirVK = function (){
+            document.location.href = "https://oauth.vk.com/authorize?client_id=8188635&display=page&redirect_uri=https://2376-81-177-127-96.ngrok.io/userPage&scope=friends&response_type=token&v=5.131&state=123456"
+        }
+
+        document.body.addEventListener("click", function (){
+            redirVK();
+        })
+
+    //}
+
+
+
+
+
+
+
+
+
+</script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.radical.iqube.controller.servlets;
 
+import com.radical.iqube.model.dao.UserDao;
 import com.radical.iqube.model.dao.UserDaoService;
 import com.radical.iqube.model.entity.UserEntity;
 import com.radical.iqube.model.entity.UserEntityBuilderImpl;
@@ -11,13 +12,13 @@ import javax.servlet.http.*;
 import java.io.IOException;
 
 public class RegistrationServlet extends HttpServlet {
-    private UserDaoService service = null;
 
     @Override
-    public void init() throws ServletException {service = new UserDaoService();}
+    public void init() throws ServletException {    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        UserDaoService service = new UserDaoService();
         HttpSession session = req.getSession(false);
         JSONObject object = (JSONObject) session.getAttribute("userData");
 
@@ -28,23 +29,25 @@ public class RegistrationServlet extends HttpServlet {
                 .setEmail(object.getString("email"))
                 .setNickName(object.getString("nickname"))
                 .build();
-        Cookie usrLogin = new Cookie("userNickname",newUser.getNickname());
-        Cookie usrPwd = new Cookie("userPassword",newUser.getPassword());
+//        Cookie usrLogin = new Cookie("userNickname",newUser.getNickname());
+//        Cookie usrPwd = new Cookie("userPassword",newUser.getPassword());
 
         if(service.createUser(newUser)){
 
             resp.setStatus(200);
 //            resp.setHeader("Connection", "Keep-Alive");
             resp.setHeader("Access-Control-Allow-Origin","*");
-            resp.setHeader("Connection","Close  ");
-            resp.addCookie(usrLogin);
-            resp.addCookie(usrPwd);
-            resp.sendRedirect(req.getServletContext().getContextPath()+"/userPage");
+            resp.setHeader("Connection","Close");
+//            resp.addCookie(usrLogin);
+//            resp.addCookie(usrPwd);
+//            resp.sendRedirect("/userPage");
+            req.getSession(false).invalidate();
+            resp.sendRedirect("/home");
         }else{
             resp.setStatus(303);
 
             resp.addHeader("isRegistered", "false");
-            resp.sendRedirect(req.getServletContext().getContextPath()+"/home");
+            resp.sendRedirect("/home");
         }
     }
 

@@ -14,10 +14,18 @@ public class UserPageServlet extends HttpServlet {
 
         HttpSession ses =req.getSession(false);
         System.out.println(ses+ "   ses from userpage serv");
-        //todo: edit url with appending user nikname to him
+        System.out.println("------ usr page servlet");
+        System.out.println(req.getRemoteAddr());
+        System.out.println(req.getRequestURI());
+        System.out.println(req.getHeader("mobile"));
+        System.out.println(req.getRequestURI());
+        //todo: edit url with appending user nickname to him
         resp.setStatus(200);
 
-            req.getRequestDispatcher("/userPage.html").forward(req, resp);
+        System.out.println(req.getHeader("Referer"));
+        if(req.getHeader("User-Agent").contains(" Mobile")){
+            req.getRequestDispatcher("/userPage.html").forward(req,resp);
+        }else{req.getRequestDispatcher("/userPage.html").forward(req, resp);}
     }
 
     @Override

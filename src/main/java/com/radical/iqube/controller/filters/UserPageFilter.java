@@ -13,16 +13,23 @@ public class UserPageFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain) {
         HttpServletRequest rqst= (HttpServletRequest) req;
         HttpServletResponse rspns = (HttpServletResponse) resp;
+
+        System.out.println("------usr page filter");
+        System.out.println(req.getRemoteAddr());
         try {
             System.out.println(rqst.getSession(false) + "   from userpage filter");
-            if (rqst.getSession(false) == null) {
-                System.out.println("your session is NULL, redirect to /home");
-                rspns.getWriter().write("not authorized");
+            rspns.addHeader("Access-Control-Allow-Origin","*");
 
-                rspns.sendRedirect(req.getServletContext().getContextPath()+"/home");
+//            if (rqst.getSession(false) == null) {
+//                System.out.println("your session is NULL, redirect to /home");
+//
+//                rspns.sendRedirect("/home");
+//            }else
+            if(rqst.getCookies() != null){
                 System.out.println("redir to u page");
-            }else{req.getRequestDispatcher("/userPage").forward(req,resp);}
-        }catch (IOException | ServletException e){/*log---->*/}
+                rqst.getRequestDispatcher("/userPage").forward(req,resp);
+            }else {rspns.sendRedirect("/home");}
+        }catch (IOException | ServletException e){e.printStackTrace();}
     }
 
     @Override

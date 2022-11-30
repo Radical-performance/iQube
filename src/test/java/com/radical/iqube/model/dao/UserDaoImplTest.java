@@ -12,16 +12,16 @@ import java.sql.*;
 
 public class UserDaoImplTest {
     private static final Logger log = Logger.getLogger(UserDaoImplTest.class);
-    private ConnectorTest connector;
+    private static ConnectorTest connector;
     private Savepoint savepoint;
-    private  Connection connection;
+    private static Connection connection;
 
     public UserDaoImplTest() {connector = new ConnectorTest();}
 
 
-    @BeforeClass
     @Test
-    public void tearUp() {insertUser();}
+    @BeforeClass
+    public static void tearUp() {insertUser();}
 
     @AfterClass
     public void tearDown() {connector = null;}
@@ -44,11 +44,12 @@ public class UserDaoImplTest {
             savepoint = connection.setSavepoint();
             Assert.assertNotNull(savepoint);
 
-            PreparedStatement st = connection.prepareStatement("INSERT INTO userstest VALUES(?,?,?,?)");
+            PreparedStatement st = connection.prepareStatement("INSERT INTO userstest VALUES(?,?,?,?,?)");
             Assert.assertNotNull(st);
 
-            for (int x = 1; x < 5; x++) {
-                st.setString(x, "test");
+            for (int x = 1; x <= 5; x++) {
+                if(x == 1){st.setInt(x,x);}
+                else{st.setString(x, "test");}
             }
             updValue = st.executeUpdate();
 
@@ -62,7 +63,6 @@ public class UserDaoImplTest {
             connection.close();
             Assert.assertTrue(connection.isClosed());
             connection = null;
-            Assert.assertNull(connection);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -76,18 +76,29 @@ public class UserDaoImplTest {
         PreparedStatement st = connection.prepareStatement("SELECT * FROM userstest WHEre login = (?)");
         st.setString(1,"testValue");
         ResultSet rs = st.executeQuery();
-        while (rs.next()) {Assert.assertEquals(rs.getString(1), "testValue");}
+
+        while (rs.next()) {
+            Assert.assertEquals(rs.getInt(1), 1);
+            Assert.assertEquals(rs.getString(2), "testValue");
+
+            Assert.assertEquals(rs.getString(3),"testValue") ;
+
+            Assert.assertEquals(rs.getString(4), "testValue");
+
+            Assert.assertEquals(rs.getString(5), "testValue");
+
+
+        }
         st.close();
         connection.close();
         Assert.assertTrue(connection.isClosed());
         connection = null;
-        Assert.assertNull(connection);
     }
 
     @Test(dependsOnMethods = {"get"})
     public void update() {
         String query;
-        PreparedStatement st = null;
+        PreparedStatement st;
         int updated;
         for(int i = 0; i<4; i++){
             try {
@@ -119,11 +130,12 @@ public class UserDaoImplTest {
                     st.setString(2,"updatedLogin");
                 }
                 updated = st.executeUpdate();
+                Assert.assertEquals(updated,1);
+
+                st.close();
                 if(updated == 1){
-                    st.close();
                     connection.commit();
                 }else{
-                    st.close();
                     connection.rollback(savepoint);
                 }
                 Assert.assertEquals(updated,1);
@@ -154,7 +166,6 @@ public class UserDaoImplTest {
         connection.close();
         Assert.assertTrue(connection.isClosed());
         connection = null;
-        Assert.assertNull(connection);
     }
 
 
@@ -166,17 +177,25 @@ public class UserDaoImplTest {
         connection = null;
     }
 
-    public Connection getConnect() {
+    public static Connection getConnect() {
         try {connection = connector.connect();} catch (SQLException e) {e.printStackTrace();}
         return connection;
     }
 
-    public void insertUser() {
+    public static void insertUser() {
 
         connection = getConnect();
         try {
-            PreparedStatement st = connection.prepareStatement("INSERT INTO userstest VALUES(?,?,?,?)");
-            for (int x = 1; x < 5; x++) {st.setString(x, "testValue");}
+            PreparedStatement st = connection.prepareStatement("INSERT INTO userstest VALUES(?,?,?,?,?)");
+            for (int x = 1; x <= 5; x++) {
+                if (x == 1) {
+                    st.setInt(x, x);
+                } else {
+                    st.setString(x, "testValue");
+                }
+
+
+            }
             st.executeUpdate();
             connection.commit();
             st.close();

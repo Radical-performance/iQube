@@ -1,0 +1,226 @@
+html,body {
+    margin: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+
+#settingPane {
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    border: 1px solid red;
+    right: 10%;
+}
+
+.canvasSettingsPane{
+    position: relative;
+    display: block;
+    width: 90%;
+    height: 25%;
+    float: left;
+    border: 1px solid white;
+}
+#mainWrapper{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(black 10%, #2e2e2e);
+
+}
+#audioHolder {
+    width: 100%;
+    height: 5%;
+    margin: 0 auto;
+    display: inline-block;
+    float: left;
+    position: relative;
+    top: 15%;
+}
+
+#audioBox {
+    height: 16px;
+    border-radius: 20%;
+    display: inline-block;
+    float: left;
+}
+
+#audioControls {
+    float: left;
+    position: absolute;
+    z-index: 12121212121;
+    left: 10%
+}
+
+/*#can1 {*/
+/*    position: relative;*/
+/*    width: 100%;*/
+/*    height: 15%;*/
+/*    top: 15%;*/
+/*}*/
+
+
+#progressBar {
+    position: absolute;
+    width: 100%;
+    height: 10px;
+    float: left;
+    padding: 0;
+}
+
+#progress {
+    position: relative;
+    float: left;
+    width: 0px;
+    height: 50%;
+    /*top: 16%;*/
+    margin: 1px;
+    /*border: 1px solid;*/
+    transition: width 0.4s linear, box-shadow .4s linear, height .7s ease-out;
+    background: #ff9100;
+
+}
+
+button {
+    width: 38px;
+    height: 38px;
+    border: 1px black;
+    float: left;
+    background: #292929;
+}
+
+#volumeBar {
+    width: 100px;
+    height: 12px;
+    background: black;
+    float: left;
+    margin-left: 10px;
+    padding: 2px;
+}
+
+#volumeP {
+    margin: 1px;
+    background: red;
+}
+
+
+#muteBox {
+    float: left;
+    margin-left: 5px;
+}
+
+#timeBox {
+    float: left;
+    margin: 2px;
+    background: #3d4d51;
+}
+
+.fa-volume-high {
+    transition: all ease 3s;
+
+}
+
+#mute_unmute {
+    height: 50px;
+    width: 50px;
+}
+
+#mute_unmute_lbl {
+    transition: 0.2s ease-in;
+    color: rgba(204, 255, 10, 0.976);
+    text-shadow: 0px 0px 6px, black 2px 1px 2px;
+
+}
+
+#play_pause_lbl {
+    transition: 0.2s ease-in;
+    font-size: 25px;
+    color: cyan;
+    text-shadow: 1px 0px 4px, black 3px 2px 2px;
+
+}
+
+#play_pause {
+    width: 50px;
+    height: 50px;
+    float: left;
+    background: #3d4d51;
+}
+
+
+i {
+    color: #ccff0a;
+    text-shadow: 0px 0px 2px;
+}
+
+#canvasWrapper {
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    top: 42%;
+}
+#can1{
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    filter: drop-shadow(2px -2px 18px red) drop-shadow(-2px -5px 2px #f60228);      top: 25%;
+}
+#can1wrapper{
+    position: relative;
+    width: 100%;
+    height: 30%;
+    top: 15%;
+    overflow: hidden;
+}
+#can3{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(2px -2px 18px red) drop-shadow(-2px -5px 2px #f60228);
+    top: 25%;
+}
+#can3wrapper{
+    transform: rotateY(180deg);
+    position: absolute;
+    width: 100%;
+    height: 30%;
+    top: 15%;
+    overflow: hidden;
+}
+#can2{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(1px -0px 10px red) drop-shadow(1px -1px 3px #f60228);
+    top: 25%;
+
+}
+#can2wrapper{
+    transform:rotatex(180deg);
+
+    position: relative;
+    width: 100%;
+    height: 30%;
+    top: 15%;
+    overflow: hidden;
+}
+#can4{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(1px -0px 10px red) drop-shadow(1px -1px 3px #f60228);
+    top: 25%;
+}
+#can4wrapper{
+    position: absolute;
+    width: 100%;
+    height: 30%;
+    top: 50%;
+    overflow: hidden;
+    transform:rotateX(176deg) rotate3d(0, 1, 0, 180deg);
+
+}
+

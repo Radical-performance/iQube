@@ -118,22 +118,20 @@ public class UserDaoImpl implements UserDao {
             st.setString(1,value);
             System.out.println(st);
 
-            if(st!=null)
+//            if(st!=null){
+            st.setString(1, value);
+            rs = st.executeQuery();
+            while (rs.next())
             {
-                st.setString(1, value);
-                rs = st.executeQuery();
-                while (rs.next())
-                {
-                    user = new UserEntityBuilderImpl()
-                            .setLogin(rs.getString(1))
-                            .setPassword(rs.getString(2))
-                            .setEmail(rs.getString(3))
-                            .setNickName(rs.getString(4))
-                            .build();
-                }
-                st.close();
-                rs.close();
+                user = new UserEntityBuilderImpl()
+                        .setLogin(rs.getString(1))
+                        .setPassword(rs.getString(2))
+                        .setEmail(rs.getString(3))
+                        .setNickName(rs.getString(4))
+                        .build();
             }
+            st.close();
+            rs.close();
         } catch (SQLException e) {e.printStackTrace();//<=======LOGGER
         } finally { if(con != null){connector.close(con);}
         }

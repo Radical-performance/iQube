@@ -1,14 +1,14 @@
 let authorize = function () {
     let credentials = {
-        'login': $('#loginInput').val(),
-        'password': $('#passwordInput').val()
+        'login': $('#login').val(),
+        'password': $('#password').val()
     }
     let div1 = null;
     let div2 = null;
     let div3 = null;
 
     $.post({
-        url: 'http://localhost:8080/iQube/auth',
+        url: 'http://be5a-217-107-127-44.ngrok.io/auth',
         data: JSON.stringify(credentials),
         contentType: 'application/json',
         dataType: 'html',
@@ -38,25 +38,31 @@ let authorize = function () {
 //
 //     })
 // }
-login.addEventListener("contextmenu", function(){authorize()});
+let login = document.getElementById("loginButton");
+login.addEventListener("click", function(){authorize()});
 
 function reg(){
     let data = {
-        'login':$('#regLogin').val(),
-        'password':$('#regPwd').val(),
-        'email':$('#regEmail').val(),
-        'nickname':$('#regNickname').val()
+        // 'login':$('#regLogin').val(),
+        // 'password':$('#regPwd').val(),
+        // 'email':$('#regEmail').val(),
+        // 'nickname':$('#regNickname').val()
+        'login':$('#loginreg').val(),
+        'password':$('#passwordreg').val(),
+        'email':$('#email').val(),
+        'nickname':$('#nickname').val()
     }
 
     $.post({
-        url: 'http://3d69142f686e.ngrok.io/iQube/registration',
+        url: 'http://ae43-213-24-133-54.ngrok.io/registration',
         data: JSON.stringify(data),
         contentType: 'application/json',
         dataType: 'html',
+        method: 'post',
         success:function (){
             location.reload();
         }
     })
 }
-let registration = document.getElementById("registration");
+let registration = document.getElementById("regButton");
 registration.addEventListener("contextmenu",function(){reg()});

@@ -41,6 +41,26 @@
     <servlet-class>com.radical.iqube.controller.servlets.UserPageServlet</servlet-class>
   </servlet>
 
+  <servlet>
+      <servlet-name>audio</servlet-name>
+    <servlet-class>com.radical.iqube.controller.servlets.AudioServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>json</servlet-name>
+    <servlet-class>com.radical.iqube.controller.JsonServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>music</servlet-name>
+    <servlet-class>com.radical.iqube.Music</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>relevance</servlet-name>
+    <servlet-class>com.radical.iqube.controller.servlets.DataRelevanceCheckServlet</servlet-class>
+  </servlet>
+
 
   <filter-mapping>
     <filter-name>homeFilter</filter-name>
@@ -78,10 +98,36 @@
   </servlet-mapping>
 
   <servlet-mapping>
+    <servlet-name>music</servlet-name>
+    <url-pattern>/music</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
     <servlet-name>userPage</servlet-name>
     <url-pattern>/userPage</url-pattern>
   </servlet-mapping>
 
+  <servlet-mapping>
+    <servlet-name>audio</servlet-name>
+    <url-pattern>/audio</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>json</servlet-name>
+    <url-pattern>/json</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>relevance</servlet-name>
+    <url-pattern>/relevance</url-pattern>
+  </servlet-mapping>
+
+  <resource-ref>
+    <description>DB Connection1</description>
+    <res-ref-name>jdbc/persistence</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
 
   <resource-ref>
     <description>DB Connection</description>
@@ -89,6 +135,10 @@
     <res-type>javax.sql.DataSource</res-type>
     <res-auth>Container</res-auth>
   </resource-ref>
+
+
+
+
 
 <!--  <security-constraint>-->
 <!--    <web-resource-collection>-->

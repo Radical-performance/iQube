@@ -6,45 +6,50 @@ import com.radical.iqube.optional.Listener;
 import org.json.JSONObject;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.http.*;
+import java.io.IOException;
 
 public class AuthServlet extends HttpServlet {
-    private UserDaoService service = null;
 
     @Override
     public void init(ServletConfig config) {
-        service = new UserDaoService();
+
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+         UserDaoService service = new UserDaoService();
+
         HttpSession session = req.getSession(false);
-        JSONObject credentials = (JSONObject)session.getAttribute("credentials");
+        JSONObject credentials = (JSONObject) session.getAttribute("credentials");
         String login = credentials.getString("login");
         String pwd = credentials.getString("password");
         UserEntity user = service.getByLogin(login);
-        System.out.println(session + "  ses from auth servlet");
+        System.out.println(user);
 
-
-
+        System.out.println(req.getAttribute("credentials") + "  ses from auth servlet");
         try {
             if (user != null) {
                 if (user.getPassword().equals(pwd)) {
-
-                    //юзать куки не вариант, так ка это может быть причиной CRSF атаки
-                    //but i need to have 'dirt' working copy on 31.12..but using of jwt (refreshable) without normal
-                    // understanding of that technoligy(+ssl)  not my choise
-                    // that's why i'll use cookie to auth below and replace it on jwt later..'i believe :D'...AGA SHAS!
                     Cookie usrLogin = new Cookie("userNickname",user.getNickname());
                     Cookie usrPwd = new Cookie("userPassword",user.getPassword());
-                    resp.setStatus(200);
-                    resp.addHeader("Access-Control-Allow-Origin","*");
-                    resp.addHeader("Connection","Keep-Alive");
-                    resp.addHeader("accepted","logged in");
+                    Cookie jsessionId = new Cookie("JSESSIONID",session.getId());
+                    resp.addCookie(jsessionId);
                     resp.addCookie(usrLogin);
                     resp.addCookie(usrPwd);
+                    resp.setStatus(200);
+                    resp.addHeader("Access-Control-Allow-Origin","*");
+//                    resp.addHeader("Connection","Keep-Alive");
+                    resp.addHeader("accepted","logged in");
+                    resp.addHeader("Device", "xxxx");
+
+
+
                     System.out.println("redir");
-                    resp.sendRedirect(req.getServletContext().getContextPath() + "/userPage");
+                    System.out.println(session);
+                    session.setAttribute("credentials",credentials);
+                  resp.sendRedirect("https://50a0-81-177-127-253.ngrok.io/userPage");
 
                 } else {
                     resp.getWriter().write("incorrect password");

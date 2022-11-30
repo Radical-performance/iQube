@@ -26,12 +26,12 @@ public class AuthFilter implements Filter {
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain filterChain) throws IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-        HttpSession session = request.getSession(false);
+        HttpSession session;
 
         StringBuilder sb = new StringBuilder();
         String line;
         JSONObject user = null;
-        if (session == null || request.getCookies() == null && request.getRequestURI().endsWith("auth")) {
+        if (/*session == null ||*/ request.getCookies() == null && request.getRequestURI().endsWith("auth")) {
 
             try {
                 BufferedReader reader = req.getReader();
@@ -40,10 +40,11 @@ public class AuthFilter implements Filter {
                 }
                 user = new JSONObject(sb.toString());
                 System.out.println(user);
+                System.out.println("------");
 
                 if (!user.getString("login").isEmpty() && !user.getString("password").isEmpty()) {
-                    session = request.getSession(true);
-                        session.setAttribute("credentials", user);
+                    session = ((HttpServletRequest) req).getSession(true);
+                    session.setAttribute("credentials", user);
                         request.getRequestDispatcher("/auth").forward(request, response);
                     } else {
                         request.getRequestDispatcher("/home").forward(request, response);
@@ -51,12 +52,11 @@ public class AuthFilter implements Filter {
                 
             } catch (Exception e) {
                 //log
-
-                System.out.println(Arrays.toString(e.getStackTrace()));
-            }
+                //
+                e.printStackTrace();}
         } else {
             response.setStatus(303);
-            response.sendRedirect(req.getServletContext().getContextPath()+"/iqube/userPage");
+            response.sendRedirect("/userPage");
         }
     }
 }

@@ -1,0 +1,389 @@
+<html lang="en">
+<head>
+    <title>Equalizer made with the Web Audio API</title>
+    <style>
+
+        div audio {
+            display: block;
+            margin-bottom:10px;
+        }
+
+        .eq {
+            margin: 32px;
+            border:1px solid;
+            border-radius:15px;
+            background-color:lightGrey;
+            padding:10px;
+            width:300px;
+            box-shadow: 10px 10px 5px grey;
+            text-align:center;
+            font-family: "Open Sans";
+            font-size: 12px;
+        }
+
+
+        div.controls:hover {
+            color:blue;
+            font-weight:bold;
+        }
+        div.controls label {
+            display: inline-block;
+            text-align: center;
+            width: 50px;
+        }
+
+        div.controls label, div.controls input, output {
+            vertical-align: middle;
+            padding: 0;
+            margin: 0;
+            font-family: "Open Sans",Verdana,Geneva,sans-serif,sans-serif;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<h2>Equalizer made with the Web Audio API</h2>
+
+<div class="eq">
+    <audio id="player" controls crossorigin="anonymous" loop>
+        <source src="/resources/content/sound/monroe.mp3">
+
+        Your browser does not support the audio tag.
+    </audio>
+    <div class="controls">
+        <label>60Hz</label>
+        <input type="range" value="0" step="1" min="-30" max="30" oninput="changeGain(this.value, 0);"></input>
+        <output id="gain0">0 dB</output>
+    </div>
+    <div class="controls">
+        <label>170Hz</label>
+        <input type="range" value="0" step="1" min="-30" max="30" oninput="changeGain(this.value, 1);"></input>
+        <output id="gain1">0 dB</output>
+    </div>
+    <div class="controls">
+        <label>350Hz</label>
+        <input type="range" value="0" step="1" min="-30" max="30" oninput="changeGain(this.value, 2);"></input>
+        <output id="gain2">0 dB</output>
+    </div>
+    <div class="controls">
+        <label>1000Hz</label>
+        <input type="range" value="0" step="1" min="-30" max="30" oninput="changeGain(this.value, 3);"></input>
+        <output id="gain3">0 dB</output>
+    </div>
+    <div class="controls">
+        <label>3500Hz</label>
+        <input type="range" value="0" step="1" min="-30" max="30" oninput="changeGain(this.value, 4);"></input>
+        <output id="gain4">0 dB</output>
+    </div>
+    <div class="controls">
+        <label>10000Hz</label>
+        <input type="range" value="0" step="1" min="-30" max="30" oninput="changeGain(this.value, 5);"></input>
+        <output id="gain5">0 dB</output>
+    </div>
+</div>
+<script>
+
+    var ctx = window.AudioContext || window.webkitAudioContext;
+    var context = new ctx();
+
+    var mediaElement = document.getElementById('player');
+    var sourceNode = context.createMediaElementSource(mediaElement);
+
+    // create the equalizer. It's a set of biquad Filters
+
+    var filters = [];
+
+    // Set filters
+    [60, 170, 350, 1000, 3500, 10000].forEach(function(freq, i) {
+        var eq = context.createBiquadFilter();
+        eq.frequency.value = freq;
+        eq.type = "peaking";
+        eq.gain.value = 0;
+        filters.push(eq);
+    });
+
+    // Connect filters in serie
+    sourceNode.connect(filters[0]);
+    for(var i = 0; i < filters.length - 1; i++) {
+        filters[i].connect(filters[i+1]);
+    }
+
+    // connect the last filter to the speakers
+    filters[filters.length - 1].connect(context.destination);
+
+    function changeGain(sliderVal,nbFilter) {
+        var value = parseFloat(sliderVal);
+        filters[nbFilter].gain.value = value;
+
+        // update output labels
+        var output = document.querySelector("#gain"+nbFilter);
+        output.value = value + " dB";
+    }
+</script>
+</body>
+</html>
+
+<!--
+<html lang="en">
+<head>
+    <title>Equalizer made with the Web Audio API</title>
+    <style>
+        body {
+            background-color: #141722;
+            text-align: center;
+            margin: 0 auto;
+            position: relative;
+        }
+        .float {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .top-container {
+            color: #fff;
+            font-family: sans-serif;
+            width: 100%;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            margin: 0 auto;
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid rgba(0, 0, 0, 1);
+            background-color: rgba(128, 128, 128, 0.16);
+        }
+
+        .top-container h1 {
+            font-size: 28px;
+        }
+
+        .top-container h2 {
+            font-size: 14px;
+            font-weight: 100;
+            opacity: 0.6;
+        }
+
+        #canvas {
+            border: 2px solid black;
+            background-color: rgba(128, 128, 128, 0.16);
+        }
+
+        input:disabled {
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body>
+<audio id="theSong" src="/resources/content/sound/monroe.mp3" controls ></audio>
+
+
+<div id="controls">
+    <p>
+        <select id="filtersDropdown">
+        </select>
+    </p>
+    <canvas id="canvas" width="400" height ="200"></canvas>
+    <p>
+        <input id="frequencySlider" title="Frequency" type="range" min="0" max="2000" value="1000" />
+        <input id="qSlider" title="Q" type="range" min="1" max="100" value="10" />
+        <input id="gainSlider" title="Gain" disabled type="range" min="1" max="100" value="20" />
+    </p>
+</div>
+<script>
+
+    /*
+     Read my blog post about Web Audio API:
+     https://codepen.io/DonKarlssonSan/blog/fun-with-web-audio-api
+
+     Browser support for Web Audio API:
+     http://caniuse.com/#feat=audio-api
+   */
+    (function() {
+        var AudioContext = window.AudioContext ||
+            window.webkitAudioContext;
+        var audioContext;
+        var biquadFilter;
+
+        var frequencySlider = document.getElementById("frequencySlider");
+        var qSlider = document.getElementById("qSlider");
+        var gainSlider = document.getElementById("gainSlider");
+
+        var audio;
+
+        // All Web Audio API filters
+        // https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode/type
+        // q and gain controls if the corresponding slider
+        // should be enabled
+        var filters = { "lowpass": {
+                q: true,
+                gain: false
+            }, "highpass": {
+                q: true,
+                gain: false
+            }, "bandpass": {
+                q: true,
+                gain: false
+            }, "lowshelf": {
+                q: false,
+                gain: true
+            }, "highshelf": {
+                q: false,
+                gain: true
+            }, "peaking": {
+                q: true,
+                gain: true
+            }, "notch": {
+                q: true,
+                gain: false
+            }, "allpass": {
+                q: true,
+                gain: false
+            }
+        };
+
+        var canvas = document.getElementById("canvas");
+        var canvasContext = canvas.getContext("2d");
+
+        var frequencyBars = 100;
+        // Array containing all the frequencies we want to get
+        // response for when calling getFrequencyResponse()
+        var myFrequencyArray = new Float32Array(frequencyBars);
+        for(var i = 0; i < frequencyBars; ++i) {
+            myFrequencyArray[i] = 2000/frequencyBars*(i+1);
+        }
+
+        // We receive the result in these two when calling
+        // getFrequencyResponse()
+        var magResponseOutput = new Float32Array(frequencyBars); // magnitude
+        var phaseResponseOutput = new Float32Array(frequencyBars);
+
+        audioContext = new AudioContext();
+
+        window.addEventListener("load", function(e) {
+            audio = document.getElementById("theSong");
+            audio.crossOrigin = "anonymous";
+
+            var source = audioContext.createMediaElementSource(audio);
+
+            biquadFilter = audioContext.createBiquadFilter();
+            biquadFilter.type = "lowpass";
+            biquadFilter.frequency.value = 1000;
+            biquadFilter.Q.value = 10;
+            biquadFilter.gain.value = 20;
+
+            source.connect(biquadFilter);
+            biquadFilter.connect(audioContext.destination);
+
+            updateFrequencyResponse();
+        }, false);
+
+        function drawFrequencyResponse(mag, phase) {
+            canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+            var barWidth = 400 / frequencyBars;
+
+            // Magnitude
+            canvasContext.strokeStyle = "white";
+            canvasContext.beginPath();
+            for(var frequencyStep = 0; frequencyStep < frequencyBars; ++frequencyStep) {
+                canvasContext.lineTo(
+                    frequencyStep * barWidth,
+                    canvas.height - mag[frequencyStep]*90);
+            }
+            canvasContext.stroke();
+
+            // Phase
+            canvasContext.strokeStyle = "red";
+            canvasContext.beginPath();
+            for(var frequencyStep = 0; frequencyStep < frequencyBars; ++frequencyStep) {
+                canvasContext.lineTo(
+                    frequencyStep * barWidth,
+                    canvas.height - (phase[frequencyStep]*90 + 300)/Math.PI);
+            }
+            canvasContext.stroke();
+        }
+
+        function updateFrequencyResponse() {
+            biquadFilter.getFrequencyResponse(
+                myFrequencyArray,
+                magResponseOutput,
+                phaseResponseOutput);
+            drawFrequencyResponse(magResponseOutput, phaseResponseOutput);
+        }
+
+
+        frequencySlider.addEventListener("change", function () {
+            biquadFilter.frequency.value = this.value;
+        });
+
+        frequencySlider.addEventListener("mousemove", function () {
+            biquadFilter.frequency.value = this.value;
+            updateFrequencyResponse();
+        });
+
+        qSlider.addEventListener("mousemove", function () {
+            biquadFilter.Q.value = this.value;
+            updateFrequencyResponse();
+        });
+
+        gainSlider.addEventListener("mousemove", function () {
+            biquadFilter.gain.value = this.value;
+            updateFrequencyResponse();
+        });
+
+        var filtersDropdown = document.getElementById("filtersDropdown");
+
+        for(var item in filters) {
+            var option = document.createElement("option");
+            option.innerHTML = item;
+            // This will cause a re-flow of the page but we don't care
+            filtersDropdown.appendChild(option);
+        };
+
+        function filterClicked (event) {
+            event = event || window.event;
+            var target = event.target || event.srcElement;
+            var filterName = target.value;
+            biquadFilter.type = filterName;
+            updateFrequencyResponse();
+            qSlider.disabled = !filters[filterName].q;
+            gainSlider.disabled = !filters[filterName].gain;
+        };
+        filtersDropdown.addEventListener("change", filterClicked, false);
+
+        ////////////////////////////
+        // Soundcloud stuff below //
+        ////////////////////////////
+
+        function get(url, callback) {
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function() {
+                if (request.readyState === 4 && request.status === 200) {
+                    callback(request.responseText);
+                }
+            }
+
+            request.open("GET", url, true);
+            request.send(null);
+        }
+
+        var clientParameter = "client_id=aae0cd3ce269784234bb78aa6d485394"
+
+        var trackPermalinkUrl = "https://soundcloud.com/spinninrecords/project-t-martin-garrix-remix";
+        //var trackPermalinkUrl =
+        "https://soundcloud.com/aviciiofficial/avicii-levels-original-mix";
+
+        function findTrack() {
+            get("https://api.soundcloud.com/resolve.json?url=" + trackPermalinkUrl + "&" + clientParameter,
+                function (response) {
+                    var trackInfo = JSON.parse(response);
+                    audio.src = trackInfo.stream_url + "?" + clientParameter;
+                }
+            );
+        };
+
+        findTrack();
+
+    })();
+</script>
+</body>
+</html-->

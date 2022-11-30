@@ -1,9 +1,22 @@
-Error occurred during connection establishing  javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or as an applet parameter, or in an application resource file:  java.naming.factory.initial
-Error occurred during connection establishing  javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or as an applet parameter, or in an application resource file:  java.naming.factory.initial
-Error occurred during connection establishing  javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or as an applet parameter, or in an application resource file:  java.naming.factory.initial
-Error occurred during connection establishing  javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or as an applet parameter, or in an application resource file:  java.naming.factory.initial
-Error occurred during connection establishing  javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or as an applet parameter, or in an application resource file:  java.naming.factory.initial
-Error occurred during connection establishing  javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or as an applet parameter, or in an application resource file:  java.naming.factory.initial
-Error occurred during connection establishing  javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or as an applet parameter, or in an application resource file:  java.naming.factory.initial
-Error occurred during connection establishing  javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or as an applet parameter, or in an application resource file:  java.naming.factory.initial
-Error occurred during connection establishing  javax.naming.NoInitialContextException: Need to specify class name in environment or system property, or as an applet parameter, or in an application resource file:  java.naming.factory.initial
+SQL Error: 1062, SQLState: 23000
+Duplicate entry '13' for key 'artist.PRIMARY'
+SQL Error: 1062, SQLState: 23000
+Duplicate entry '1755' for key 'artist.PRIMARY'
+SQL Error: 1062, SQLState: 23000
+Duplicate entry '267' for key 'artist.PRIMARY'
+SQL Error: 1062, SQLState: 23000
+Duplicate entry '8218' for key 'artist.PRIMARY'
+SQL Error: 1062, SQLState: 23000
+Duplicate entry '8218' for key 'artist.PRIMARY'
+SQL Error: 1062, SQLState: 23000
+Duplicate entry '8218' for key 'artist.PRIMARY'
+SQL Error: 1062, SQLState: 23000
+Duplicate entry '8218' for key 'artist.PRIMARY'
+SQL Error: 1062, SQLState: 23000
+Duplicate entry '103152782' for key 'album.PRIMARY'
+SQL Error: 1205, SQLState: 40001
+Lock wait timeout exceeded; try restarting transaction
+SQL Error: 1205, SQLState: 40001
+Lock wait timeout exceeded; try restarting transaction
+SQL Error: 1062, SQLState: 23000
+Duplicate entry '10140464' for key 'artist.PRIMARY'

@@ -44,11 +44,11 @@ public class RegistrationFilter implements Filter {
                                 obj.getString("login").isEmpty() ||
                                         obj.getString("password").isEmpty() ||
                                         obj.getString("email").isEmpty() ||
-                                        obj.getString("nickname").isEmpty()
+                                        obj.getString("nickName").isEmpty()
                         ){
                             System.out.println("empty");
                             response.setStatus(200);
-                        response.sendRedirect(req.getServletContext().getContextPath() + "/home");}
+                        response.sendRedirect("/home");}
                         else {
                             System.out.println(obj.getString("login"));
                             System.out.println(obj.getString("password"));
@@ -67,7 +67,7 @@ public class RegistrationFilter implements Filter {
                     response.setStatus(303);
                     response.addHeader("Connection","Keep-Alive");
                     response.addHeader("Access-Control-Allow-Origin","*");
-                    response.sendRedirect(req.getServletContext().getContextPath() + "/home");}
+                    response.sendRedirect("/home");}
 
             } catch (IOException | ServletException e) {
                 logger = Logger.getLogger(RegistrationFilter.class);

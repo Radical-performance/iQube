@@ -1,0 +1,1409 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src='https://kit.fontawesome.com/56cc19ca60.js' crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="/resources/css/audio.css">
+    <link rel="stylesheet" href="/resources/css/cube2.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Cinzel:wght@600&display=swap" rel="stylesheet">
+
+    <title>audio</title>
+    <style>
+        #tracklistButton{
+            padding-left: 2%;
+        }
+        #searchWrapper{
+            display: flex;
+            transform: translateX(700px);
+            padding: 0;
+            width: 0em;
+            border: none;
+            outline: none;
+            border-radius: 15px;
+        }
+        #search_input{
+
+
+            flex: none;
+            position: relative;
+            width: 15em;
+            height: 70%;
+            transition: 0.4s ease-in-out;
+            background: rgb(13 12 12 / 46%);
+            outline: none;
+            box-shadow: 0 0 5px 0px #00ffb8;
+            border: 1px solid #4e4e4d;
+            border-radius: 10px;
+            color: #00ff9f;
+            font-family: 'Audiowide', monospace;
+            font-size: 21px;
+            text-shadow: 0 0 2px cyan;
+        }
+
+        #songs{
+            position: absolute;
+            width: 30%;
+            height: 30%;
+            border: 1px solid crimson;
+            top: 10%;
+        }
+        .canSet{
+            position: relative;
+            width: 50%;
+            height: 50%;
+            border: 1px solid red;
+            padding: 6px;
+
+        }
+        .trackSettings{
+             transform: translateX(105px);
+            /*height: 100%;*/
+            /*width: 10em;*/
+
+            border-radius: 10%;
+            transition: 0.3s ease-out;
+            text-align: left;
+            flex: none;
+            display: flex;
+            justify-content: flex-start;
+            color: #f60228;
+            font-size: 15px;
+        }
+
+        .trackSettingLabels {
+            font-size: 20px;
+            margin: 15px;
+            color: #ccff0af9;
+        }
+
+        .trackSettingLabels:hover {
+            color: white;
+            text-shadow: 0 0 3px white;
+        }
+
+
+        #tracklist{
+            position: relative;
+            width: 100%;
+            float: right;
+            height: 90%;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            border-radius: 4%;
+            background: radial-gradient(black, transparent);
+            backdrop-filter: blur(10px);
+            top: 8%;
+                transition: 1s linear;
+                opacity: 0;
+            }
+
+            #searchedTracks{
+                border: 1px solid greenyellow;
+                position: absolute;
+                width: 100%;
+                float: right;
+                height: 90%;
+                overflow-y: scroll;
+                overflow-x: hidden;
+                border-radius: 4%;
+                box-shadow: 0 0 16px 3px #383838, -4px 0 13px 5px inset #030303;
+                background: #e6e6fa00;
+                backdrop-filter: blur(10px);
+                z-index: 10;
+                top: 8%;
+                transition: 1s linear;
+        }
+        #searchedTracks::-webkit-scrollbar{
+            display: none;
+        }
+        #playListsTab::-webkit-scrollbar{
+            display: none   ;
+        }
+        #tracklist::-webkit-scrollbar{
+            display: none   ;
+        }
+        #artistImageWraper{
+            position: relative;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            float: left;
+            margin: 5px;
+            box-shadow: black 0px 0px 4px 1px;
+        }
+        #artistImage{
+            position: relative;
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+            box-shadow: black 0 0 4px 1px;
+        }
+        #artistName{
+            position: relative;
+            width: 100px;
+            height: 20px;
+            float: left;
+
+        }
+        #audioSearchButton{
+            position: relative;
+        }
+        #audioHolder{
+            position: relative;
+        }
+        .tracklistElem:hover{
+            will-change: box-shadow;
+            box-shadow: inset 0 0 5px 0px #fafafa;
+            transition: 0.2s linear;
+            /*display: flex;*/
+
+        }
+
+
+        .tracklistElem{
+            overflow: hidden;
+            transition: 0.3s linear;
+            width: 100%;
+            height: 6%;
+            display: flex;
+            justify-content: flex-start;
+            color: #ccff0af9;
+            font-weight: bolder;
+            font-size:  larger;
+            font-family: sans-serif;
+            cursor: pointer;
+            border: 1px solid #101010d1;
+        }
+        .tracklistElem div:nth-child(2){
+            flex: none;
+            width: 12em;
+        }
+        .tracklistElem div:nth-child(3){
+            flex: none;
+            width: 12em;
+        }
+        .artistName{
+            /*width: 100%;*/
+            /*height: 50%;*/
+            /* float: left;*/
+            /*position: relative;*/
+            text-align: center;
+            text-shadow: 0 -2px 3px black;
+            box-shadow: 0 0 0 0;
+            padding: 15px;
+            margin-left: 5em;
+            overflow-y: scroll;
+            overflow-x:hidden ;
+        }
+        .songName{
+            overflow-x:hidden ;
+            overflow-y:scroll ;
+            width: 300%;
+            height: 50%;
+            /* margin-left: 30px; */
+            padding: 15px;
+            text-align: center;
+            text-shadow: 0 -2px 3px black;
+        }
+
+        .songName::-webkit-scrollbar{
+            display: none;
+        }
+        .artistName::-webkit-scrollbar{
+            display: none;
+        }
+
+        #container-area{
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            perspective: 2500px;
+            left: 30%;
+            top: 30%;
+            z-index: 99999999;
+        }
+        #mainWrapper{
+            position: absolute;
+            perspective: 3000px;
+            width: 100%;
+            height: 100%;
+
+        }
+
+        @-webkit-keyframes spin {
+            from { -webkit-transform: rotateY(0) rotateX(0); }
+            to   { -webkit-transform: rotateY(-360deg) rotateX(360deg); }
+        }
+
+        #blur{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(5px);
+            z-index: 5;
+            transition: 1s linear;
+        }
+        .trackElementButton {
+            font-size: 25px;
+            margin: 15px;
+            opacity: 1;
+            transition: 0.3s linear;
+            color: #545454;
+        }
+        .trackElementButton:hover{
+            will-change: text-shadow;
+
+            cursor: pointer;
+            color: white;
+            text-shadow: 0 0 4px 0 white;
+        }
+
+        .playlistAddButton{
+            margin: 15px;
+            font-size: 25px;
+            opacity: 0;
+            transition: 0.2s linear;
+            color: #545454;
+        }
+        .audioPlaying{
+            margin: 15px;
+            font-size: 25px;
+            opacity: 1;
+            transition: 0.2s linear;
+            color: #545454;
+        }
+        .playlistAddButton:hover{
+            will-change: text-shadow;
+            color: white;
+            text-shadow: 0 0 4px 0 white;
+        }
+        .addButtonMenu{
+            width: 0;
+            height: 0;
+            border: 1px solid #000000;
+            background: #1c1c1c;
+            transition: 0.3s linear;
+            display: inherit;
+            transform: translateY(-20%);
+            border-radius: 2%;
+            overflow: hidden;
+            padding: 0;
+        }
+        #artistHeader{
+            width: 45%;
+            height: 3%;
+            margin-left: 4%;
+            display: inline-block;
+            float: left;
+            text-align: center;
+            /* float: left; */
+            color: white;
+            font-size: 25px;
+            font-family: monospace;
+
+        }
+        #trackHeader{
+            width: 30%;
+            font-size: 25px;
+            text-align: center;
+            color: #3d4d51;
+            height: 3%;
+            /* float: right; */
+            display: inline-block;
+            font-family: monospace;
+        }
+        .buttons{
+            /*width: 15%;*/
+            height: 5%;
+            transform: translateX(-50px);
+            transition: 0.5s ease-out;
+            position: absolute;
+            display: flex;
+        }
+
+        .plusLbl{
+            position: absolute;
+            font-size: 15px;
+            font-style: initial;
+            color: white;
+        }
+        .addBtnMenuIcon{
+            position: relative;
+            float: left;
+            padding: 5%;
+            font-size: 20px;
+            font-style: initial;
+            color: cyan;
+        }
+        .addBtnMenuTitle{
+            position: relative;
+            margin-left: 25%;
+            margin-top: 8%;
+            font-size: 50%;
+            color: white;
+
+        }
+
+        .addBtnMenuElem{
+            display: block;
+            float: left;
+            width: inherit;
+
+        }
+        .addBtnMenuElem:hover{
+            box-shadow: 0 0 19px 3px black inset;
+            transition: 0.3s;
+        }
+        #tracklistWraper{
+            position: absolute;
+            width: 40%;
+            float: right;
+            height: 100%;
+
+            border-radius: 4%;
+            background: linear-gradient(#00000033 10%, #10101000);
+            backdrop-filter: blur(4px);
+            left: 40%;
+            z-index: 10;
+        }
+        #test1{
+            width: 100%;
+            z-index: 11;
+            position: absolute;
+            height: 3%;
+            }
+        #test2{
+            width: 100%;
+            z-index: 11;
+            position: absolute;
+             top: 97%;
+            height: 3%;
+            }
+        #x{
+            position: relative;
+            top: 5%;
+        }
+        .plusLbl{
+            transition: 0.5s linear;
+        }
+
+        .menuButtons{
+            position: relative;
+            width: 4em;
+            height: 2em;
+            top: 10%;
+            padding-left: 6%;
+            float: left;
+            color: #00ffae;
+            text-shadow: 0 4px 2px black, 0 0 3px #00ffc4;
+            font-family: 'Cinzel',serif;
+            cursor: pointer;
+            font-size: x-large;
+            transition: 0.2s linear;
+        }
+        .menuButtons:hover{text-shadow:  0 0 4px #00ffc4;}
+
+        #menuButtonsWrapper{
+            z-index: 22;
+            position: absolute;height: 5%;width: 100%;
+            background: rgba(128, 128, 128, 0.53);
+            overflow: hidden;
+            transition: 0.7s;
+            transform: translateY(-100px);
+        }
+        #displ{
+            position: absolute;
+            display: none;
+            width: 100%;
+            z-index: 11;
+            opacity: 0;
+            transition: 1s linear;
+            height: 100%;
+            background: radial-gradient( #000000ed 383%, #000000d4);
+        }
+        #search_inpt_icon{
+            padding: 7px;
+            transition: 1s linear;
+            color: #ffffff;
+            text-shadow: -1px 0px 3px black;
+            flex: none;
+        }
+        #addB{
+            top: 36%;
+            left: 45%;
+        }
+        #addNewPLInput{
+            width: 0;
+            height: 30px;
+            border: none;
+            outline: none;
+            transition: 0.5s linear;
+           margin: 2px;
+            background: none;
+            color: #00ff9f;
+            font-size: 20px;
+            font-family: Audiowide;
+            font-weight: bolder;
+        }
+        #addBWrapper{
+           margin:110px;
+        }
+
+
+
+        .playlist{
+            color: #00fdff;
+            display: flow-root;
+            margin: 15px;
+            font-family: Comfortaa, monospace;
+            font-size: 20px;
+            font-weight: bolder;
+            transform: translateX(30%);
+            cursor: pointer;
+        }
+        #playlistsWraper{
+            width: 80%;
+            border: 1px solid gold;
+
+        }
+
+        #playListsTab{
+            position: absolute;
+            width: 100%;
+            float: right;
+            height: 90%;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            border-radius: 4%;
+            box-shadow: 0 0 3px 3px #383838, -4px 0 3px 2px inset #520c0c;
+            opacity: 0;
+            background: #e6e6fa00;
+            z-index: 10;
+            top: 8%;
+            transition: 1s linear;
+            display: none;
+        }
+        span{
+            position: absolute;
+            font-size: 26px;
+        }
+        #heart{
+            color: white;
+            transform: translateX(-94px) translateY(-4px);
+            font-size: 15px;
+            text-shadow: 0 0 5px #121212;
+        }
+
+        .playlistsIcon{
+            display: inherit;
+            transform: translateX(-20px) translateY(-24px);
+            color: white;
+            font-size: 15px;
+            text-shadow: 0 0px 5px #121212;
+
+        }
+
+</style>
+</head>
+<body>
+<div id="mainWrapper">
+
+    <div id="volumeBar">-
+        <div id="volumeP"></div>
+    </div>
+    <div id="audioControls" style="position:absolute; z-index: 12121212121; left: 10%" >
+        <button id="play_pause"><i class="audioPlaying fa-solid fa-play" id="play_pause_lbl"></i></button>
+    </div>
+
+
+    <div id="muteBox">
+        <button id="mute_unmute"><i class="fa-solid fa-volume-high" id="mute_unmute_lbl"></i></button>
+    </div>
+
+
+
+    <audio src="" crossorigin="anonymous"></audio>
+
+    <div id="canvasWrapper">
+        <div id="can1wrapper">
+            <canvas id="can1"></canvas>
+        </div>
+        <div id="can2wrapper">
+            <canvas id="can2"></canvas>
+        </div>
+        <div id="audioHolder">
+            <div id="audioBox">
+
+                <div id="progressBar">
+                    <div id="progress"></div>
+                </div>
+            </div>
+        </div>
+        <div id="can3wrapper">
+            <canvas id="can3"></canvas>
+        </div>
+        <div id="can4wrapper">
+            <canvas id="can4"></canvas>
+        </div>
+
+    </div>
+
+
+
+
+    <div id="audioPane" style="position:absolute; width: 500px; height: 300px; top: 30%; border: 2px solid red">
+        <div id="artistImageWraper">
+            <img id="artistImage" src="">
+        </div>
+        <textarea id="artistName"></textarea>
+    </div>
+
+    <div id="container-area">
+        <div class="container">
+            <div id="back" class="side">
+                <canvas id="canvas4"></canvas>
+            </div>
+            <div id="left" class="side"></div>
+            <div id="right" class="side">
+                <!--            <div id="login">Sign in</div>-->
+                <!--            <canvas id="can3"></canvas>-->
+                <canvas id="canvas3"></canvas>
+
+            </div>
+            <div id="top" class="side"></div>
+            <div id="bottom" class="side">
+                <div id="registration">Sign up</div>
+            </div>
+            <div id="front" class="side">
+                <div id="timeBox">00:00 / 00:00</div>
+
+            </div>
+        </div>
+    </div>
+
+<div id="tracklistWraper">
+<!--    <div id="x">-->
+<!--    <div id="artistHeader">ARTIST</div>-->
+<!--    <div id="trackHeader">TRACK</div>-->
+<!--    </div>-->
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <div id="playListsTab"></div>
+    <div id="tracklist"></div>
+    <div id="searchedTracks"></div>
+    <div id="displ">
+        <div id="addBWrapper">
+        <button type="button" id="addB"><i class="fa-solid fa-plus"></i></button>
+        <input type="text" id="addNewPLInput" placeholder="Create New PLaylist">
+        </div>
+        <div id="playlistsWraper">
+        </div>
+    </div>
+</div>
+<div id="menuButtonsWrapper">
+    <div id="tracklistButton" class="menuButtons">Tracklist<i class="fa-solid fa-heart" id="heart"></i></div>
+    <div id="playlistsButton" class="menuButtons">Playlists<i class="fa-solid fa-music playlistsIcon" ></i></div>
+    <div id="LikedlistButton" class="menuButtons">Liked<i class="fa-solid fa-heart playlistsIcon" ></i></div>
+    <div id="searchWrapper" class="menuButtons">
+        <i class="fa-solid fa-search" id="search_inpt_icon"></i><input type="text" id="search_input">
+    </div>
+</div>
+    <div id="settingPane">
+        <div class="canvasSettingsPane">
+            <input type="color" id="can1colorinput">
+            <input type="color" id="can1shadowinput">
+            <input type="range" id="can1height" min="10" max="2000">
+        </div>
+        <div  class="canvasSettingsPane">
+            <input type="color" id="can2colorinput">
+            <input type="color" id="can2shadowinput">
+            <input type="range" id="can2height" min="1" max="10">
+        </div>
+        <div class="canvasSettingsPane">
+            <input type="color" id="can3colorinput">
+            <input type="color" id="can3shadowinput">
+            <input type="range" id="can3height" min="1" max="10">
+        </div>
+        <div class="canvasSettingsPane">
+            <input type="color" id="can4colorinput">
+            <input type="color" id="can4shadowinput">
+            <input type="range" id="can4height" min="1" max="10">
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    let searchedTracks = document.getElementById("searchedTracks");
+    let selectPlaylistTab = document.getElementById("displ");
+    let playlistsTab = document.getElementById("playListsTab");
+    let playListsStorage = null;
+
+    let searchInput = document.getElementById("search_input");
+    let tracklistTab = document.getElementById("tracklist");
+
+    let check_isEmpty_storage = function () {
+        let tracklist_storage = JSON.parse(localStorage.getItem("tracklist"));
+        let playlists_storage  = JSON.parse(localStorage.getItem("playlists"));
+        let artists_storage = JSON.parse(localStorage.getItem("artists"));
+        let albums_storage = JSON.parse(localStorage.getItem("albums"));
+
+        let resp;
+        let arr = [{"tracklists":tracklist_storage},{"playlists":playlists_storage},{"artists":artists_storage},{"albums": albums_storage}];
+
+        alert(arr[0].tracklists);
+        let xml = new XMLHttpRequest();
+        xml.open('POST','https://af3c-213-24-126-64.ngrok.io/relevance');
+             let data = JSON.stringify([{"tracks": arr[0]},{"playlists": arr[1]},{"artists": arr[2]},{"albums": arr[3]}]);
+             xml.setRequestHeader("Content-Type","application/json");
+
+             xml.onload = function () {
+                 alert("xxxxx");
+             }
+        xml.send(data);
+
+        }
+
+        let create_track_element = function () {
+            let el = document.createElement("div");
+            let html_code =
+                // '<div class=\"tracklistElem\">' +
+                '<div class=\"buttons\">' +
+                '<i class=\"trackElementButton fa-solid fa-play\"></i>'+
+                '<i class=\"playlistAddButton fa-solid fa-plus\">' +
+                '<ul class=\"addButtonMenu\">' +
+                '<li class=\"addBtnMenuElem\"><i class=\"addBtnMenuIcon fa-download\"></i><div class=\"addBtnMenuTitle\">download</div></<li>' +
+                '<li class=\"addBtnMenuElem\"><i class=\"addBtnMenuIcon fa-share\"></i><div class=\"addBtnMenuTitle\">share</div></<li>' +
+                '<li class=\"addBtnMenuElem\"><i class=\"plusLbl fa-plus\"></i><i class=\"addBtnMenuIcon fa-music\"></i><div class=\"addBtnMenuTitle\">add to playlist</div></<li>'+
+                '<li class=\"addBtnMenuElem\"><i class=\"plusLbl fa-plus\"></i><i class=\"addBtnMenuIcon fa-list\"></i><div class=\"addBtnMenuTitle\">add to tracks</div></<li>'+
+                '</ul>' +
+                +'</i>'+
+                '</div>' +
+                '<div class=\"songName\"></div>'+
+                '<div class=\"artistName\"></div>' +
+                '<div class=\"trackSettings\">' +
+                '<i class=\"trackSettingLabels fa-solid fa-thumbs-up\"></i>'+
+                '<i class=\"trackSettingLabels fa-solid fa-thumbs-down\"></i>' +
+                '</div>';
+            el.className = "tracklistElem";
+            el.innerHTML = html_code;
+
+
+                // '</div>'
+            searchedTracks.appendChild(el);
+        }
+        let x = 0;
+    alert(check_isEmpty_storage());
+
+        fetch(new Request('https://af3c-213-24-126-64.ngrok.io/json')).then((response) => response.json()).then((data) => {
+        playListsStorage = data;
+
+        if(data.playlists.length === 0){
+            localStorage.setItem("playlists", JSON.stringify(data.playlists));
+            localStorage.setItem("tracklists", JSON.stringify(data.tracklist));
+            localStorage.setItem("albums", JSON.stringify(data.albums));
+            localStorage.setItem("artists", JSON.stringify(data.artists));
+
+
+        }
+        localStorage.setItem("playlists", JSON.stringify(data));
+        for(let x=0;x<data.length;x++){create_track_element();}
+
+        let ch = searchedTracks.childNodes;
+        ch.forEach((node)=>{node.children[2].innerText = data.name});
+    });
+
+
+
+    //JSON.parse(localStorage.getItem("playLists"));
+    let tracklistStorage = JSON.parse(localStorage.getItem("tracklist"));
+
+    if (playListsStorage !== null) {
+        playListsStorage.forEach((e) => {
+            let c = document.createElement("div");
+
+            let z = document.createElement("div");
+            c.className = "playlist";
+            c.innerText = e.name;
+            z.className = "playlist";
+            z.innerText = e.name;
+            selectPlaylistTab.appendChild(z);
+            playlistsTab.appendChild(c);
+
+            z.onclick = function () {
+                if ((e.tracks.some(track => track.id === trackForPLAdd.id))) alert('уже есть в плейлисте');
+                else {
+                    e.tracks.push(trackForPLAdd);
+                    localStorage.setItem("playLists", JSON.stringify(playListsStorage));
+                    //надпись успешно добавлен
+                    selectPlaylistTab.style.opacity = "0";
+                    setTimeout(function () {
+                        selectPlaylistTab.style.display = "none";
+                    }, 1000);
+                }
+            };
+        });
+    }
+
+
+    let currentMusicTabId ;
+    document.getElementById("searchWrapper").onmouseover = function () {
+        this.children[1].style.width = "20em";
+        this.children[1].style.opacity = "1";
+    }
+
+
+    document.getElementById("searchWrapper").onmouseleave = function () {
+        this.children[1].style.width = "0em";
+        this.children[1].style.opacity = "0";
+        this.style.width = "15em";
+    }
+
+    let audioSearchButton = document.getElementById("search_inpt_icon");
+    let audio = document.querySelector('audio');
+    let nowPLayingButtonId;
+
+    let playPause = document.getElementById('play_pause');
+    let muteunmute = document.getElementById('mute_unmute');
+    //let play_pause_lbl = document.getElementById('play_pause_lbl');
+    let mute_unmute_lbl = document.getElementById('mute_unmute_lbl');
+    let progress = document.getElementById('progress');
+    let timeBox = document.getElementById('timeBox');
+    let progressBar = document.getElementById('progressBar');
+    let can1 = document.getElementById('can1');
+    let can2 = document.getElementById('can2');
+    let can3 = document.getElementById('can3');
+    let can4 = document.getElementById('can4');
+
+    let can1color = "red";
+    let can2color = "red";
+    let can3color = "red";
+    let can4color = "red";
+
+    let can1shadowColor = "red";
+    let can2shadowColor = "red";
+    let can3shadowColor = "red";
+    let can4shadowColor = "red";
+
+    let can1colorinput = document.getElementById("can1colorinput");
+    let can2colorinput = document.getElementById("can2colorinput");
+    let can3colorinput = document.getElementById("can3colorinput");
+    let can4colorinput = document.getElementById("can4colorinput");
+
+    let can1shadowInput = document.getElementById("can1shadowinput");
+    let can2shadowInput = document.getElementById("can2shadowinput");
+    let can3shadowInput = document.getElementById("can3shadowinput");
+    let can4shadowInput = document.getElementById("can4shadowinput");
+
+    can1colorinput.oninput = function (){can1color = can1colorinput.value;};
+    can2colorinput.oninput = function (){can2color = can2colorinput.value;};
+    can3colorinput.oninput = function (){can3color = can3colorinput.value;};
+    can4colorinput.oninput = function (){can4color = can4colorinput.value;};
+
+    can1shadowInput.oninput = function (){
+        can1.style.filter =
+            "drop-shadow(1px -1px 3px"+ can1shadowInput.value+")" +
+            " drop-shadow(-1px -4px 2px"+ can1shadowInput.value+")";
+    };
+
+    can2shadowInput.oninput = function (){
+        can2.style.filter =
+            "drop-shadow(2px -2px 3px"+ can2shadowInput.value+")" +
+            "drop-shadow(-2px -5px 2px"+ can2shadowInput.value+")";
+    };
+
+    can3shadowInput.oninput = function (){
+        can3.style.filter =
+            "drop-shadow(2px -2px 3px"+ can3shadowInput.value+")" +
+            " drop-shadow(-2px -5px 2px"+ can3shadowInput.value+")";
+    };
+
+    can4shadowInput.oninput = function (){
+        can4.style.filter =
+            "drop-shadow(2px -2px 3px"+ can4shadowInput.value+")" +
+            "drop-shadow(-2px -5px 2px"+ can4shadowInput.value+")";
+    };
+    let h = null;
+    let can1height = document.getElementById("can1height");
+
+    can1height.oninput = function (){h=can1height.value};
+
+    muteunmute.addEventListener("click", function () {
+        if(audio.muted){
+            audio.muted = false;
+            mute_unmute_lbl.style.opacity = "0";
+
+            setTimeout(function () {
+                mute_unmute_lbl.classList.remove('fa-volume-xmark');
+                mute_unmute_lbl.classList.add('fa-volume-high');
+                mute_unmute_lbl.style.opacity = "1";
+            }, 200);
+        }else{
+            audio.muted = true;
+            mute_unmute_lbl.style.opacity = "0";
+            setTimeout(function () {
+                mute_unmute_lbl.classList.remove('fa-volume-high');
+                mute_unmute_lbl.classList.add('fa-volume-xmark');
+                mute_unmute_lbl.style.opacity = "1";
+            },200);
+        }
+    });
+
+    audio.addEventListener("timeupdate", function () {
+        progress.style.width = ((audio.currentTime / audio.duration) * 100) -1+ "%";  }, false);
+
+    audio.addEventListener('timeupdate', function () {
+        var currentMinutes, currentSeconds, totalMinutes, totalSeconds;
+        currentMinutes = smartTime(Math.floor((audio.currentTime / 60)));
+        totalMinutes = smartTime(Math.floor((audio.duration / 60)));
+        currentSeconds = smartTime(Math.floor((audio.currentTime % 60)));
+        totalSeconds = smartTime(Math.floor((audio.duration % 60)));
+
+        var currentTime = currentMinutes + ":" + currentSeconds;
+        var totalTime = totalMinutes + ":" + totalSeconds;
+        timeBox.innerHTML = currentTime + "/" + totalTime;
+
+        function smartTime(time) {return time < 10 ? "0" + time.toString().trim() : time;}});
+
+        let canW = document.getElementById("canvasWrapper");
+        canW.addEventListener("mousedown", function (event) {
+        progress.style.boxShadow = "white 0 0 10px 0";
+        audio.pause();
+        setTimeout(function (){progress.style.boxShadow = "0 0 0 0 white";},400);
+        setTimeout(function () {var clickedPosition = event.clientX - event.target.offsetLeft;
+            audio.currentTime = (clickedPosition / progressBar.offsetWidth) * audio.duration;audio.play();}, 50);});
+    //rendering...
+let src = null;
+let context = null;
+let analyser = null;
+let arraybuffer = null;
+let started = null;
+let gainNode = null;
+
+let renderFrame;
+window.onload = function(){
+    document.addEventListener("mousemove", function (e) {
+        if(e.clientY < 100) {document.getElementById("menuButtonsWrapper").style.transform = "translateY(0px)";}
+        else{document.getElementById("menuButtonsWrapper").style.transform = "translateY(-100px)";}
+    });
+
+    if(context ===null) {
+        context = new AudioContext();
+        src = context.createMediaElementSource(audio);
+        analyser = context.createAnalyser();
+        gainNode = context.createGain();
+        src.connect(gainNode);
+        gainNode.connect(analyser).connect(context.destination);
+    }
+
+    if(src === null) {};
+    var canvas = can1;
+    var canvas2 = can2;
+    var canvas3 = can3;
+    var canvas4 = can4;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas2.width = window.innerWidth;
+    canvas2.height = window.innerHeight;
+    canvas3.width = window.innerWidth;
+    canvas3.height = window.innerHeight;
+    canvas4.width = window.innerWidth;
+    canvas4.height = window.innerHeight;
+
+    var ctx = canvas.getContext("2d");
+    var ctx2 = canvas2.getContext("2d");
+    var ctx3 = canvas3.getContext("2d");
+    var ctx4 = canvas4.getContext("2d");
+    analyser.fftSize = 512;
+    var bufferLength = analyser.frequencyBinCount;
+    var dataArray = new Uint8Array(bufferLength);///////////////<---------------
+    var WIDTH = canvas.width;
+    var HEIGHT = canvas.height;
+    var WIDTH2 = canvas2.width;
+    var HEIGHT2 = canvas2.height;
+    var barWidth = (WIDTH/ bufferLength);
+    var barHeight;
+    var x = 0;
+    renderFrame1 =  function renderFrame1() {//!!!!!!!!!!!
+        requestAnimationFrame(renderFrame);
+        analyser.getByteFrequencyData(dataArray);
+
+        x = 0;
+
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+        ctx2.clearRect(0, 0, WIDTH2, HEIGHT2);
+        ctx3.clearRect(0, 0, WIDTH, HEIGHT);
+        ctx4.clearRect(0, 0, WIDTH, HEIGHT);
+
+        for (var i=0; i<bufferLength; i++) {
+            barHeight = dataArray[i] * 2.5 ;
+            ctx.fillStyle = can1color;
+            ctx2.fillStyle = can2color;
+            ctx3.fillStyle = can3color;
+            ctx4.fillStyle = can4color;
+
+            ctx.fillRect(x, HEIGHT - barHeight, barWidth,barHeight);
+            ctx2.fillRect(x, HEIGHT - barHeight, barWidth , barHeight);
+            ctx3.fillRect(x, HEIGHT - barHeight, barWidth , barHeight-110);
+            ctx4.fillRect(x, HEIGHT - barHeight, barWidth, barHeight-110);
+
+            x += barWidth +1;
+        }
+    }
+}
+
+let playMusic = async function(){
+    if (audio.paused || audio.ended) {
+        play_pause_lbl.style.opacity = "0";
+        setTimeout(function () {
+            play_pause_lbl.classList.remove('fa-pause');
+            play_pause_lbl.classList.add('fa-play');
+            play_pause_lbl.style.opacity = "1";
+        }, 200);
+
+        await audio.load();
+        await context.resume();
+        // await audio.play();
+        renderFrame();
+    }else
+        audio.pause();
+        play_pause_lbl.style.opacity = "0";
+        setTimeout(function () {
+            play_pause_lbl.classList.remove('fa-play');
+            play_pause_lbl.classList.add('fa-pause');
+            play_pause_lbl.style.opacity = "1";
+        }, 200);
+}
+    playPause.onclick = function () {playMusic();}
+
+    let c = 0;
+    let trackForPLAdd;
+    let trackList = JSON.parse(localStorage.getItem("tracklist"));
+
+
+
+
+    let show = function () {
+        document.getElementById("addBWrapper").children[1].style.width = "10em";
+    }
+    let hide = function (e) {
+        e.stopPropagation();
+        document.getElementById("addBWrapper").children[1].style.width = "0";
+    }
+
+    selectPlaylistTab.children[0].addEventListener("mouseover", show);
+    selectPlaylistTab.children[0].addEventListener("mouseleave", hide);
+
+    document.getElementById("addB").onclick = function () {
+        if (playListsStorage !== null && playListsStorage.some(el => el.name === document.getElementById("addNewPLInput").value)) {
+            alert('такой пл уже есть');
+        } else {
+            let pl = {
+                name: document.getElementById("addNewPLInput").value,
+                tracks: []
+            }
+            // let tra = {
+            //     id: trackForPLAdd.id,
+            //     url: trackForPLAdd.preview
+            // }
+            playListsStorage.push(pl);
+            localStorage.setItem("playLists", JSON.stringify(playListsStorage));
+
+            new_pl = document.createElement("div");
+            new_pl_non_click = document.createElement("div");
+            new_pl_non_click.className = "playlist";
+            new_pl_non_click.innerText = document.getElementById("addNewPLInput").value;
+            new_pl.className = "playlist";
+            new_pl.innerText = document.getElementById("addNewPLInput").value;
+
+            playlistsTab.appendChild(new_pl_non_click);
+            document.getElementById("playlistsWraper").appendChild(new_pl);
+            document.getElementById("addNewPLInput").value = '';
+
+            new_pl.onclick = function () {
+                playListsStorage.forEach((e)=>{
+                    if ((e.tracks.some(track => track.id === trackForPLAdd.id))) alert('уже есть в плейлисте');
+                    else {
+                        e.tracks.push(trackForPLAdd);
+                        localStorage.setItem("playLists", JSON.stringify(playListsStorage));
+                        //надпись успешно добавлен
+                        selectPlaylistTab.style.opacity = "0";
+                        setTimeout(function () {selectPlaylistTab.style.display = "none";}, 1000);
+                    }
+                });
+            }
+            pl=null;
+        }
+    }
+
+let funct = function() {
+    let tracksKeys;
+    let muz;
+
+    audioSearchButton.addEventListener("click", async function () {
+        let cache1 = await caches.open('audio_search');
+        let resp = await fetch(new Request('https://af3c-213-24-126-64.ngrok.io/music?name=' + searchInput.value));
+        await cache1.add(new Request('https://af3c-213-24-126-64.ngrok.io/music?name=' + searchInput.value));
+        muz = await resp.json();
+        searchInput.value = '';
+        tracksKeys= JSON.parse(localStorage.getItem("tracksKeys"));
+
+
+
+
+
+        if(searchedTracks.childElementCount > 0){
+            let searchTabElems = await searchedTracks.children;
+            alert(searchTabElems[0].children[1].className);
+            for(let x=0; x<searchTabElems.length; x++){
+                searchTabElems[x].children[1].innerText = muz.data[x].artist.name;
+                searchTabElems[x].children[2].innerText = muz.data[x].title;
+                searchTabElems[x].children[0].children[0].setAttribute("val",x.toString());
+            }
+        }else {
+            muz.data.forEach((evt) => {
+                if (tracksKeys !== null && tracksKeys.includes(evt.id)) {}
+                else {tracksKeys = [];
+                }
+
+                cur = document.createElement("div");
+                artist = document.createElement("div");
+                songNama = document.createElement("div");
+                trackElemPLayPause = document.createElement("i");
+                add_to_playlist = document.createElement("i");
+                track_setting_but = document.createElement("div");
+                track_setting_lbl = document.createElement("i");
+                like = document.createElement("i");
+                dislike = document.createElement("i");
+                buttons = document.createElement("div");
+                addButtonMenu = document.createElement("ul");
+
+                track_setting_but.className = "trackSettings";
+                like.className = "trackSettingLabels fa-solid fa-thumbs-up";
+                dislike.className = "trackSettingLabels fa-solid fa-thumbs-down";
+                track_setting_lbl.className = "fa-solid fa-ellipsis-v";
+                track_setting_lbl.style.margin = "3px";
+                track_setting_lbl.style.padding = "15px";
+                cur.className = "tracklistElem";
+                songNama.className = "songName";
+                artist.className = "artistName";
+                trackElemPLayPause.className = "trackElementButton fa-solid fa-play";
+                add_to_playlist.className = "playlistAddButton fa-solid fa-plus";
+                addButtonMenu.className = "addButtonMenu";
+                buttons.className = "buttons";
+                buttons.id = c;//evt.preview;
+
+                like.className = "trackSettingLabels fa-solid fa-thumbs-up";
+                dislike.className = "trackSettingLabels fa-solid fa-thumbs-down";
+
+                addButtonMenu.setAttribute("val", c);
+                add_to_playlist.appendChild(addButtonMenu);
+                addButtonMenu.innerHTML = "<li class=\"addBtnMenuElem\"><i class=\"addBtnMenuIcon fa-download\"></i><div class=\"addBtnMenuTitle\">download</div></<li>" +
+                    "<li class=\"addBtnMenuElem\"><i class=\"addBtnMenuIcon fa-share\"></i><div class=\"addBtnMenuTitle\">share</div></<li>" +
+                    "<li class=\"addBtnMenuElem\"><i class=\"plusLbl fa-plus\"></i><i class=\"addBtnMenuIcon fa-music\"></i><div class=\"addBtnMenuTitle\">add to playlist</div></<li>" +
+                    "<li class=\"addBtnMenuElem\"><i class=\"plusLbl fa-plus\"></i><i class=\"addBtnMenuIcon fa-list\"></i><div class=\"addBtnMenuTitle\">add to tracks</div></<li>";
+
+                cur.appendChild(buttons);
+                cur.appendChild(artist);
+                cur.appendChild(songNama);
+                cur.appendChild(track_setting_but);
+                buttons.appendChild(trackElemPLayPause);
+                searchedTracks.appendChild(cur);
+                track_setting_but.appendChild(track_setting_lbl);
+                track_setting_but.appendChild(like);
+                track_setting_but.appendChild(dislike);
+                buttons.append(add_to_playlist);
+
+                addButtonMenu.children[3].onclick = function (e) {
+                    e.stopPropagation();
+                    let m = this.parentNode.getAttribute("val");
+                    let data = muz.data[m];
+                    let child = this.children[0];
+                    let trackObject = {
+                        track_id: data.id,
+                        artist_id: data.artist.id,
+                        album_id: data.album.id,
+                        artist_name: data.artist.name,
+                        track_name: data.title,
+                        artist_image_url: data.artist.picture_medium,
+                        album_image_url: data.album.cover_medium,
+                        track_url: data.preview,
+                        artist_tracklist: data.artist.tracklist,
+                        album_tracklist: data.album.tracklist,
+                        track_duration: data.duration,
+                        isLiked: false,
+                        timeMarks: []
+                    }
+
+                    if (localStorage.getItem("tracklist") !== null) {
+                        tracklistStorage = JSON.parse(localStorage.getItem("tracklist"));
+                    }else{
+                        tracklistStorage = [];
+                        localStorage.setItem("tracklist",JSON.stringify(tracklistStorage));
+                    }
+                    if (localStorage.getItem("tracksKeys") !== null) {
+                        tracksKeys = JSON.parse(localStorage.getItem("tracksKeys"));
+                    }else{
+                        tracksKeys = [];
+                        localStorage.setItem("trackKeys",JSON.stringify(tracksKeys));
+                    }
+                    tracksKeys.push(trackObject.track_id);
+                    tracklistStorage.push(trackObject);
+                    localStorage.setItem("tracklist", JSON.stringify(tracklistStorage));
+                    localStorage.setItem("tracksKeys", JSON.stringify(tracksKeys));
+
+                    child.style.transform = "rotateZ(45deg)";
+                    child.style.color = "red";
+                    tracksKeys = null;
+                    tracklistStorage = null;
+                    let track = document.createElement("div");
+                    track.className = "tracklistElem";
+                    tracklistTab.appendChild(track);
+
+                };
+
+                addButtonMenu.children[2].onclick = function (e) {
+                    e.stopPropagation();
+                    trackForPLAdd = muz.data[this.parentNode.getAttribute("val")];
+                    selectPlaylistTab.style.display = "block";
+
+                    setTimeout(function () {selectPlaylistTab.style.opacity = "1";}, 10);
+                    playListsStorage = JSON.parse(localStorage.getItem("playLists"));
+                    if(playListsStorage === null){
+                        playListsStorage = [];
+                        localStorage.setItem("playLists", playListsStorage);
+                    }else{
+                        if(playListsStorage.length === selectPlaylistTab.childElementCount-2){
+                        }else{
+
+                            playListsStorage.forEach((e) => {
+                                let z = document.createElement("div");
+                                z.className = "playlist";
+                                z.innerText = e.name;
+                                selectPlaylistTab.appendChild(z);
+                                z.onclick = function () {
+                                    if ((e.tracks.some(track => track.id === trackForPLAdd.id))){ alert('уже есть в плейлисте');}
+                                    else {
+                                        e.tracks.push(trackForPLAdd);
+                                        localStorage.setItem("playLists", JSON.stringify(playListsStorage));
+                                        //надпись успешно добавлен
+                                        selectPlaylistTab.style.opacity = "0";
+                                        setTimeout(function () {selectPlaylistTab.style.display = "none";}, 1000);
+                                    }
+                                };
+                            });
+                        }
+
+                    }
+                    selectPlaylistTab.style.display = "block";
+                    setTimeout(function () {selectPlaylistTab.style.opacity = "1";}, 10);
+
+                }
+
+
+
+                track_setting_but.addEventListener("mouseover", function (e) {
+                    if (e.target.className === "trackSettings" || e.target.parentNode.className === "trackSettings") {
+                        this.style.transform = "translateX(-1px)";
+                    }
+                });
+                track_setting_but.addEventListener("mouseleave", function (e) {
+                    if (e.target.className.startsWith("fa")) {
+                        return;
+                    }
+                    this.style.transform = "translateX(105px)";
+                });
+
+                artist.innerText = evt.artist.name;
+                songNama.innerText = evt.title_short;
+
+                cur.addEventListener("mouseover", function () {
+                    this.children[0].style.transform = "translateX(15px)";
+                    this.children[0].style.opacity = "1";
+                    this.children[0].children[1].style.opacity = "1";
+                    this.style.color = "white";
+                })
+
+                trackElemPLayPause.onclick = async function (e) {
+                    let cache = await caches.open('audio');
+                    let entity = muz.data[e.target.parentNode.id];
+                    await cache.add(new Request(entity.preview));
+                    await cache.add(new Request(entity.artist.picture_medium));
+                    //добавить сюда localstorage
+                    document.getElementById("artistImage").src = entity.artist.picture_medium;
+                    document.getElementById("artistName").innerText = entity.artist.name;
+                    audio.src = entity.preview;
+                    this.className = "trackElementButton fa-solid fa-pause";
+                    nowPLayingButtonId = this.parentNode.id;
+                    await playMusic();
+                }
+
+                audio.onpause = function () {
+                    document.getElementById(nowPLayingButtonId).children[0].className = "trackElementButton fa-solid fa-play";
+                }
+
+                add_to_playlist.addEventListener("click", function (t) {
+                    t.target.style.color = "black";  // ИЛИ this
+                    this.children[0].style.display = "inherit";
+                    setTimeout(function () {t.target.children[0].style.width = "200px";}, 10);
+                    setTimeout(function () {
+                        t.target.children[0].style.height = "170px";
+                        t.target.children[0].style.opacity = "1";
+                    }, 300);
+                });
+
+                addButtonMenu.addEventListener("mouseleave", function (e) {
+                    setTimeout(function () {e.target.style.width = "0px"}, 300);
+                    setTimeout(function () {e.target.style.display = "none";}, 700);
+                    e.target.parentNode.style.color = "cyan";
+                    e.target.style.height = "0px";
+                });
+
+                cur.addEventListener("mouseleave", function () {
+                    this.children[0].style.opacity = "0";
+                    this.children[0].style.transform = "translateX(-50px)";
+                    this.style.color = "#ccff0af9";
+                })
+
+                c++;
+            });
+        }
+    });
+}
+
+funct();
+
+let tracks = document.getElementById("tracklist");//aka tracksTab
+// let playlistsTab = document.getElementById("playListsTab");
+let trackListButton = document.getElementById("tracklistButton");
+let playlistsButton = document.getElementById("playlistsButton");
+
+trackListButton.onclick = async function () {
+    tracksStorage = await JSON.parse(localStorage.getItem("tracklist"));
+    if(tracks.childElementCount !== 0){
+        while(tracks.firstChild){
+             tracks.removeChild(trackList.firstChild)
+        }
+    }
+
+    alert(tracks.childElementCount + '   '+ tracksStorage.length);
+
+    currentMusicTabId.style.opacity = "0";
+    currentMusicTabId.style.display = "none";
+
+    setTimeout(await function () {
+        currentMusicTabId = tracks;
+        currentMusicTabId.style.display = "block";
+        currentMusicTabId.style.opacity = "1";
+    },1010);
+
+    if(tracksStorage !== null ){
+        if(tracks.childElementCount !== tracksStorage.length){
+
+            if(localStorage.getItem("tracklist")!== null){
+                for(let i=0; i<tracksStorage.length; i++){
+                    let div = document.createElement("div");
+                    tracks.appendChild(div);
+                    div.className = "tracklistElem";
+                    div.innerText = tracksStorage[i].track_name;
+                    div.innerHTML =
+                        '<div class="buttons"><i class="trackElementButton fa-solid fa-play"></i>' +
+                        '<i class="playlistAddButton fa-solid fa-plus">' +
+                        '<ul class="addButtonMenu" id=\"'+tracksStorage[i].track_id+'\">'+
+                        '<li class=\"addBtnMenuElem\"><i class=\"addBtnMenuIcon fa-download\"></i><div class=\"addBtnMenuTitle\">download</div></li>' +
+                        '<li class=\"addBtnMenuElem\"><i class=\"addBtnMenuIcon fa-share\"></i><div class=\"addBtnMenuTitle\">share</div></li>' +
+                        '<li class=\"addBtnMenuElem\"><i class=\"plusLbl fa-plus\"></i><i class=\"addBtnMenuIcon fa-music\"></i><div class=\"addBtnMenuTitle\">add to playlist</div></li>' +
+                        '<li class=\"addBtnMenuElem\"><i class=\"plusLbl fa-minus\"></i><i class=\"addBtnMenuIcon fa-music\"></i><div class=\"addBtnMenuTitle\">remove from tracks</div></li>' +
+                        '</ul>' +
+                        '</i></div>'+
+                        '<div class="artistName"></div>'+
+                        '<div class="songName"></div>'+
+                        '<div class="trackSettings"></div>';
+
+                    div.children[0].children[1].onclick = function (e) {
+                        e.target.style.color = "black";  // ИЛИ this
+                        e.target.children[0].style.display = "inherit";
+                        setTimeout(function () {e.target.children[0].style.width = "200px";}, 10);
+                        setTimeout(function () {
+                            e.target.children[0].style.height = "200px";
+                            e.target.children[0].style.opacity = "1";
+                        }, 300);
+                    }
+                  /*!!!*/  ul = div.children[0].children[1].children[0];
+
+                  /*!!!*/  ulNodes =ul.children;
+
+                    ul.onmouseleave = function(){
+                        this.style.width = "0px";
+                        setTimeout(function () {
+                            ul.style.display = "none";
+                            ul.parentElement.style.color = "gray";
+                        },1000);
+                        ul.style.height = "0px";
+                    }
+
+                    ulNodes[2].onclick = function (e) {
+                        e.stopPropagation();
+                        selectPlaylistTab.style.display="block";
+                        setTimeout(function () {
+                            selectPlaylistTab.style.opacity = "1";
+                            trackForPLAdd = ul.id;
+                        },100);
+                    }
+
+
+                    div.onmouseleave = function () {div.children[0].style.transform  = "translateX(-80px)";}
+
+                    div.children[1].innerText = tracksStorage[i].artist_name;
+                    div.children[2].innerText = tracksStorage[i].track_name;
+                    div.onmouseover = function () {
+                        this.children[0].style.transform = "translateX(15px)";
+                        this.children[0].style.opacity = "1";
+                        this.children[0].children[1].style.opacity = "1";
+                        this.style.color = "white";
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+let switchTabs = function (tabId) {}
+playlistsButton.onclick = async function () {
+    currentMusicTabId.style.opacity = "0";
+    //switch tabs funct
+    currentMusicTabId.style.display = "none";
+
+    setTimeout(function () {
+        currentMusicTabId = playlistsTab;
+        currentMusicTabId.style.display = "block";
+        currentMusicTabId.style.opacity = "1";
+    }, 1000);
+
+
+    playlistStorage = await JSON.parse(localStorage.getItem("playLists"));
+    if (currentMusicTabId.childElementCount !== playlistStorage.length) {
+        for (let i = 0; i < playlistStorage.length; i++) {
+            let plist = document.createElement("div");
+            playlistsTab.appendChild(plist);
+            plist.className = "tracklistElem";
+            plist.innerText = playlistStorage[i].name;
+        }
+    } else {
+        currentMusicTabId = playlistsTab;
+        currentMusicTabId.style.display = "block";
+        currentMusicTabId.style.opacity = "1";
+    }
+}
+
+
+</script>
+</body>
+</html>

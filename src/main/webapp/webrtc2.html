@@ -11,7 +11,6 @@
 <input id="endCallButton" type="button" disabled value="End Call"/>
 <input type="button" id="connect" value="cnt"/>
 <script type="text/javascript">
-    window.addEventListener("load", pageReady);
 
     let localVideoElem = null;
     let remoteVideoElem = null;
@@ -21,8 +20,14 @@
     let endCallButton = null;
     let peerConn = null;
     let wsc;
+
+
+    const getCookieValue = (name) => {
+        return  document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop()
+    }
+
     document.getElementById("connect").addEventListener("click",function (){
-        wsc = new WebSocket('wss://85fd-213-24-132-239.ngrok.io/chat?'/*+getCookieValue("userNickname")*/);
+        wsc = new WebSocket('wss://1239-217-107-127-33.ngrok.io/chat?'+getCookieValue("userNickname"));
         wsc.onmessage = function (evt) {
             console.log(evt.data);
             let signal = JSON.parse(evt.data);
@@ -32,36 +37,34 @@
             if (signal.sdp) {
                 peerConn.setRemoteDescription(new RTCSessionDescription(signal.sdp));
             } else if (signal.candidate) {
-                peerConn.addIceCandidate(new RTCIceCandidate(signal.candidate));
+                peerConn.addIceCandidate(signal.candidate);
             } else if (signal.closeConnection){
                 endCall();
             }
         };
+        videoCallButton.addEventListener("click", initiateCall);
+        videoCallButton.removeAttribute("disabled");
     })
     let peerConnCfg = {'iceServers':
-                [{'urls': 'stun:stun.services.mozilla.com'},
-                    {'urls': "stun:openrelay.metered.ca:80"},
-                    {'urls': "turn:openrelay.metered.ca:80",
-                        username: "openrelayproject",
-                        credential: "openrelayproject",
-                    },
-                    {
-                        'urls': "turn:openrelay.metered.ca:443",
-                        username: "openrelayproject",
-                        credential: "openrelayproject",
-                     },
-                    {'urls': 'stun:stun.l.google.com:19302'}]
-        };
+             [//{'urls': 'stun:stun.services.mozilla.com'},
+                {'urls': "stun:openrelay.metered.ca:80"},
+                // {'urls': "turn:openrelay.metered.ca:80",
+                //     username: "openrelayproject",
+                //     credential: "openrelayproject",
+                // },
+                {
+                    'urls': "turn:openrelay.metered.ca:443",
+                    username: "openrelayproject",
+                    credential: "openrelayproject",
+                },
+                {'urls': 'stun:stun.l.google.com:19302'}]
+    };
 
-    function pageReady() {
+    videoCallButton = document.getElementById("videoCallButton");
 
-        if(navigator.getUserMedia) {
-            videoCallButton = document.getElementById("videoCallButton");
             endCallButton = document.getElementById("endCallButton");
             localVideoElem = document.getElementById("localVideo");
             remoteVideoElem = document.getElementById("remoteVideo");
-            videoCallButton.removeAttribute("disabled");
-            videoCallButton.addEventListener("click", initiateCall);
             endCallButton.addEventListener("click", function (evt) {
                 wsc.send(JSON.stringify({"closeConnection": true }));
                 localVideoElem.srcObject = null;
@@ -75,13 +78,6 @@
                 wsc.close()
 
             });
-        } else {
-            alert("Sorry, your browser does not support WebRTC!");
-        }
-    };
-
-
-
 
 
     var mediaConstraints = {
@@ -110,7 +106,7 @@
 
     function initiateCall() {
         prepareCall();
-        navigator.getUserMedia(mediaConstraints, function (stream) {
+        navigator.mediaDevices.getUserMedia(mediaConstraints, function (stream) {
             localVideoElem.srcObject = stream;
             peerConn.addStream(stream);
 
@@ -139,7 +135,7 @@
         peerConn.createOffer(
             function (offer) {
                 var off = new RTCSessionDescription(offer);
-                peerConn.setLocalDescription(new RTCSessionDescription(off),
+                peerConn.setLocalDescription(off,
                     function() {
                         // wsc.send(JSON.stringify({"sdp": off }));
                         // wsc.send(JSON.stringify({"sdp": off }));
@@ -163,20 +159,19 @@
     function answerCall() {
         prepareCall();
         // get the local stream, show it in the local video element and send it
-        navigator.getUserMedia({ "audio": true, "video": true }, function (stream) {
+        navigator.mediaDevices.getUserMedia({ "audio": true, "video": true }, function (stream) {
             localVideoElem.srcObject = stream;
 
-           //  let audioContext = new AudioContext();
-           //  var source = audioContext.createMediaStreamSource(stream);
-           //  let osc = audioContext.createOscillator();
-           // osc.frequency.value = 400;
-           // osc.type = "sinea";
-           // source.connect(osc);
-           // osc.connect(audioContext.destination);
+            //  let audioContext = new AudioContext();
+            //  var source = audioContext.createMediaStreamSource(stream);
+            //  let osc = audioContext.createOscillator();
+            // osc.frequency.value = 400;
+            // osc.type = "sinea";
+            // source.connect(osc);
+            // osc.connect(audioContext.destination);
 
 
             peerConn.addStream(stream);
-            console.log(peerConn.getSenders())
             createAndSendAnswer();
         }, function(error) { console.log(error);});
     };
@@ -186,7 +181,7 @@
             function (answer) {
                 var ans = new RTCSessionDescription(answer);
                 peerConn.setLocalDescription(ans, function() {
-                        wsc.send(JSON.stringify({"sdp": ans }));
+                        wsc.send(JSON.stringify({"answer": ans }));
                     },
                     function (error) {
                         console.log(error);

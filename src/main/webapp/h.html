@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>>>></title>
+		<style>
+			body{
+				position: absolute;
+				width: 100%;
+				height: 100%;
+			}
+			#wrapper{
+				position: absolute;
+				width:  100%;
+				height: 15%;
+				top: 35%;
+			}
+			canvas{
+				position: relative;
+				width: 100%;
+				height: 20%;
+				filter: drop-shadow(1px 0px 2px #fdfdfd);
+
+			}
+		</style>
+
+	</head>
+
+	
+
+
+	<body>
+		<audio id="aud1" src="resources/monroe.mp3" controls>
+		</audio>
+
+		<canvas id="can1"></canvas>
+		
+		<script type="text/javascript">
+			window.onload = function(){
+			var audioCtx = new AudioContext();
+			var canvas = document.getElementById('can1');
+			var ctx = canvas.getContext('2d');
+			var analyser = audioCtx.createAnalyser();
+			 analyser.fftSize = 2048;
+			 var bufferLength = analyser.frequencyBinCount;
+             var dataArray = new Uint8Array(bufferLength);
+             var aud1 = document.getElementById('aud1');
+                                            aud1.crossorigin = "anonymous";
+
+               var WIDTH = canvas.width*2;
+                                            var HEIGHT = canvas.height;
+                                            var barWidth = (WIDTH / bufferLength)/2 // дели на 2
+                                            var barHeight;
+                                            var src = audioCtx.createMediaElementSource(aud1);
+                                            src.connect(analyser);
+                                            analyser.connect(audioCtx.destination);
+
+                                            function renderFrame() {
+                                                requestAnimationFrame(renderFrame);
+
+                    // analyser.getByteFrequencyData(dataArray);
+												analyser.getByteFrequencyData(dataArray);
+                                                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                                                // ctx1.clearRect(0, 0, canvas.width, canvas.height);
+                                                x=0;
+                                                for (var i = 0; i < bufferLength; i++) {
+
+                                                    barHeight = dataArray[i] ;
+                                            
+
+                                                    // ctx.filter = 'blur(2px)';
+													ctx.fillStyle = "#f60228"
+                                                    // ctx.fillRect(x*0.5, HEIGHT- barHeight/2, barWidth*2 , barHeight-50);
+													ctx.fillRect(x * 2, HEIGHT - barHeight/2, barWidth*2 , barHeight-30);
+
+                                                    // ctx1.fillStyle = "crimson";
+                                                    // ctx1.shadowColor = "black";
+                                                    // ctx1.shadowOffsetX = 1;
+                                                    // ctx1.shadowOffsetY = 10;
+                                                    // ctx1.shadowBlur = 3;
+
+                                                    // ctx1.fillRect(x * 2, HEIGHT - barHeight / 2, barWidth * 2, barHeight - 30);
+
+
+
+                                                    x += barWidth + 0.5;
+                                                }
+                                            }
+                                            aud1.onplay = function(){
+                                            	audioCtx.resume();
+                                            	renderFrame();
+                                            	aud1.muted = false;
+                                            }
+                                        }
+
+		</script>
+
+
+
+	</body>
+
+</html>

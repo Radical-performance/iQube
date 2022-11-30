@@ -21,15 +21,16 @@ public class HomeFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain ch) throws IOException{
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain ch) throws IOException {
         HttpServletRequest rqst = (HttpServletRequest) req;
         HttpServletResponse resp = (HttpServletResponse) res;
-        HttpSession ses =rqst.getSession(false);
-        System.out.println( "  home filter");
+        HttpSession ses = rqst.getSession(false);
+        System.out.println("  home filter");
+        System.out.println("xxx");
         try {
             if (ses != null || rqst.getCookies() != null) {
-                resp.setStatus(303);
-                resp.sendRedirect(req.getServletContext().getContextPath()+ "/userPage");
+//                resp.setStatus(303);
+                resp.sendRedirect("/userPage");
             } else {
 //                resp.setStatus(200);
                 req.getRequestDispatcher("/home").forward(rqst, resp);

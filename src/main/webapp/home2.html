@@ -232,11 +232,11 @@
             position: absolute;
             z-index: 99999999999;
             width: 5%;
-            height: 45%;
+            height: 65%;
             left: 17%;
             top: 5%;
             transition: 3s linear;
-            filter: drop-shadow(1px 1px 4px #fafafa);
+            filter: drop-shadow(1px -1px 3px #fafafa);
             transform: rotateY(180deg);
 
 
@@ -283,6 +283,79 @@
             transition: 2.5s linear;
             overflow: hidden;;
         }
+        #x{
+            position: absolute;
+            width: 20%;
+            height: 50%;
+            left: 700px;
+            box-shadow: -12px 0px 10px 3px #000;
+            z-index: 100000;
+            background: black;
+            transition: 0.5s ease-out;
+        }
+        #xx{
+            position: absolute;
+            width: 20%;
+            height: 65%;
+            left: 70px;
+            box-shadow: 12px 0px 10px 3px #000;
+            z-index: 100000;
+            background: black;
+            transition: 0.5s linear;
+            top: 50%;
+        }
+        @keyframes shadow {
+            0%{
+                box-shadow: 0 0 0 0;
+            }
+            50%{
+                box-shadow: #0ec 0 0 10px 2px inset, #00ff9f 0 0 5px 0;
+            }
+            80%{
+                box-shadow: #0ec 0 0 5px 2px inset, #00ff9f 0 0 3px 0;
+            }
+            100%{
+                box-shadow: #0ec 0 0 1px 1px inset, #00ff9f 0 0 2px 0;
+            }
+        }
+        #canvas3{
+            position: relative;
+            width: 300%;
+            filter: blur(0px);
+            height: 165%;
+            left: 0%;
+            top: -64%;
+            transform: rotateY(180deg);
+
+        }
+        #canvas4{
+            position: relative;
+            width: 300%;
+            filter: blur(0px);
+            height: 165%;
+            left: 0%;
+            top: -64%;
+            transform: rotateY(180deg);
+
+        }
+        #canvas5{
+            position: relative;
+            width: 300%;
+            filter: blur(0px);
+            height: 165%;
+            left: 0%;
+            top: -64%;
+            transform: rotateY(180deg);
+
+        }
+        #canvas3con{
+            position: absolute;
+            width: 100%;
+            height: 15%;
+            margin: 10px;
+            z-index: 1111111111111;
+        }
+
 
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500&family=Goldman&display=swap" rel="stylesheet">
@@ -291,7 +364,11 @@
 
 </head>
 <body>
+<div id="canvas3con">
+</div>
 <div id="canvas-container" style="position:absolute; z-index: 12121212; width: 100%; height: 50%; left: -10%">
+    <div id="x"></div>
+    <div id="xx"></div>
     <canvas id="canvas"></canvas>
 <div id="text-block">
     <div id="textt">Radical</div>
@@ -308,98 +385,170 @@
 
 </div>
 <audio id="aud1" src="resources/content/sound/2.mp3" muted="muted"></audio>
-
+<html-gl>
 <div id="container-area">
     <div class="container">
-        <div id="back" class="side"></div>
+        <div id="back" class="side">
+            <canvas id="canvas4"></canvas>
+        </div>
         <div id="left" class="side"></div>
         <div id="right" class="side">
-            <div id="login">Sign in</div>
+<!--            <div id="login">Sign in</div>-->
+<!--            <canvas id="can3"></canvas>-->
+            <canvas id="canvas3"></canvas>
+
         </div>
         <div id="top" class="side"></div>
         <div id="bottom" class="side">
             <div id="registration">Sign up</div>
         </div>
-        <div id="front" class="side"></div>
+        <div id="front" class="side">
+            <canvas id="canvas5"></canvas>
+        </div>
     </div>
 </div>
+</html-gl>
     <script>
         window.onload = function () {
-                function playx(){
+            setTimeout(function () {
+                document.querySelectorAll(".side").forEach((e) => {
+                    e.style.boxShadow = "#0ec 0 0 1px 1px inset, #00ff9f 0 0 2px 0";
+                    e.style.border = "1px solid #11ffc7";
+                    e.style.background = "#00000045";
+                });
 
-                    var audio = document.getElementById("aud1");
+            }, 7300);
+            setTimeout(function () {}, 6500);
 
-                    var canvas2 = document.getElementById("canvas2");
-                    let audioCtx = new AudioContext();
-                    var src = audioCtx.createMediaElementSource(audio);
+            setTimeout(function () {
+                document.getElementById("aud1").src = "resources/content/sound/1.mp3";
+                document.getElementById("aud1").removeAttribute("muted");
+            }, 3500);
 
-                    let canvas = document.getElementById("canvas");
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
+            var analyser;
+            var audioCtx;
+            var src;
+            var canvas2;
+            var canvas4 = document.getElementById("canvas4");
+            var ctx;
+            var ctx2;
+            var ctx3;
+            var canvas5= document.getElementById("canvas5");
 
-                    var ctx = canvas.getContext("2d");
-                    var ctx2 = canvas2.getContext("2d");
-                    var analyser = audioCtx.createAnalyser();
-                    analyser.fftSize = 1024;
-                    var bufferLength = analyser.frequencyBinCount;
-                    var dataArray = new Uint8Array(bufferLength);
-                    var WIDTH = canvas.width;
-                    var HEIGHT = canvas.height;
-                    var barWidth = (WIDTH / bufferLength) ;
-                    var barHeight;
+            function playx() {
+                audioCtx = new AudioContext();
+
+                var gainNode = audioCtx.createGain();
+                var biquadFilter = audioCtx.createBiquadFilter();
+                var audio = document.getElementById("aud1");
+
+                canvas2 = document.getElementById("canvas2");
+                src = audioCtx.createMediaElementSource(audio);
+
+                let canvas = document.getElementById("canvas");
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+
+                ctx = canvas.getContext("2d");
+                 ctx2 = canvas4.getContext("2d");
+                ctx3 = canvas5.getContext("2d");
+
+                analyser = audioCtx.createAnalyser();
+                analyser.fftSize = 2048;
+                var bufferLength = analyser.frequencyBinCount;
+                var dataArray = new Uint8Array(bufferLength);
+                var WIDTH = canvas.width;
+                var HEIGHT = canvas.height;
+                var barWidth = (WIDTH / bufferLength);
+                var barHeight;
+                src.connect(analyser).connect(audioCtx.destination);
+                // src.connect(analyser).connect(biquadFilter).connect(gainNode).connect(audioCtx.destination);
+                // biquadFilter.type = "bandpass";
+                // biquadFilter.frequency.value = 140;
+                // biquadFilter.gain.value = 115;
+                function renderFrame() {
+                    requestAnimationFrame(renderFrame);
+
+                    var xx = 0;
+
+                    analyser.getByteFrequencyData(dataArray);
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx2.clearRect(0, 0, canvas4.width, canvas4.height);
+                    ctx3.clearRect(0, 0, canvas5.width, canvas5.height);
+
+
+
+                    for (var i = 0; i < bufferLength; i++) {
+                        barHeight = dataArray[i];
+
+                        ctx.fillStyle = "#fafafa";
+                        ctx2.fillStyle = "#fafafa";
+                        ctx3.fillStyle = "#fafafa";
+
+                        ctx.fillRect(xx*2, HEIGHT - barHeight, barWidth * 2, barHeight*2);
+                        ctx2.fillRect(xx*2, HEIGHT - barHeight, barWidth * 2, barHeight*2);
+                        ctx3.fillRect(xx*2, HEIGHT - barHeight, barWidth * 2, barHeight*2);
+
+                        xx += barWidth + 1;
+                    }
+                }
+
+                audio.muted = false;
+                renderFrame();
+                document.getElementById("text-block").style.width = "20%";
+                canvas.style.left = "28%";
+                // canvas.style.top = "8%"
+                window.removeEventListener("mousemove", playx);
+                setTimeout(function () {
+                    src.disconnect();
+
+                    audio.src = "resources/content/sound/1.mp3";
+                    document.getElementById("performanceTextWraper").style.width = "100%";
+
+                    canvas2.height = window.innerHeight / 40;
+                    // canvas2.width = window.innerWidth*0.2;
+                    HEIGHT = canvas2.height * 2;
+                    WIDTH = canvas2.width * 2;
+                    barWidth = (WIDTH / bufferLength);
+
+                    analyser.disconnect(audioCtx.destination);
+
+                    ctx = null;
+                    ctx = canvas2.getContext("2d");
                     src.connect(analyser).connect(audioCtx.destination);
 
-                    function renderFrame() {
-                        requestAnimationFrame(renderFrame);
-
-                        var xx = 0;
-
-                        analyser.getByteFrequencyData(dataArray);
-                        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                        for (var i = 0; i < bufferLength; i++) {
-
-                            barHeight = dataArray[i];
-
-                            ctx.fillStyle = "#fafafa";
-
-                            ctx.fillRect(xx *2 , HEIGHT - barHeight, barWidth*2, barHeight);
-
-                            xx += barWidth + 1;
-                        }
-
-                    }
-
-                    audio.muted = false;
                     audio.play();
+
+                    canvas2.style.left = "100%";
+
                     renderFrame();
-                    document.getElementById("text-block").style.width = "20%";
-                    canvas.style.left = "28%";
-                    // canvas.style.top = "8%"
-                    window.removeEventListener("mousemove",playx);
+
                     setTimeout(function (){
-                        audio.src = "http://localhost:8080/iQube/resources/content/sound/1.mp3";
-                        document.getElementById("performanceTextWraper").style.width = "100%";
                         src.disconnect();
-
-                        canvas2.height = window.innerHeight/40;
-                         // canvas2.width = window.innerWidth*0.2;
-                        HEIGHT = canvas2.height*2;
-                        WIDTH =canvas2.width*2;
-                        barWidth = (WIDTH / bufferLength);
-
-
-                        analyser.disconnect(audioCtx.destination);
-
+                        canvas3 = document.getElementById("canvas3");
+                        canvas = canvas3;
                         ctx = null;
-                        ctx = canvas2.getContext("2d");
+                        analyser.fftSize = 1024;
+                        ctx = canvas3.getContext("2d");
+                        WIDTH = canvas3.width*2;
+                        HEIGHT = canvas3.height*1.8;
+                        document.getElementById("canvas2").remove();
+                        document.getElementById("aud1").src = "resources/content/sound/monroe.mp3";
                         src.connect(analyser).connect(audioCtx.destination);
-                        audio.play();
-                        canvas2.style.left = "100%";
+
+                        document.getElementById("aud1").play();
                         renderFrame();
 
-                    },3500);
-                }
+                        document.getElementById("x").style.left = "325px";
+                        document.getElementById("xx").style.left = "325px";
+                        document.querySelectorAll(".side").forEach((e) => {
+                            e.style.animation = "shadow 0.8s ease-out";
+                        });
+                    },2500);
+                }, 3500);
+            }
+
+
 
             window.addEventListener("mousemove", playx);
 
@@ -421,12 +570,12 @@
             let cube = document.querySelector(".container");
 
 
-            setTimeout(function (){
-                cube.style.top = "35%";
-
-                cube.style.transform = "rotate3d(7,45,-10,226deg)";
-
-            },3000);
+            // setTimeout(function (){
+            //     // cube.style.top = "35%";
+            //
+            //     cube.style.transform = "rotate3d(7,45,-10,226deg)";
+            //
+            // },3000);
 
 
 
