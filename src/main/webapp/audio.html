@@ -549,9 +549,7 @@
         <div id="can3wrapper">
             <canvas id="can3"></canvas>
         </div>
-        <div id="can4wrapper">
             <canvas id="can4"></canvas>
-        </div>
 
     </div>
 
@@ -875,7 +873,9 @@
         progress.style.boxShadow = "white 0 0 10px 0";
         audio.pause();
         setTimeout(function (){progress.style.boxShadow = "0 0 0 0 white";},400);
-        setTimeout(function () {var clickedPosition = event.clientX - event.target.offsetLeft;
+        setTimeout(function () {
+
+            var clickedPosition = event.clientX - event.target.offsetLeft;
             audio.currentTime = (clickedPosition / progressBar.offsetWidth) * audio.duration;audio.play();}, 50);});
     //rendering...
 let src = null;
@@ -920,7 +920,7 @@ window.onload = function(){
     var ctx2 = canvas2.getContext("2d");
     var ctx3 = canvas3.getContext("2d");
     var ctx4 = canvas4.getContext("2d");
-    analyser.fftSize = 512;
+    analyser.fftSize = 256;
     var bufferLength = analyser.frequencyBinCount;
     var dataArray = new Uint8Array(bufferLength);///////////////<---------------
     var WIDTH = canvas.width;
