@@ -23,13 +23,56 @@ public class Music extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException, NullPointerException {
-        System.out.println(req.getParameter("name"));
-        //тут надо проксировать через nginx, но пока тяжеловато идёт эта тема, нужно сменть подход
-        //пока это будет прокси сервлет...
-        try {
+        System.out.println(req.getRequestURL());
+        System.out.println(req.getParameterNames().nextElement());
+        if (req.getParameter("artist_tracklist") != null) {
+            System.out.println("aga contain");
+            String uri = req.getRequestURI();
+            try {
+                System.out.println(uri);
+                URL url = new URL("https://api.deezer.com/artist/" + req.getParameter("artist_tracklist") + "/top?limit=50");
+                System.out.println(url);
+                HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+
+
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestMethod("GET");
+                connection.setReadTimeout(5000);
+                connection.setConnectTimeout(5000);
+                connection.connect();
+                resp.addHeader("Content-Type", "application/json; charset=utf-8");
+                resp.addHeader("Access-Control-Allow-Origin", "*");
+                resp.addHeader("Cache-Control", "private, max-age=3600");
+                resp.addHeader("Connection", "close");
+
+
+                String inputLine;
+                StringBuilder content = new StringBuilder();
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+                while ((inputLine = in.readLine()) != null) {content.append(inputLine);}
+
+
+//                System.out.println(content);
+                connection.disconnect();
+//            in.lines().forEach(System.out::println);
+
+                in.close();
+
+                PrintWriter writer = resp.getWriter();
+                writer.print(content);
+                writer.flush();
+                writer.close();
+            }catch (IOException e){e.printStackTrace();}
+        } else {
+
             System.out.println(req.getParameter("name"));
-            URL url = new URL("https://api.deezer.com/search?q=" + req.getParameter("name"));
-            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+            //тут надо проксировать через nginx, но пока тяжеловато идёт эта тема, нужно сменть подход
+            //пока это будет прокси сервлет...
+            try {
+                System.out.println(req.getParameter("name"));
+                URL url = new URL("https://api.deezer.com/search?q=" + req.getParameter("name"));
+                HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Content-Type", "application/json");
                 connection.setReadTimeout(5000);
@@ -45,7 +88,8 @@ public class Music extends HttpServlet {
                 StringBuilder content = new StringBuilder();
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 while ((inputLine = in.readLine()) != null) {
-                    content.append(inputLine);}
+                    content.append(inputLine);
+                }
 
                 System.out.println(connection.getResponseCode());
                 connection.disconnect();
@@ -54,13 +98,62 @@ public class Music extends HttpServlet {
                 in.close();
 
 
-            PrintWriter writer = resp.getWriter();
-            writer.print(content);
-            writer.flush();
-            writer.close();
+                PrintWriter writer = resp.getWriter();
+                writer.print(content);
+                writer.flush();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        catch (IOException e) {
-            e.printStackTrace();}
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        System.out.println("aga contain");
+//        String uri = req.getRequestURI();
+//try {
+//    System.out.println(uri);
+//    URL url = new URL("https://api.deezer.com/artist/" + req.getParameter("tracklist") + "/top?limit=25");
+//    System.out.println(url);
+//    HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+//
+//
+//            connection.setRequestProperty("Content-Type", "application/json");
+//            connection.setRequestMethod("GET");
+//    connection.setReadTimeout(5000);
+//    connection.setConnectTimeout(5000);
+//    connection.connect();
+//    resp.addHeader("Content-Type", "application/json");
+//    resp.addHeader("Access-Control-Allow-Origin", "*");
+//    resp.addHeader("Cache-Control", "private, max-age=3600");
+//
+//
+//    String inputLine;
+//    StringBuilder content = new StringBuilder();
+//    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+//
+//    while ((inputLine = in.readLine()) != null) {content.append(inputLine);}
+//
+//
+//    System.out.println(content);
+//    connection.disconnect();
+////            in.lines().forEach(System.out::println);
+//
+//    in.close();
+//
+//    PrintWriter writer = resp.getWriter();
+//    writer.print(content);
+//    writer.flush();
+//    writer.close();
+//}catch (IOException e){
+//    e.printStackTrace();
+//}
+
+
+
+
+
     }
     // playPause.onclick = function () {
     //     audio.load();

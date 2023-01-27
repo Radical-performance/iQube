@@ -57,11 +57,12 @@
             }
 
             .playlistElem{
-                position: relative;
-                height: 15%;
-                margin: 12%;
-                border: 1px solid red;
-                width: 22%;
+                width: 100%;
+                transform: translateY(50px);
+                margin-top: 5%;
+                display: block;
+                margin-left: 5%;
+                height: 10%;
             }
 
             #searchWrapper{
@@ -154,7 +155,8 @@
                 display: inline-block;
                 width: 15%;
                 height: 21%;
-                border: 1px solid #eb5353;
+                border: 2px solid black;
+                box-shadow: 0 0 5px 3px black;
                 border-radius: 15px;
                 margin: 1%;
                 transition: 1s ease-out;
@@ -167,7 +169,7 @@
                 margin: 32%;
             }
 
-            .playlists_pane_elem_container:hover {
+            .playlists_pane_elem_icon:hover {
                 box-shadow: inset black 0 3px 5px 1px;
             }
 
@@ -656,13 +658,15 @@
 
                     #pl_tracks{
                         position: absolute;
-                        top: 40%;
-                        width: 100%;
-                        height: 60%;
-                        background: linear-gradient(10deg, #000000, #0000001f);
-                        box-shadow: 0 0 12px 5px black;
+                        width: 45%;
+                        height: 100%;
+                        background: linear-gradient(90deg, #000000c7, #00000080);
+                        box-shadow: 11px 0 26px 1px black;
                         backdrop-filter: blur(2px);
+                    }
 
+                    #pl_tracks::-webkit-scrollbar{
+                        display: none;
                     }
 
                     #playlist_image_container{
@@ -699,43 +703,268 @@
                     }
 
                     #cur_playlist_title{
-                        color: white;
+                        color: #ffffffe8;
                         position: absolute;
                         top: 5%;
-                        left: 27%;
+                        left: 50%;
                         width: 110%;
-                        text-decoration-line: underline;
+                        /* text-decoration-line: underline; */
                         margin: 4%;
                         padding: 4%;
                         backdrop-filter: blur(3px);
                         font-size: 75px;
                         text-shadow: 1px 1px 3px #ffffff, 2px 0 1px #ffffff;
-                        font-family: 'Audiowide';
+                        font-family: fantasy;
                         height: 8%;
-
                     }
-                    #playlistElement{
+
+
+                    .playlistElement{
+                        width: 80%;
+                        margin-top: 5%;
                         display: block;
-                        width: 60%;
+                        margin-left: 10%;
                         height: 10%;
-                        border: 1px solid red;
 
                     }
-            .pl_elem_play_btn{
-                display: inline;
-                width: 10%;
-                height: 100%;
-                color: blue;
+                    .pl_elem_play_btn{
+                        width: 20%;
+                        font-size: xx-large;
+                        position: relative;
+                        height: 101%;
+                        color: #14ff89;
+                        float: left;
+                    }
+
+                    .pl_play_icon{margin: 37%;}
+
+                    .music_info{
+                        position: relative;
+                        float: right;
+                        color: wheat;
+                        width: 80%;
+                        height: 100%;
+                        margin-top: 1%;
+                    }
+            .pl_songName{
+                width: 250%;
+                font-size: x-large;
+                height: 25%;
+                letter-spacing: 0px;
+                color: rgb(205 205 205 / 99%);
+                font-weight: 900;
+                font-family: 'system-ui';
             }
-            .pl_play_icon{
+
+            .pl_artistName{
+                font-size: larger;
+                float: left;
+                position: relative;
+                top: 5%;
+                color: red;
+                font-family: 'Audiowide';
+                cursor: pointer;
+                text-shadow: none;
+                transition: 0.5s ease-out;
+            }
+
+            .pl_artistName:hover{
+                transition: 0.5s ease-in;
+                text-shadow: 0 0 4px red;
+            }
+            .pl_albumName{
+                width: 53%;
+                height: 55%;
+                margin-left: 10%;
+                display: inline;
+                top: 10%;
+                color: red;
+            }
+
+            #test{
+                position: absolute;
+                width: 100%;
+                z-index: 121212;
+                height: 100%;
+                opacity: 0;
+                display: none;
+                transition: 1s linear
+            }
+
+            #currentArtistTab{
+                position: absolute;
+                display: none;
+                width: 100%;
+                height: 100%;
+                background-size: cover;
+                opacity: 0;
+                background-image: none;
+                background-color: rgba(0, 0, 0, 0.94);
 
             }
-            .pl_artistName{
-                display: inline;
+
+            .cur_artist_albums{
+                position: relative;
+
+                height: 100%;
+                transform: translatey(-0px) translateX(500px);
+                box-shadow: 0 0 6px -1px #00ffc7;
+                width: 65%;
+                border-radius: 1%;
+                background: #060606d9;
             }
-            .pl_songName{
-                display: inline;
+
+            #cur_artist_bg{
+                width: 100%;
+                height: 100%;
+                top: 17%;
+                background-color: #0000008a;
+                background-image: none;
+                background-size: cover;
+                position: absolute;
+                opacity: .2;
+                box-shadow: 0 23px 60px 30px black inset;
             }
+
+            #cur_artist_name_wrapper{
+                position: relative;
+                width: 85%;
+                height: 12%;
+                color: white;
+                font-family: 'AUDIOWIDE';
+                font-size: 60px;
+                text-decoration: underline black;
+                margin: 3%;
+                text-shadow: -1px -1px 3px white;
+            }
+
+                    #cur_artist_albums{
+                        position: relative;
+
+                        height: 100%;
+                        transition: 1s linear;
+                        transform: translatey(0px) translateX(500px);
+                        box-shadow: 0px 0 6px -1px #00ffc7;
+                        width: 65%;
+                        border-radius: 1%;
+                        background: #060606d9;
+                    }
+
+                    #cur_artist_tracklist{
+                        position: relative;
+                        /*height: 100%;*/
+                        /*transform: translatey(-20%) translateX(90%);*/
+                        height: 70%;
+                        top: 7%;
+                        left: 7%;
+                        box-shadow: 0 0 5px 5px #000000;
+                        width: 80%;
+                        backdrop-filter: blur(4px);
+                        margin: 1%;
+                        border-radius: 1%;
+                        background: #000000b8;
+                        float: left;
+                        overflow-x: hidden;
+                        overflow-y: scroll;
+                    }
+                    #cur_artist_tracklist::-webkit-scrollbar{display: none;}
+
+                    #selector_wrapper{
+                        position: absolute;
+                        width: 70%;
+                        font-family: system-ui;
+                        display: flex;
+                        text-shadow: 0 0 1px red;
+                        font-size: x-large;
+                        color: #038957;
+                        transform: translateX(36px);
+                        height: 29%;
+                        flex-wrap: wrap;
+                        align-content: space-between;
+                        align-items: stretch;
+                        flex-direction: row;
+                        overflow: hidden;
+                        transition: 1s ease-out;
+                    }
+
+                    .sel{
+                        padding: 5px;
+                        transition: 0.5s linear;
+                        cursor: pointer;
+                        overflow: hidden;
+                    }
+                    .sel:hover{width: 0%;}
+
+                    .artist_songs{
+                        width: 100%;
+                        height: 15%;
+                        position: relative;
+                        float: left;
+                        margin: 1%;
+                        transition: 0.5s;
+                        box-shadow: none;
+                    }
+                    .artist_songs:hover{
+                        box-shadow: 0 0 15px 0 white inset;
+                    }
+
+                    .art_song_album_img{
+                        position: relative;
+                        float: left;
+                        width: 8%;
+                        height: 90%;
+                        margin: 1%;
+                        border: 1px solid #6c6c6c;
+                        box-shadow: none;
+                        transition: 0.5s;
+                    }
+
+
+
+                    .art_song_title{
+                        display: block;
+                        color: white;
+                        font-size: x-large;
+                        /*width: 70%;*/
+                        text-align: left;
+                        font-family: 'Audiowide';
+                        height: 35%;
+                        margin-left: 1%;
+                        margin-top: 1%;
+                        overflow-x: hidden;
+                        overflow-y: hidden;
+                        cursor: pointer;
+                    }
+
+                    .art_song_album_title{
+
+                        display: inline-block;
+                        float: left;
+                        color: #6a6a6a;
+                        font-size: larger;
+                        width: 66%;
+                        height: 80%;
+                        margin-top: 1%;
+                        margin-left: 1%;
+                        font-family: 'Comfortaa',Serif;
+                        transition: 0.5s ease-out;
+                        text-shadow: none;
+                    }
+                    .art_song_album_title:hover{
+                        color: #00ff66;
+                        transition: 0.5s linear;
+                        text-shadow: 0 1px 7px #00ff66;
+
+                    }
+
+                    .song_play_btn{
+                        color: #00ff8b;
+                        font-size: 25px;
+                        text-shadow: 4px 2px 5px black,-2px 0 5px black;
+                        margin: 36%;
+                        transform: rotateX(90deg);
+                        transition: 0.5s;
+                    }
 
 
 
@@ -823,24 +1052,38 @@
 
         <div id="tracklistWraper">
 
-            <div id="currentArtistTab"></div>
-            <div id="currentAlbumTab"></div>
+            <div id="currentArtistTab">
+                <div id="cur_artist_bg"></div>
+                <div id="cur_artist_name_wrapper">
+                    <div id="cur_artist_name"></div>
+                    <div id="selector_wrapper">
+                        <div class="sel">Tracks</div>
+                        <div class="sel">|</div>
+                        <div class="sel">Albums</div>
+                    </div>
+                </div>
+                <div id="cur_artist_tracklist"></div>
+                <div id="cur_artist_albums"></div>
+            </div>
+
+            <div id="currentAlbumTab">
+                <div id="cur_album_img_container">
+                    <div id="cur_album_img"></div>
+                </div>
+                <div id="cur_album_song_list"></div>
+            </div>
+
             <div id="playListsPane"></div>
 
-            <div id="test" style="
-             position: absolute;
-             width: 100%;
-             z-index: 121212;
-             height: 100%;
-             opacity: 0;
-             display: none;
-             transition: 1s linear;">
+            <div id="test">
                 <div id="playlist_image_container">
                     <div class="cur_playlist_img"></div>
                 </div>
-                <div id="cur_playlist_title"></div>
 
-                <div id="pl_tracks"></div>
+                <div id="cur_playlist_title"></div>
+                <div id="pl_tracks">
+
+                </div>
 
             </div>
 
@@ -967,48 +1210,48 @@ window.onload = function(){audioBuffers = []; source = null;}
 
 
 function  update_artistInfo(){
-    if(current_tab_playing === "searchedTracksTab"){
+    if(current_tab_playing.id === "searchedTracksTab"){
         if(search_data.data.length === numba){numba = 0;}
         audio_url = search_data.data[numba].preview;
 
         artistImage.src = search_data.data[numba].artist.picture_medium;
         artistName.innerText = search_data.data[numba].artist.name;
-    }else if(current_tab_playing === "tracklistTab"){
-
-
-        if(tracklist.tracks.length === numba){
-            numba = 0;
-            console.log('2222222');
-        }
+    }else if(current_tab_playing.id === "tracklistTab"){
         audio_url = tracklist.tracks[numba].url;
 
+
+        if(tracklist.tracks.length === numba){numba = 0;}
         artistImage.src = tracklist.tracks[numba].artist_picture;
         artistName.innerText = tracklist.tracks[numba].artist.name;
+    }else if(current_tab_playing.id === "cur_artist_tracklist"){
+
+        artistImage.src = currentArtistTab.getAttribute("img_url");
+        artistName.innerText =currentArtistTab.getAttribute("name");
+        console.log(current_artist_tracks + " ____CURRNT ART TRSCKS")
+
+        if(current_artist_tracks.data.length === numba){numba = 0;}
     }
 }
 
 
 
     async function load_and_decode() {
+        if(audioContext === null){
+            audioContext = new AudioContext();
+            analyzer = audioContext.createAnalyser();
+            analyzer.fftSize = 512;
+            gainNode = audioContext.createGain();
+            gainNode.connect(analyzer);
+            analyzer.connect(audioContext.destination);
+        }
+
         var xhr = new XMLHttpRequest();
         xhr.open("GET", audio_url);
         xhr.responseType = "arraybuffer";
-        xhr.onload =  whenLoaded;
+        xhr.onload = await whenLoaded;
         xhr.send();
 
-         async function whenLoaded(e) {
-            var data = xhr.response;
 
-            if(data === null){alert('problem on load');}
-
-            await   audioContext.decodeAudioData(data,whenDecoded,decodingError);
-
-            play(numba);
-             await search_cache.add(new Request(audio_url));
-
-             console.log('numba  val'+ numba + 'after decoding');
-
-        }
         function whenDecoded(audiobuffer){
              audioBuffers.push(audiobuffer);
              console.log(audioBuffers.length);
@@ -1030,6 +1273,25 @@ function  update_artistInfo(){
 
         }
 
+        async function whenLoaded(e) {
+            let data = await xhr.response;
+            search_cache.add(new Request(audio_url));
+
+            if(audioContext === null){
+                audioContext = new AudioContext();
+            }
+            if (data === null) {
+                alert('problem on load');
+            } else {
+                await audioContext.decodeAudioData(xhr.response, whenDecoded, decodingError);
+                play(numba);
+            }
+
+
+            console.log('numba  val'+ numba + 'after decoding');
+
+        }
+
     }
 
     let rate_counter = null;
@@ -1048,8 +1310,8 @@ function  update_artistInfo(){
             startedAt = null;
             duration = null;
             rate_counter = null;
-            document.getElementById(current_tab_playing).children[numba].children[0].children[0].classList.add('fa-play');
-            document.getElementById(current_tab_playing).children[numba].children[0].children[0].classList.remove('fa-pause');
+            document.getElementById(current_tab_playing.id).children[numba].children[0].children[0].classList.add('fa-play');
+            document.getElementById(current_tab_playing.id).children[numba].children[0].children[0].classList.remove('fa-pause');
             numba+=1;
 
             update_artistInfo();
@@ -1074,11 +1336,11 @@ function  update_artistInfo(){
     function play() {
         var playing_now;
         if(numba === 0)
-        {playing_now = document.getElementById(current_tab_playing).children[numba];}
+        {playing_now = document.getElementById(current_tab_playing.id).children[numba];}
         else
-        {playing_now = document.getElementById(current_tab_playing).children[numba-1];}
+        {playing_now = document.getElementById(current_tab_playing.id).children[numba-1];}
 
-        var need_to_play_now = document.getElementById(current_tab_playing).children[numba];
+        var need_to_play_now = document.getElementById(current_tab_playing.id).children[numba];
 
         if(isPlaying === true){//?!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!watch top
             playing_now.children[0].children[0].classList.add('fa-play');
@@ -1102,8 +1364,6 @@ function  update_artistInfo(){
         bufferLength = analyzer.frequencyBinCount;
         dataArray = new Uint8Array(bufferLength);
         startedAt = Date.now();
-
-
 
         source.start();
         interval = setInterval(change,500);
@@ -1152,7 +1412,9 @@ function  update_artistInfo(){
 
     let smartTime = function smartTime(time) {return time < 10 ? "0" + time.toString().trim() : time};
 
-
+let l = document.getElementById("left");
+let r =document.getElementById("right");
+let t = document.getElementById("top");
         let counter;
 
 
@@ -1176,12 +1438,16 @@ function  update_artistInfo(){
                 can2_context.fillStyle = "#fafafa";
                 can1_context.lineCap = "round";
                 can2_context.lineCap = "round";
+                l.style.transform = "translateX(-" + dataArray[3]/2.2 +"px) rotateY(90deg)";
+                r.style.transform = "translateX(" + dataArray[3]/2.2 +"px) rotateY(90deg)";
+                t.style.transform = "translateY(-" + dataArray[3]/2.2 +"px) rotateX(90deg)";
 
 
 
-                can1_context.fillRect(counter+2, HEIGHT - barHeight / 2, barWidth*0.4, barHeight -100);
-                can2_context.fillRect(counter, HEIGHT - barHeight / 2, barWidth / 2, barHeight-50 );
-                counter += barWidth + 0.8;
+
+                can1_context.fillRect(counter*1.8, HEIGHT - barHeight / 2, barWidth*1.9 , barHeight -70);
+                can2_context.fillRect(counter*1.8, HEIGHT - barHeight / 2, barWidth *2, barHeight-70);
+                counter += barWidth + 0.9;
 
             }
 
@@ -1363,14 +1629,13 @@ function  update_artistInfo(){
 
 
 
-let numba;
+let numba = 0;
     let current_tab_playing = null;
 
 
     let initListeners = function(el, data) {
 
         let ul = el.children[0].children[1].children[0];
-        let elem = el;
         el.addEventListener("mouseover", function () {
             el.children[0].style.transform = "translateX(15px)";
             el.children[0].style.opacity = "1";
@@ -1380,7 +1645,6 @@ let numba;
 
         el.addEventListener("mouseleave", function () {
             el.children[0].children[1].style.opacity = "0";
-            // div.children[0].style.opacity = "0";
             el.children[0].style.transform = "translateX(-50px)";
             el.style.color = "#ccff0af9";
         });
@@ -1412,17 +1676,17 @@ let numba;
             change_current_tab(selectPlaylistTab);
             if (lastTab.id === "searchedTracksTab") {
                 track_for_playlist_adding = search_data.data[parseInt(ul.getAttribute("number"), 10)].id;
-                console.log(track_for_playlist_adding + "   id of variable \'track_for_playlist_adding\'    FROM SEARCH_TAB");
+                console.log(track_for_playlist_adding + "----++   id of variable \'track_for_playlist_adding\'    FROM SEARCH_TAB");
             } else if (lastTab.id === "tracklistTab") {
                 console.log(ul.parentElement.parentElement.getAttribute("id"));
                 track_for_playlist_adding = ul.getAttribute("id");
-                console.log(track_for_playlist_adding + "   id of variable \'track_for_playlist_adding\'    FROM TRACKLIST_TAB");
+                console.log(track_for_playlist_adding + "----++   id of variable \'track_for_playlist_adding\'    FROM TRACKLIST_TAB");
             }
         });
 
         el.children[0].children[0].addEventListener('click',  function (e) {
             if(isPlaying === true && current_tab_playing != null){
-                var ee = document.getElementById(current_tab_playing).children[numba];
+                var ee = document.getElementById(current_tab_playing.id).children[numba];
 
                 ee.children[0].children[0].classList.add('fa-play');
                 ee.children[0].children[0].classList.remove('fa-pause');
@@ -1438,28 +1702,26 @@ let numba;
                 analyzer.connect(audioContext.destination);
             }
 
-            if ( parent_elem.id === 'searchedTracksTab') {
+             if ( parent_elem.id === 'searchedTracksTab') {
                 numba = parseInt(e.target.parentElement.children[1].children[0].getAttribute("number"));
                 audio_url = search_data.data[numba].preview;
                 console.log(numba + '    NUM');
-                current_tab_playing = parent_elem.id;
+                // current_tab_playing = parent_elem.id;
+                 current_tab_playing = parent_elem;
 
-            }else{
-                if(parent_elem.id === 'tracklistTab'){
 
-                    current_tab_playing = parent_elem.id;
-                    var id_atr = e.target.parentElement.children[1].children[0].getAttribute("id");
-                    tracklist = local_get_tracklist();
-                    // numba = 0;
-                    numba = local_get_tracks_ids().identificators.indexOf(parseInt(id_atr,10),0);
-                    audio_url = tracklist.tracks[numba].url;
+             }
+            else if(parent_elem.id === "tracklistTab"){
+                 numba = tracklist_tracks_identificarors.identificators.indexOf(parseInt(e.target.parentElement.children[1].children[0].getAttribute("id")));
+                 audio_url = tracklist.tracks[numba].preview;
+                 // current_tab_playing = parent
+                 // _elem.id;
+                 current_tab_playing = parent_elem;
 
-                    console.log(numba + '    ID');
-                    console.log(audio_url);
-                }
-            }
+             }
             update_artistInfo();
-            load_and_decode(numba);
+            // load_and_decode(numba);
+            load_and_decode();
 
         })
     }
@@ -1564,9 +1826,6 @@ let numba;
             c_ul.children[3].children[0].style.color = "white";
             c_ul.children[3].children[2].innerText = 'add to tracklist';
             c_ul.children[3].addEventListener('click',function (){add_to_tracklist(c_ul.parentElement.parentElement.parentElement)},{once : true});
-
-            console.log('idid');
-
         }
         else if(ul.closest("#searchedTracksTab")) {
             val = ul.getAttribute("number");
@@ -1599,16 +1858,14 @@ let numba;
         ul.children[3].children[0].style.transform = "rotate(0deg)";
         ul.children[3].children[0].style.color = "white";
         ul.children[3].children[2].innerText = 'add to tracklist';
-
-            remove_from_tracklist_request(deleting_track);
+        remove_from_tracklist_request(deleting_track);
         }
 
 
     searchButton.addEventListener("click", search, true);
 
-
-            let addNewPlaylistButton = document.getElementById("addNewPlaylistButton");
-            let addNewPlaylistTitle = document.getElementById("addNewPlaylistTitle");
+    let addNewPlaylistButton = document.getElementById("addNewPlaylistButton");
+    let addNewPlaylistTitle = document.getElementById("addNewPlaylistTitle");
 
     let create_tracklistTab_element = function (data) {
         let div = createEl(data);
@@ -1639,14 +1896,18 @@ let change_button = function (button){
                 }
                 else{
                     currentTab.style.opacity = "0";
-                    currentTab.style.zIndex = "0";
+                    currentTab.style.display = "none"
+                    currentTab.style.zIndex = "0";  ///???????????????????<<<<<<----убрать з индекс?
                     lastTab = currentTab;
                     console.log(lastTab.id + ' lastTAB');
 
                 }
                 currentTab = tab;
+                currentTab.style.position ="absolute";
+                currentTab.style.width = "100%";
+                currentTab.style.height = "100%"
                 currentTab.style.display = "inline";
-                currentTab.style.zIndex = "11113";
+               currentTab.style.zIndex = "11113";   ///???????????????????<<<<<<----убрать з индекс?
                 setTimeout(function () {currentTab.style.opacity = "1";}, 100);
 
                 console.log(currentTab.id + ' currentTAB');
@@ -1657,188 +1918,321 @@ let change_button = function (button){
     let pl_titles;
     let track_for_playlist_adding;
 
+
+    let currentArtistTab = document.getElementById("currentArtistTab");
+    let cur_artist_tracklist = document.getElementById("cur_artist_tracklist");
+    let select_wraper = document.getElementById("selector_wrapper");
+    select_wraper.onmouseover = function(){select_wraper.style.width = "0%"}
+    select_wraper.onmouseleave = function(){select_wraper.style.width = "70%"}
+
     let testTab = document.getElementById("test");
+
+
+    let current_pl_number = null;
+    let current_artist_tracks = null;
+    let create_playlist_song_element = async function () {
+        // console.log('create_playlist_song_element()' + '   pl_number  ' + pl_number);
+
+        let div = document.createElement("div");
+        div.className = "playlistElement";
+        div.innerHTML =
+            //'<div class=\"pl_elem_play_btn\"><i class=\"pl_play_icon fa-solid fa-play\"></i></div>' +
+            "<div class=\"music_info\">" +
+            "<div class=\"pl_songName\"></div>" +
+            "<div class=\"pl_artistName\" pl_song_number=\"null\"></div>" +
+            "</div>";
+
+        await testTab.children[2].appendChild(div);
+        let track_number = testTab.children[2].children.length-1;
+
+        await div.children[0].children[1].setAttribute("pl_song_number",track_number.toString());
+       div.children[0].children[1].addEventListener("click",async function (){
+           let current_playlist_track =  playlists.lists[current_pl_number].tracks[track_number];
+           currentArtistTab.setAttribute("artist_id", current_playlist_track.artist.id);
+           currentArtistTab.setAttribute("img_url", current_playlist_track.artist.picture_medium);
+           currentArtistTab.setAttribute("name", current_playlist_track.artist.name);
+
+           let tracks_data =await get_artist_tracklist_request(current_playlist_track.artist.id);
+           current_artist_tracks = tracks_data;
+           let elements_count = cur_artist_tracklist.children.length;
+
+          let counter = null;
+
+           if (elements_count === 0) {
+               tracks_data.data.forEach((data) => {console.log(data);create_artist_tracklist_song_element(data);});
+           } else {
+               if (elements_count > tracks_data.data.length) {
+                   counter = elements_count - tracks_data.data.length;
+                   for (let j = 0; j < counter; j++) {await cur_artist_tracklist.lastElementChild.remove();}
+               } else if(elements_count < tracks_data.data.length){
+                   counter = tracks_data.data.length - elements_count;
+                   for (let j = 0; j <counter; j++) {
+                       console.log(cur_artist_tracklist.children.length + ' ``````````` '+ tracks_data.data.length);
+                       await create_artist_tracklist_song_element(tracks_data.data[j]);
+                       }
+               }else {}
+               for(let v=0;v<cur_artist_tracklist.children.length; v++){
+                   let current =  cur_artist_tracklist.children[v];
+                   current.children[0].style.backgroundImage = "url(\'"+tracks_data.data[v].album.cover_small+"\')";
+                   current.children[1].innerText = tracks_data.data[v].title;
+                   current.children[2].innerText = tracks_data.data[v].album.title;
+                   current.children[3].innerText = tracks_data.data[v].duration;
+               }
+           }
+
+           currentArtistTab.children[0].style.backgroundImage = "url(\'"+ current_playlist_track.artist.picture_medium+"\')";
+            currentArtistTab.children[1].children[0].innerText =  tracks_data.data[0].artist.name;
+           await change_current_tab(currentArtistTab);
+
+       })
+    }
+
             addNewPlaylistButton.addEventListener("click", async function () {
-                playlists = local_get_playlists();
-                pl_titles = local_get_playlists_titles();
-                tracklist_tracks_identificarors = local_get_tracks_ids();
-                tracklist = local_get_tracklist();
+                console.log('событие КЛИК на кнопке добавления нового плейлиста');
+                playlists = await local_get_playlists();
+                pl_titles = await local_get_playlists_titles();
 
-
-                if(!pl_titles.titles.includes(addNewPlaylistTitle.value)) {
+                if (!pl_titles.titles.includes(addNewPlaylistTitle.value)) {
+                    console.log('1.1 создан элемент добавления в плейллист(на панели displ)');
                     let newPLElement = document.createElement("div");
                     newPLElement.innerText = addNewPlaylistTitle.value;
                     let newPLText = newPLElement.innerText;
 
 
                     number = playlists.lists.length;
+                    console.log('1.2 переменная ..number...  проинициализирована количеством плейлистов');
                     newPLElement.setAttribute("number", number.toString());
                     newPLElement.className = "pl_select_el";
+                    console.log('1.3 элементу присвоен атрибут ..number..');
 
-
-                    console.log('html элемент ПЛЕЙЛИСТА успешно создан! innerText = __'+newPLText.toString());
                     selectPlaylistTab.appendChild(newPLElement);
+                    console.log('1.4 элемент прикреплен к панели  SELECT  плейлиста для добавления');
+                    console.log(' ');
+                    console.log(' ');
 
-                    var playlist_tab_el = document.createElement("div");
+
+                    let playlist_tab_el = document.createElement("div");
                     playlist_tab_el.className = "playlists_pane_elem_container"; //+ ..icon
                     playlist_tab_el.innerHTML =
                         "<div class=\"playlists_pane_elem_icon\"><i class=\"fa fa-music\"></i></div>" +
-                        "<div class=\"playlist_title\">"+newPLText+"</div>"+
+                        "<div class=\"playlist_title\">" + newPLText + "</div>" +
                         "<div class=\"xz\" style=\"width: 98%; transition: 0.3s ease; height: 98%;transform: translateX(140px) translateY(-150px);backdrop-filter: blur(5px);\">" +
 
                         "<div class=\"pl_icon_wrapper\"><i class=\"pl_icon fa-solid fa-play\" style=\"color: white; cursor: pointer\"></i></div>" +
                         "<div class=\"pl_icon_wrapper\"><i class=\"pl_icon fa-solid fa-list\" style=\"color: white; cursor: pointer\"></i></div>" +
                         "</div>";
 
+                    console.log('2.1 создан элемент SELECT плейлиста');
+
 
                     //бавить листнеры
-                    playlist_tab_el.setAttribute("number", number.toString())
+                    playlist_tab_el.setAttribute("number", number.toString());
+                    console.log('2.2  элементу ВЫБОРА плейлиста установлен атрибут _!!number!!_ с значением : '+number);
+
                     playlistsTab.appendChild(playlist_tab_el);
-
-
-
-                    playlist_tab_el.addEventListener('mouseover', function (e){playlist_tab_el.children[2].style.transform = "translateY(-155px) translateX(70px)";});
-                    playlist_tab_el.addEventListener('mouseleave', function (e){playlist_tab_el.children[2].style.transform = "translateX(140px) translateY(-155px)";});
-
-                    let newPlaylist = {number: number, title: newPLText, tracks: [], image : 'https://e-cdns-images.dzcdn.net/images/cover/73ac351bce721467224777d10fda9ed9/500x500-000000-80-0-0.jpg'};
+                    console.log('2.3  элемент ВЫБОРА плейлиста прикреплён к PlaylistTsTab');
+                    console.log(' ');
+                    console.log(' ');
 
 
 
 
+                    <!---->  playlist_tab_el.addEventListener('mouseover', function (e) {playlist_tab_el.children[2].style.transform = "translateY(-155px) translateX(70px)";});
+                    <!----> playlist_tab_el.addEventListener('mouseleave', function (e) {playlist_tab_el.children[2].style.transform = "translateX(140px) translateY(-155px)";});
 
-                    console.log('html элемент ПЛЕЙЛИСТА appended to select/playlistTab\'ам as childNode');
-                    console.log('..+ ему установлен атрибут NUMBER со значением:  ' +number);
+                    let newPlaylist = {
+                        number: number,
+                        title: newPLText,
+                        tracks: [],
+                        image: 'https://e-cdns-images.dzcdn.net/images/cover/73ac351bce721467224777d10fda9ed9/500x500-000000-80-0-0.jpg'
+                    };
 
 
-                    playlists.lists.push(newPlaylist);
-                    pl_titles.titles.push(newPlaylist.title);
+
+                    await playlists.lists.push(newPlaylist);
+                    await pl_titles.titles.push(newPlaylist.title);
                     await update_local_playlists();
+                    console.log('3.1 localstorage PLAYLISTS + PLAYLISTS_titles UPDATED');
+                    console.log('3.2 playlist object with number : _' + number + '_ + added to localstorage(playlists/+titles)');
 
-                    console.log('updated');
-                    console.log('playlist object with number : _'+number+'_ + added to localstorage(playlists/+titles)...FROM SearchTab!!!')
+                    create_playlist_request(newPlaylist);
+                    console.log('3.3 на сервер отправлен запрос на добавление плейлиста');
+                    add_listener_to_select_pl_el(newPLElement);
+                    console.log('3.4 элементу SELECT плейлиста добавлен листнер');
+                    console.log(' ');
+                    console.log(' ');
 
-                     create_playlist_request(newPlaylist);
 
-//////////////////---
+                    console.log('3.6  добавление КЛИК-ЛИСТНЕРА для элемента ВЫБОРА плейлиста...');
+
+                    await playlist_tab_el.addEventListener('click',async function (){
+                        playlists = await  local_get_playlists();
+                        current_pl_number = parseInt(playlist_tab_el.getAttribute("number"),10); //playlists.lists[parseInt(playlist_tab_el.getAttribute("number"),10)];
+                        console.log('3.7   переменная current_pl_number проинициализирована значение....'+ current_pl_number+'... элемента ВЫБОРА плейлиста  ');
 
 
-                    let create_playlist_song_element = function (e){
-                        let div = document.createElement("div");
-                        div.className = "playlistElement";
-                        div.innerHTML =
-                            '<div class=\"pl_elem_play_btn\"><i class=\"pl_play_icon fa-solid fa-play\"></i></div>' +
-                            '<div class="music_info">' +
-                            '<div class=\"pl_artistName\"></div>' +
-                            '<div class=\"pl_songName\"></div>' +
-                            '</div>';
-                        document.getElementById("cur_playlist_title").innerText = playlists.lists[parseInt(playlist_tab_el.getAttribute("number"),10)].title;
-                        testTab.children[2].appendChild(div);
-
-                    }
-
-///////!!!!!!!!!!!!
+                        document.getElementById("cur_playlist_title").innerText = playlists.lists[current_pl_number].title;
+                        console.log('3.8   дочерний эл-т  --cur_playlist_title--- родительского элемента ---test--- получил innerTEXT ::  '+ playlists.lists[current_pl_number].title);
 
 
 
-                    /////////!!!!!!!!!
+                        let tracks_number_in_playlist = playlists.lists[current_pl_number].tracks.length;
+                        let cur_playlist_pane_tracks_number = testTab.children[2].children.length;
+                        let count_value = 0;
 
-                    newPLElement.addEventListener("click", function () {
-                        playlists = local_get_playlists();
-                        pl_titles = local_get_playlists_titles();
-
-                        let pl_number = parseInt(newPLElement.getAttribute("number"), 10);
-
-                        console.log(pl_number  + '   pl_number');
-                        let track_index;
-                        let track;
-                        let payload;
-
-                        if(lastTab.id === "tracklistTab"){
-                            track_index = tracklist_tracks_identificarors.identificators.indexOf(parseInt(track_for_playlist_adding, 10), 0);
-                            track = tracklist.tracks[track_index];
-                            payload = {track_id:track.id, number : number};
-                            console.log(track_index + '    index of track in tracklist(tracklistTab)');
-
-                        }else if(lastTab.id === "searchedTracksTab"){
-                            for(let x=0; x<search_data.data.length; x++) {
-                                console.log(search_data.data[x].id);
-                                console.log(track_for_playlist_adding);
-                                console.log(search_data.data[x].id.toString() === track_for_playlist_adding.toString());
-
-                                if(search_data.data[x].id.toString() === track_for_playlist_adding.toString()){
-                                    track_index = x;
-                                    track = search_data.data[x];
-                                    payload  = {track_id : track.id, number : number};
-                                    console.log(track_index + '    index of track in searchedTab(!)');
-
+                        if(tracks_number_in_playlist !== 0){
+                            if(cur_playlist_pane_tracks_number > tracks_number_in_playlist){
+                                count_value = cur_playlist_pane_tracks_number - tracks_number_in_playlist ;
+                                for(let i = 0; i < count_value; i++){
+                                    testTab.children[2].removeChild(testTab.children[2].lastElementChild);
+                                    console.log('removed');
                                 }
+                            }else if(cur_playlist_pane_tracks_number < tracks_number_in_playlist){
+                                count_value =tracks_number_in_playlist - cur_playlist_pane_tracks_number ;
+                                for(let i = 0; i < count_value; i++){
+                                    await create_playlist_song_element(current_pl_number);
+                                }
+                            }else if(cur_playlist_pane_tracks_number === tracks_number_in_playlist){
+
+                            }
+                        }else{
+                            for(let i = 0; i < tracks_number_in_playlist; i++){
+                                await create_playlist_song_element(current_pl_number);
                             }
                         }
 
+                        console.log(tracks_number_in_playlist + '      ' +cur_playlist_pane_tracks_number + '   ' + count_value  );
 
-                        console.log(track);
+                        for(let i=0; i <testTab.children[2].children.length; i++) {
+                            console.log(i);
 
-                        let plist = playlists.lists[pl_number];
-                        playlists.lists[pl_number].tracks.push(track);
-                        update_local_playlists();
-
-                        console.log(plist.title + '  plist_title');
-
-                        add_to_playlist_request(payload);
-
-                        track_for_playlist_adding = null;
-                        change_current_tab(lastTab);
-
-
-
-
-                        playlist_tab_el.addEventListener('click',async function (){
-                            playlists =  local_get_playlists();
-                            let pl_number = playlist_tab_el.getAttribute("number"); //playlists.lists[parseInt(playlist_tab_el.getAttribute("number"),10)];
-                            let tracks_number_in_playlist = playlists.lists[pl_number].tracks.length;
-                            let cur_playlist_pane_tracks_number = testTab.children[2].children.length;
-                            let count_value;
-
-                            if(tracks_number_in_playlist !== 0){
-                                if(cur_playlist_pane_tracks_number > tracks_number_in_playlist){
-                                    count_value = cur_playlist_pane_tracks_number - tracks_number_in_playlist ;
-                                    for(let i = 0; i < count_value; i++){
-                                        await testTab.children[2].children[testTab.children[2].children.length-1].remove();
-                                    }
-                                }else if(cur_playlist_pane_tracks_number < tracks_number_in_playlist){
-                                    count_value =tracks_number_in_playlist - cur_playlist_pane_tracks_number ;
-                                    for(let i = 0; i < count_value; i++){
-                                        await create_playlist_song_element();
-                                    }
-                                }
-                            }else{
-                                for(let i =0; i < tracks_number_in_playlist; i++){ await create_playlist_song_element();}
-                            }
-                            console.log(tracks_number_in_playlist + '      ' +cur_playlist_pane_tracks_number + '   ' + count_value  )
-
-                            for(let i=0; i <testTab.children[2].children.length; i++){console.log(i);
-                                testTab.children[2].children[i].children[1].children[0].innerText = playlists.lists[pl_number].tracks[i].artist.name;
-                                testTab.children[2].children[i].children[1].children[1].innerText = playlists.lists[pl_number].tracks[i].title;
-                            }
-
-                            if(playlists.lists[pl_number].image !== null){
-                                testTab.children[0].children[0].style.backgroundImage = "url(\'"+ playlists.lists[pl_number].image + "\')";
-                            }
-                            change_current_tab(testTab);
-                        });
+                            testTab.children[2].children[i].children[0].children[0].innerText = playlists.lists[current_pl_number].tracks[i].title;
+                            testTab.children[2].children[i].children[0].children[1].innerText = playlists.lists[current_pl_number].tracks[i].artist.name;
+                            // testTab.children[2].children[i].children[0].children[1].setAttribute("pl_song_number", i.toString());
+                        }
+                        if(playlists.lists[current_pl_number].image !== null){
+                            testTab.children[0].children[0].style.backgroundImage = "url(\'"+ playlists.lists[current_pl_number].image + "\')";
+                        }
+                        change_current_tab(testTab);
                     });
-                }   else{alert('playlist существуеь');}
+                }else{alert('playlist существуеь');}
             });
+
+
+
+    //!!!!!!!ATTTENTION
+
+
+
+    let create_artist_tracklist_song_element =  function (data){
+                let song = document.createElement("div");
+                song.className = "artist_songs";
+                song.innerHTML =
+                    "<div class=\"art_song_album_img\">" +
+                    "<div class=\"song_play_btn fa-solid fa-play\"></div>"+
+                    "</div>" +
+                    "<div class=\"art_song_title\"></div>" +
+                    "<div class=\"art_song_album_title\"></div>"+
+                    "<div class=\"duration\"></div>" +
+                    "<div class=\"options\">" +
+                    "<div class=\"add_to_trklst_from_art_pane\"></div>"+
+                    "<div class=\"add_to_plst_from_art_pane\"></div>"+
+                    "<div class=\"add_to queue_art_pane\"></div>" +
+                    "<div class=\"like_dislike_wrapper\"></div>" +
+                    "</div>";
+
+
+        song.children[0].style.backgroundImage = "url(\'"+data.album.cover_small+"\')";
+        song.setAttribute("artist_tracklist_song_number", (cur_artist_tracklist.childElementCount).toString());
+                song.children[1].innerText = data.title;
+                song.children[2].innerText = data.album.title;
+
+                song.children[0].addEventListener("mouseover", function (){
+                    song.children[0].style.boxShadow = "inset black 0px 0px 20px 15px ";
+                    song.children[0].lastElementChild.style.transform = "rotateX(0deg)"
+                });
+
+                song.children[0].addEventListener("mouseleave", function (){
+                    song.children[0].style.boxShadow = "none";
+                    song.children[0].lastElementChild.style.transform = "rotateX(90deg)";
+                });
+                song.children[0].lastElementChild.addEventListener("click", function(){
+                    current_tab_playing = song.parentElement;
+
+                    audio_url = current_artist_tracks.data[parseInt(song.getAttribute("artist_tracklist_song_number"))].preview;
+                    update_artistInfo();
+                    load_and_decode();
+
+                })
+
+        document.getElementById("cur_artist_tracklist").appendChild(song);
+    }
+
+    async function get_art_tracklist () {
+        current_artist_tracks = await get_artist_tracklist_request(currentArtistTab.getAttribute("artist_id"));
+    }
+//////////////////
+
+//тут был create_playlist_song_element = funct...
+let  add_listener_to_select_pl_el = function (el){
+    let elem = el;
+    elem.addEventListener("click",async function () {
+        playlists = local_get_playlists();
+        pl_titles = local_get_playlists_titles();
+
+        let pl_number = parseInt(elem.getAttribute("number"), 10);
+
+        console.log(pl_number  + '   pl_number');
+        let track_index;
+        let track;
+        let payload;
+
+        if(lastTab.id === "tracklistTab"){
+            track_index = tracklist_tracks_identificarors.identificators.indexOf(parseInt(track_for_playlist_adding, 10), 0);
+            track = tracklist.tracks[track_index];
+            payload = {track_id:track.id, number : pl_number};   ///был просто number без pl_
+            console.log('-----'+track_index + '    index of track in tracklist(tracklistTab)');
+
+        }else if(lastTab.id === "searchedTracksTab"){
+            for(let x=0; x<search_data.data.length; x++) {
+                if(search_data.data[x].id.toString() === track_for_playlist_adding.toString()){
+                    track_index = x;
+                    track = search_data.data[x];
+                    payload  = {track_id : track.id, number : pl_number}; ///был просто number без pl_
+
+                    console.log('------'+track_index + '    index of track in searchedTab(!)');
+                }
+            }
+        }
+
+
+        console.log(track.id+ '       <<----- трэк добавляемый в плейлист номер ->  '+ pl_number);
+
+        playlists.lists[pl_number].tracks.push(track);
+       await update_local_playlists();
+        console.log('3.5 ТРЭК с id :  '+ track.id + ' добавлен в localstorage_____исполнитель:  '+ track.artist.name);
+
+
+        add_to_playlist_request(payload);
+        console.log('3.6  на сервер выполнен запрос на добавление трэка в плейлист ' );
+
+
+        track_for_playlist_adding = null;
+        track = null;
+        payload = null;
+        track_index = null;
+        console.log('3.7  переменные track, track_index и payload проинициализированы null\'ом');
+       await console.log('3.8 вызван change_current_tab(lastTab)...где lastTab : '+ lastTab.id.toString());
+       await change_current_tab(lastTab);
+
+    });
+}
+
 /////////////
 
 
-
-    //https://i.ytimg.com/vi/-qgzNwdkV4s/hqdefault.jpg?sqp=-oaymwEWCMACELQBIAQqCghQEJADGFogjgJIWg&rs=AMzJL3kmILo_PrUlgsedQeixSXPcj-_g4A
-    let uri = 'https://a22f-217-107-127-133.ngrok.io';
+    let uri = 'https://1c22-217-107-126-46.ngrok.io';
     let audio_url = null;
-
-
-
 
     let add_to_tracklist_request =  function(arg){
       let resp =   fetch(uri+'/json?method=add_to_tracklist',{method:'POST',body:JSON.stringify(arg)})
@@ -1867,6 +2261,21 @@ let change_button = function (button){
         fetch(uri+'/json?method=add_to_playlist',{method:'POST',body:JSON.stringify(arg)})
             .then(response => response.json())
             .then(data => {console.log(data.result)});
+    }
+
+    let get_artist_tracklist_request = async function  (arg){
+        console.log('artist_id='+arg);
+        let req = new Request(uri + '/music?artist_tracklist=' + arg.toString(), {method: 'GET'});
+
+
+
+       let response = await (fetch(req))
+      let c = await caches.open("audio_search_cache");
+       await c.add(req);
+       //   response = await response.json();
+         console.log(response);
+
+         return response.json();
     }
 
 

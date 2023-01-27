@@ -86,8 +86,8 @@ public class JsonServlet extends HttpServlet {
                 try {
                     Artist artist1 = (Artist) query.getSingleResult();
                     System.out.println(artist1);
-//                    boolean isAdded = addTrackToTracklist(data,cookies[0].getValue());
-//                    System.out.println("IS ADDED----------->  "+   isAdded);
+                    boolean isAdded = addTrackToTracklist(data,cookies[0].getValue());//////////////////////////////////////////////
+                    System.out.println("IS ADDED----------->  "+   isAdded);
                 } catch (NoResultException e) {  /// если getSingleResult == null
                     Artist artist = Artist.builder()
                             .id(data.getInt("artist_id"))
