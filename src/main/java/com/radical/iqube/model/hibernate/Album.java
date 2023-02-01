@@ -20,14 +20,15 @@ import java.util.Objects;
 @Builder
 @Entity
 @Table(name = "album")
+@NamedQuery(name = "Album.findById", query = "SELECT a FROM Album a WHERE a.id = :id")
 public class Album {
     @Id
     private int id;
 
+    //JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "artist_id")
     @ToString.Exclude
-//    @JsonIgnore
     private Artist artist;
 
     public Artist getArtist() {return artist;}
@@ -42,6 +43,7 @@ public class Album {
     private String release_date;   //localdate<<<
 
     private String tracklist_url;
+    private String img_url;
 
 
 
@@ -80,6 +82,7 @@ public class Album {
                 ", title='"  +  title  +
                 ", release_date="  +  release_date +
                 ", tracklist_url='"  +  tracklist_url +
+                ", img_url='" + img_url +
                 '}';
     }
 }

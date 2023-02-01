@@ -92,10 +92,10 @@ public class Music extends HttpServlet {
                 }
 
                 System.out.println(connection.getResponseCode());
+                in.close();
                 connection.disconnect();
 //            in.lines().forEach(System.out::println);
 
-                in.close();
 
 
                 PrintWriter writer = resp.getWriter();

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -31,21 +32,46 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.rmi.RemoteException;
+import java.util.*;
 
 public class JsonServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 //        String body = req.getReader().lines().reduce()>?????????????????
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
-        resp.setContentType("text/html");
+
+        Query query;
+        EntityManagerFactory factory = (EntityManagerFactory) getServletContext().getAttribute("EntityManagerFactory");
         PrintWriter writer = resp.getWriter();
-        writer.print("tessssss");
-        writer.flush();
-        writer.close();
+        resp.setHeader("Content-Type","application/json; charset=utf-8");
+        resp.setHeader("Connection", "close");
 
+        if (req.getParameter("method").startsWith("a")) {
+            String sub = req.getParameter("method").substring(1);
+            System.out.println("artist_aulbums request +    " + sub);
+
+            query = factory.createEntityManager().createNamedQuery("Artist.findById");
+            query.setParameter("id", Integer.parseInt(sub));
+            Artist a = (Artist) query.getSingleResult();
+
+            HashMap<String, Object> m = new HashMap<>();
+            m.put("albums", a.getAlbums().toArray());
+            String parsedMap = ow.writeValueAsString(m);
+            if (parsedMap != null && parsedMap.length() != 0) {
+                writer.print(parsedMap);
+                writer.flush();
+                writer.close();
+
+            }
+
+        }
     }
+
+
+
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -85,7 +111,11 @@ public class JsonServlet extends HttpServlet {
                 query.setParameter("id", data.getInt("artist_id"));
                 try {
                     Artist artist1 = (Artist) query.getSingleResult();
-                    System.out.println(artist1);
+//                    System.out.println("founded");
+//                   artist1.getAlbums().forEach(album1 -> {
+//                       System.out.println(album1.getSongs().size());
+//                   });
+
                     boolean isAdded = addTrackToTracklist(data,cookies[0].getValue());//////////////////////////////////////////////
                     System.out.println("IS ADDED----------->  "+   isAdded);
                 } catch (NoResultException e) {  /// если getSingleResult == null
@@ -109,6 +139,7 @@ public class JsonServlet extends HttpServlet {
                                 .title(object.getString("title"))
                                 .release_date(object.getString("release_date"))
                                 .tracklist_url(object.getString("tracklist"))
+                                .img_url(object.getString("cover_medium"))
                                 .build();
 
                         JSONArray albumEachTrackData = ((JSONObject) object.get("tracks")).getJSONArray("data");
@@ -118,6 +149,7 @@ public class JsonServlet extends HttpServlet {
                                     .id(x.getInt("id"))
                                     .title(x.getString("title"))
                                     .url(x.getString("preview"))
+                                    .duration(Integer.parseInt(x.getString("duration")))
                                     .album(album)
                                     .build());
                         }
@@ -131,8 +163,9 @@ public class JsonServlet extends HttpServlet {
                     map.put("albums", albums);
                     map.put("artist", artist);
 
-                    resp.setContentType("application/json; charset=utf-8");
-                    resp.setHeader("Content-Type", "application/json");
+                    resp.setHeader("Content-Type", "application/json; charset=utf-8");
+                    resp.setHeader("Cache-Control","public");
+                    resp.addHeader("Connection","close");
 
                     String jsonString = null;
                     try {jsonString = ow.writeValueAsString(map2);}
