@@ -1,6 +1,6 @@
 package com.radical.iqube.controller.filters;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.Set;
 
 public class RegistrationFilter implements Filter {
-    private Logger logger;
+//    private Logger logger;
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -70,8 +70,8 @@ public class RegistrationFilter implements Filter {
                     response.sendRedirect("/home");}
 
             } catch (IOException | ServletException e) {
-                logger = Logger.getLogger(RegistrationFilter.class);
-                logger.warn(new Date() + " : " + new Date().getTime() + ": " + e.getMessage());
+//                logger = Logger.getLogger(RegistrationFilter.class);
+//                logger.warn(new Date() + " : " + new Date().getTime() + ": " + e.getMessage());
             }
         }
     }

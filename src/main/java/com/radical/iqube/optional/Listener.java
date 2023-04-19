@@ -8,7 +8,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.event.*;
 import com.radical.iqube.model.hibernate.*;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -35,7 +35,7 @@ import java.util.Properties;
 @WebListener
 public class Listener implements ServletContextListener, HttpSessionListener {
 //
-    private static final Logger log = Logger.getLogger(Listener.class);
+//    private static final Logger log = Logger.getLogger(Listener.class);
     public static volatile HashMap<String, HttpSession> openedSessions = new HashMap<>();
 
     public MongoClient client;
@@ -51,7 +51,7 @@ public class Listener implements ServletContextListener, HttpSessionListener {
 //        ctx.setAttribute("openedSessions",new ArrayList<HttpSession>());
 
         System.out.println("context создан");
-        log.info(" context initialized");
+//        log.info(" context initialized");
 
 //        Configuration configuration = new Configuration();
 //        configuration.addAnnotatedClass(Song.class);
@@ -60,20 +60,21 @@ public class Listener implements ServletContextListener, HttpSessionListener {
 //        configuration.configure("hibernate.cfg.xml");
 //        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
 
-        log.info("service registry initialized");
+//        log.info("service registry initialized");
 
 //        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
  factory = Persistence.createEntityManagerFactory("Songs");
-        log.info("entityManager has been initialized");
+//        log.info("entityManager has been initialized");
         System.out.println("sessionFactory initialized");
 
-            client = MongoClients.create("mongodb://admin:root@localhost:27017/users_tracklists?authSource=admin");/*authMechanism=SCRAM-SHA-1&*/
+            client = MongoClients.create("mongodb://admin:root@localhost:27017");
+                    //users_playlists?authSource=admin");/*authMechanism=SCRAM-SHA-1&*/
         sce.getServletContext().setAttribute("MongoClient", client);
         sce.getServletContext().setAttribute("EntityManagerFactory",factory);
 
 //        sce.getServletContext().setAttribute("SessionFactory", sessionFactory);
 
-        log.info("entitymanagerfactory successfully added to servletContext as atribute");
+//        log.info("entitymanagerfactory successfully added to servletContext as atribute");
         System.out.println("sessionFactory successfully added to servletContext as atribute");
     }
 
@@ -93,11 +94,11 @@ public class Listener implements ServletContextListener, HttpSessionListener {
             System.out.println( "EntittyManagerFactory has been successfully closed");
         }
 
-        log.info("Closing mongo client....");
-        client.close();
-        log.info("Mongo client  closed successfully....");
-        System.out.println("context удалён");
-        log.info("context удалён");
+//        log.info("Closing mongo client....");
+//        client.close();
+//        log.info("Mongo client  closed successfully....");
+//        System.out.println("context удалён");
+//        log.info("context удалён");
     }
 
     @Override

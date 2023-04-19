@@ -1,10 +1,15 @@
 package com.radical.iqube;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.gson.Gson;
-import com.radical.iqube.model.hibernate.ObjectMapper;
+import com.radical.iqube.model.hibernate.Artist;
+import com.radical.iqube.model.hibernate.Song;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +21,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.nio.Buffer;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Music extends HttpServlet {
 
@@ -23,12 +30,32 @@ public class Music extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws  IOException, NullPointerException {
-        System.out.println(req.getRequestURL());
-        System.out.println(req.getParameterNames().nextElement());
+
+        EntityManagerFactory factory = (EntityManagerFactory) getServletContext().getAttribute("EntityManagerFactory");
+        Query query;
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+
+
         if (req.getParameter("artist_tracklist") != null) {
             System.out.println("aga contain");
+            System.out.println(req.getServerName());
             String uri = req.getRequestURI();
-            try {
+//            query = factory.createEntityManager().createNamedQuery("Artist.findById");
+//            query.setParameter("id", Integer.parseInt(req.getParameter("artist_tracklist")));
+//                               Artist artist1 = (Artist) query.getSingleResult();
+//            System.out.println("founded");
+//            ArrayList<Song>songs = new ArrayList<>();
+//            HashMap<String,Object>tracklist = new HashMap<>();
+//                   artist1.getAlbums().forEach(album1 -> songs.addAll(album1.getSongs()));
+//                   tracklist.put("data", songs.toArray());
+//
+//                   String response = ow.writeValueAsString(tracklist);
+//                   resp.getWriter().print(response);
+//                   resp.getWriter().flush();
+//                   resp.getWriter().close();
+
+
+              try {
                 System.out.println(uri);
                 URL url = new URL("https://api.deezer.com/artist/" + req.getParameter("artist_tracklist") + "/top?limit=50");
                 System.out.println(url);
@@ -36,14 +63,15 @@ public class Music extends HttpServlet {
 
 
                 connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty("Connection","keep-alive");
                 connection.setRequestMethod("GET");
                 connection.setReadTimeout(5000);
                 connection.setConnectTimeout(5000);
                 connection.connect();
                 resp.addHeader("Content-Type", "application/json; charset=utf-8");
                 resp.addHeader("Access-Control-Allow-Origin", "*");
-                resp.addHeader("Cache-Control", "private, max-age=3600");
-                resp.addHeader("Connection", "close");
+                resp.addHeader("Cache-Control", "public,max-age=3600");//было , max-age=3600" приват
+                resp.addHeader("Connection", "keep-alive");
 
 
                 String inputLine;
@@ -52,12 +80,9 @@ public class Music extends HttpServlet {
 
                 while ((inputLine = in.readLine()) != null) {content.append(inputLine);}
 
-
-//                System.out.println(content);
+                in.close();
                 connection.disconnect();
 //            in.lines().forEach(System.out::println);
-
-                in.close();
 
                 PrintWriter writer = resp.getWriter();
                 writer.print(content);
@@ -79,9 +104,7 @@ public class Music extends HttpServlet {
                 connection.setConnectTimeout(5000);
                 connection.connect();
 
-                resp.addHeader("Content-Type", "application/json");
-                resp.addHeader("Access-Control-Allow-Origin", "*");
-                resp.addHeader("Cache-Control", "private, max-age=3600");
+
 
 
                 String inputLine;
@@ -94,6 +117,14 @@ public class Music extends HttpServlet {
                 System.out.println(connection.getResponseCode());
                 in.close();
                 connection.disconnect();
+
+                resp.setHeader("Content-Type", "application/json");
+                resp.setHeader("Access-Control-Allow-Origin", "*");
+                resp.setHeader("Connection","keep-alive");
+
+                resp.setHeader("Cache-Control", "public,max-age=3600");
+                resp.setStatus(200);
+
 //            in.lines().forEach(System.out::println);
 
 

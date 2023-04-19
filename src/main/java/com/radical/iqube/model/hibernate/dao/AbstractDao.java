@@ -9,6 +9,8 @@ public interface AbstractDao<T>{
     public boolean removeById(int id);
     public boolean update(Object o);
 
+    //methods: save(create)
+
 }
 
 

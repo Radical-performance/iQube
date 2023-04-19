@@ -4,10 +4,7 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import org.junit.After;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.junit.*;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;

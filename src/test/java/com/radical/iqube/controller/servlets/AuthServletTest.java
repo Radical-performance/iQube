@@ -2,8 +2,7 @@ package com.radical.iqube.controller.servlets;
 
 import com.radical.iqube.controller.filters.AuthFilter;
 import org.json.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
+
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;

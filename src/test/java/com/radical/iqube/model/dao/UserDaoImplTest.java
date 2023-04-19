@@ -1,17 +1,15 @@
 package com.radical.iqube.model.dao;
 
 import com.radical.iqube.model.connector.ConnectorTest;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.BeforeClass;
-import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.Test;
+import org.junit.*;
 
 import java.sql.*;
 
 public class UserDaoImplTest {
-    private static final Logger log = Logger.getLogger(UserDaoImplTest.class);
+//    private static final Logger log = Logger.getLogger(UserDaoImplTest.class);
     private static ConnectorTest connector;
     private Savepoint savepoint;
     private static Connection connection;
@@ -34,7 +32,7 @@ public class UserDaoImplTest {
     @Test
     void initTest() {Assert.assertNotNull(connector);}
 
-    @Test(dependsOnMethods = {"remove"})
+    @Test//(dependsOnMethods = {"remove"})
     public void create() {
         boolean created = false;
         int updValue;
@@ -68,7 +66,7 @@ public class UserDaoImplTest {
         }
     }
 
-    @Test(dependsOnMethods = {"tearUp"})
+    @Test//(dependsOnMethods = {"tearUp"})
     public void get() throws SQLException {
         connection = getConnect();
         Assert.assertFalse(connection.isClosed());
@@ -95,7 +93,7 @@ public class UserDaoImplTest {
         connection = null;
     }
 
-    @Test(dependsOnMethods = {"get"})
+    @Test//(dependsOnMethods = {"get"})
     public void update() {
         String query;
         PreparedStatement st;
@@ -147,7 +145,7 @@ public class UserDaoImplTest {
     }
 
 
-    @Test(dependsOnMethods = {"update"})
+    @Test//(dependsOnMethods = {"update"})
     public void remove() throws SQLException {
         int removed;
         connection = getConnect();

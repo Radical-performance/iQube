@@ -1,7 +1,7 @@
 package com.radical.iqube.controller.filters;
 
 import com.radical.iqube.optional.Listener;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.json.CookieList;
 import org.json.JSONObject;
 
@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class AuthFilter implements Filter {
-    private Logger logger;
+//    private Logger logger;
 
     @Override
     public void init(FilterConfig filterConfig) {

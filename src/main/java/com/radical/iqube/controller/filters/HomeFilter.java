@@ -1,6 +1,6 @@
 package com.radical.iqube.controller.filters;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -28,13 +28,15 @@ public class HomeFilter implements Filter {
         System.out.println("  home filter");
         System.out.println("xxx");
         try {
-            if (ses != null || rqst.getCookies() != null) {
+            req.getRequestDispatcher("/home").forward(rqst, resp);
+
+            //      if (ses != null || rqst.getCookies() != null) {
 //                resp.setStatus(303);
-                resp.sendRedirect("/userPage");
-            } else {
+//                resp.sendRedirect("/userPage");
+//            } else {
 //                resp.setStatus(200);
-                req.getRequestDispatcher("/home").forward(rqst, resp);
-            }
+    //            req.getRequestDispatcher("/home").forward(rqst, resp);
+          //  }
         } catch (ServletException e) {/*logger---->*/}
     }
 }

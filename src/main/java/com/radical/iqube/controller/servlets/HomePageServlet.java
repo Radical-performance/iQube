@@ -8,7 +8,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.radical.iqube.model.hibernate.*;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import org.bson.Document;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,7 +20,7 @@ import java.util.*;
 
 //web-xml description will be replaced with annotations on next steps
 public class HomePageServlet extends HttpServlet {
-    private static final Logger log = Logger.getLogger(HomePageServlet.class);
+//    private static final Logger log = Logger.getLogger(HomePageServlet.class);
     public HomePageServlet() {}
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -86,7 +86,7 @@ public class HomePageServlet extends HttpServlet {
         resp.addIntHeader("user_id",12323123);
         Cookie cookie = new Cookie("user_id","12323123");
         resp.addCookie(cookie);
-        req.getRequestDispatcher("/audio2.html").forward(req,resp);
+        req.getRequestDispatcher("/audio3warning.html").forward(req,resp);
 
     }
 }

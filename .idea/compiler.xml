@@ -10,8 +10,5 @@
         <module name="iQube" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="iQube" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

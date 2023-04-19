@@ -2,11 +2,11 @@ package com.radical.iqube.model.dao;
 import com.radical.iqube.model.connector.Connector;
 import com.radical.iqube.model.entity.UserEntity;
 import com.radical.iqube.model.entity.UserEntityBuilderImpl;
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 import java.sql.*;
 
 public class UserDaoImpl implements UserDao {
-    public final Logger log = Logger.getLogger(UserDaoImpl.class);
+//    public final Logger log = Logger.getLogger(UserDaoImpl.class);
     private final Connector connector;
     public UserDaoImpl() {
         this.connector = new Connector();
@@ -34,7 +34,7 @@ public class UserDaoImpl implements UserDao {
             if(st.executeUpdate() != 0){con.commit(); created = true;}
             else{rollback(st.getConnection(), savepoint);}
             connector.close(con);
-        } catch (SQLException e) {log.warn("Exception sql: "+e.getMessage());
+        } catch (SQLException e) {//log.warn("Exception sql: "+e.getMessage());
         } finally {
             if(con != null){connector.close(con);}
         }
@@ -75,7 +75,7 @@ public class UserDaoImpl implements UserDao {
                 }else{connector.rollback(statement.getConnection(),savepoint);}
             }
         } catch (SQLException e) {
-            log.warn(e.getMessage());
+//            log.warn(e.getMessage());
             e.printStackTrace();
         } finally { if(con != null) {connector.close(con);}}
         return updated;
@@ -93,7 +93,7 @@ public class UserDaoImpl implements UserDao {
             st.setString(1,user.getLogin());
             if(st.executeUpdate()==0){con.rollback(savepoint);}
             else{con.commit(); removed = 1;}
-        } catch (SQLException e) {log.warn(e.getCause());//<=======LOGGER
+        } catch (SQLException e) {//log.warn(e.getCause());//<=======LOGGER
         } finally { if(con != null){ connector.close(con);}}
         return removed != 0;
     }

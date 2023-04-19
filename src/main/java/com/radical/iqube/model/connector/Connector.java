@@ -1,6 +1,6 @@
 package com.radical.iqube.model.connector;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 import javax.annotation.Resource;
 import javax.naming.InitialContext;
@@ -15,7 +15,7 @@ public class Connector {
     @Resource(name = "jdbc/iqubedbtest")
     private DataSource ds;
 
-    private static final Logger log = Logger.getLogger(Connector.class);
+//    private static final Logger log = Logger.getLogger(Connector.class);
     public Connection connect(){
 
         try {
@@ -24,7 +24,7 @@ public class Connector {
             con =  ds.getConnection();
             con.setAutoCommit(false);
         } catch (SQLException e) {
-            log.warn("Error occurred during connection establishing  " + e);
+//            log.warn("Error occurred during connection establishing  " + e);
         }
         return con;
     }

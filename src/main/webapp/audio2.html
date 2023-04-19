@@ -275,12 +275,12 @@
 
             .tracklistElem{
                 overflow: hidden;
-                transition: 0.4s;
+                transition:box-shadow 0.4s linear;
                 width: 100%;
                 height: 8%;
                 display: flex;
                 justify-content: flex-start;
-                color: #ccff0af9;
+                color: rgba(10, 255, 190, 0.98);
                 font-weight: bolder;
                 font-size:  larger;
                 font-family: sans-serif;
@@ -393,9 +393,9 @@
                 height: 0;
                 border: 1px solid #000000;
                 background: #1c1c1c;
-                transition: 0.3s linear;
+                transition:width 0.3s linear, height 0.3s linear;
                 display: inherit;
-                transform: translateY(-20%);
+                transform: translateY(-30%);
                 border-radius: 5%;
                 overflow: hidden;
                 padding: 0;
@@ -427,7 +427,7 @@
                 /*width: 15%;*/
                 height: 5%;
                 transform: translateX(-50px);
-                transition: 0.5s ease-out;
+                transition:transform 0.5s ease-out;
                 position: absolute;
                 display: flex;
             }
@@ -463,7 +463,7 @@
             }
             .addBtnMenuElem:hover{
                 box-shadow: 0 0 19px 3px black inset;
-                transition: 0.3s;
+                transition: box-shadow 0.3s;
             }
             #tracklistWraper{
 
@@ -497,7 +497,7 @@
                 top: 5%;
             }
             .plusLbl{
-                transition: 0.5s linear;
+                transition:color 0.5s linear;
             }
 
             .menuButtons{
@@ -510,7 +510,7 @@
                 font-family: 'Audiowide';
                 cursor: pointer;
                 font-size: x-large;
-                transition: 0.2s linear;
+                transition:text-shadow 0.2s linear, color 0.2s linear;
             }
             /*.menuButtons:hover{text-shadow:  0 0 4px #00ffc4;}*/
 
@@ -658,7 +658,7 @@
 
                     #pl_tracks{
                         position: absolute;
-                        width: 45%;
+                        width: 60%;
                         height: 100%;
                         background: linear-gradient(90deg, #000000c7, #00000080);
                         box-shadow: 11px 0 26px 1px black;
@@ -705,12 +705,8 @@
                     #cur_playlist_title{
                         color: #ffffffe8;
                         position: absolute;
-                        top: 5%;
-                        left: 50%;
-                        width: 110%;
-                        /* text-decoration-line: underline; */
-                        margin: 4%;
-                        padding: 4%;
+                        transform: translateX(60%);
+                        width: 100%;
                         backdrop-filter: blur(3px);
                         font-size: 75px;
                         text-shadow: 1px 1px 3px #ffffff, 2px 0 1px #ffffff;
@@ -728,32 +724,38 @@
 
                     }
                     .pl_elem_play_btn{
-                        width: 20%;
-                        font-size: xx-large;
                         position: relative;
-                        height: 101%;
-                        color: #14ff89;
                         float: left;
+                        width: 18%;
+                        text-align: center;
+                        height: 100%;
+                        transform: rotateX(90deg);
+                        transition: transform 0.3s;
                     }
 
-                    .pl_play_icon{margin: 37%;}
+                    .pl_play_icon{
+                        color: #00d390;
+                        font-size: xx-large;
+                        transform: translateY(70%);
+                    }
 
                     .music_info{
                         position: relative;
-                        float: right;
+                        float: left;
                         color: wheat;
-                        width: 80%;
+                        width: 70%;
                         height: 100%;
                         margin-top: 1%;
                     }
             .pl_songName{
-                width: 250%;
+                width: 110%;
                 font-size: x-large;
                 height: 25%;
                 letter-spacing: 0px;
                 color: rgb(205 205 205 / 99%);
                 font-weight: 900;
                 font-family: 'system-ui';
+                transform: translateY(50%);
             }
 
             .pl_artistName{
@@ -765,11 +767,13 @@
                 font-family: 'Audiowide';
                 cursor: pointer;
                 text-shadow: none;
-                transition: 0.5s ease-out;
+                transition:text-shadow 0.3s;
+                transform: translateY(50%);
+
             }
 
             .pl_artistName:hover{
-                transition: 0.5s ease-in;
+                transition: text-shadow 0.3s;
                 text-shadow: 0 0 4px red;
             }
             .pl_albumName{
@@ -800,18 +804,31 @@
                 opacity: 0;
                 background-image: none;
                 background-color: rgba(0, 0, 0, 0.94);
+                transition: .8s linear;
 
             }
 
-            .cur_artist_albums{
-                position: relative;
-
+            #my_albums_tab{
+                position: absolute;
+                display: none;
+                width: 100%;
                 height: 100%;
-                transform: translatey(-0px) translateX(500px);
-                box-shadow: 0 0 6px -1px #00ffc7;
-                width: 65%;
+                opacity: 0;
+                background-color: rgba(0, 0, 0, 0.94);
+                transition: .8s linear;
+            }
+
+            .cur_artist_albums{
+                position: absolute;
+                height: 93%;
+                transition: 1s linear;
+                transform: translatey(-17px) translateX(67px);
+                overflow: hidden;
+                overflow-y: scroll;
+                box-shadow: 0 0 6px 4px #000000;
+                width: 22%;
                 border-radius: 1%;
-                background: #060606d9;
+                background: linear-gradient(45deg, #00000099, #000000);
             }
 
             #cur_artist_bg{
@@ -827,45 +844,45 @@
             }
 
             #cur_artist_name_wrapper{
-                position: relative;
-                width: 85%;
-                height: 12%;
+                display: flow-root;
+                width: 75%;
+                height: 16%;
                 color: white;
                 font-family: 'AUDIOWIDE';
                 font-size: 60px;
                 text-decoration: underline black;
                 margin: 3%;
                 text-shadow: -1px -1px 3px white;
+                border-bottom: 1px solid rebeccapurple;
+                box-shadow: 0 -1px 3px 1px rebeccapurple;
+            }
+            #cur_artist_name{
+                position: relative;
+                width: 85%;
+                float: left;
             }
 
                     #cur_artist_albums{
                         position: absolute;
                         height: 100%;
-                        transition: 1s linear;
-                        transform: translatey(-199px) translateX(500px);
-                        box-shadow: 0px 0 6px -1px #00ffc7;
-                        width: 25%;
-                        border-radius: 1%;
-                        background: #060606d9;
-                        flex-direction: column;
-                        justify-content: space-between;
-                        flex-wrap: nowrap;
-                        align-items: center;
+                        transition:transform 1s ease-in-out;
+                        transform: translatey(-105%) translateX(809px);
+                        overflow: hidden;
+                        overflow-y: scroll ;
+                        box-shadow: 0 0 6px 1px black;
+                        width: 22%;
+                        background: linear-gradient(to bottom, transparent,black);
+
                     }
+                    #cur_artist_albums::-webkit-scrollbar{display: none;}
 
                     #cur_artist_tracklist{
+                        transition:transform 1s ease-in-out; /*была секунда*/
                         position: relative;
-                        /*height: 100%;*/
-                        /*transform: translatey(-20%) translateX(90%);*/
+                        transform:translateX(20px) translateY(120%);
                         height: 70%;
-                        top: 7%;
-                        left: 7%;
-                        box-shadow: 0 0 5px 5px #000000;
                         width: 80%;
-                        backdrop-filter: blur(4px);
-                        margin: 1%;
                         border-radius: 1%;
-                        background: #000000b8;
                         float: left;
                         overflow-x: hidden;
                         overflow-y: scroll;
@@ -873,30 +890,28 @@
                     #cur_artist_tracklist::-webkit-scrollbar{display: none;}
 
                     #selector_wrapper{
-                        position: absolute;
-                        width: 70%;
+                        position: relative;
+                        width: 25%;
                         font-family: system-ui;
                         display: flex;
-                        text-shadow: 0 0 1px red;
+                        text-shadow: 0 0 1px white;
                         font-size: x-large;
-                        color: #038957;
+                        color: #fafafa;
                         transform: translateX(36px);
-                        height: 29%;
+                        height: 28%;
                         flex-wrap: wrap;
                         align-content: space-between;
                         align-items: stretch;
                         flex-direction: row;
                         overflow: hidden;
-                        transition: 1s ease-out;
                     }
 
                     .sel{
                         padding: 5px;
-                        transition: 0.5s linear;
+                        transition:transform 0.5s linear;
                         cursor: pointer;
                         overflow: hidden;
                     }
-                    .sel:hover{width: 0%;}
 
                     .artist_songs{
                         width: 100%;
@@ -904,10 +919,11 @@
                         position: relative;
                         float: left;
                         margin: 1%;
-                        transition: 0.5s;
+                        transition:box-shadow 0.5s linear;
                         box-shadow: none;
                     }
                     .artist_songs:hover{
+                        transition:box-shadow 0.5s linear;
                         box-shadow: 0 0 15px 0 white inset;
                     }
 
@@ -916,46 +932,39 @@
                         float: left;
                         width: 8%;
                         height: 90%;
-                        margin: 1%;
-                        border: 1px solid #6c6c6c;
                         box-shadow: none;
-                        transition: 0.5s;
+                        transition:box-shadow 0.5s;
                     }
 
 
 
                     .art_song_title{
-                        display: block;
                         color: white;
-                        font-size: x-large;
-                        /*width: 70%;*/
-                        text-align: left;
+                        font-size: xx-large;
+                        width: 70%;
                         font-family: 'Audiowide';
                         height: 35%;
-                        margin-left: 1%;
-                        margin-top: 1%;
+                        margin:0 10%;
                         overflow-x: hidden;
                         overflow-y: hidden;
                         cursor: pointer;
                     }
 
                     .art_song_album_title{
-
                         display: inline-block;
                         float: left;
                         color: #6a6a6a;
                         font-size: larger;
                         width: 66%;
-                        height: 80%;
                         margin-top: 1%;
-                        margin-left: 1%;
+                        margin-left: 2%;
                         font-family: 'Comfortaa',Serif;
-                        transition: 0.5s ease-out;
+                        transition:color 0.5s ease-out,text-shadow 0.5s ease-out;
                         text-shadow: none;
                     }
                     .art_song_album_title:hover{
                         color: #00ff66;
-                        transition: 0.5s linear;
+                        transition:color 0.5s linear,text-shadow 0.5s linear;
                         text-shadow: 0 1px 7px #00ff66;
 
                     }
@@ -966,19 +975,19 @@
                         text-shadow: 4px 2px 5px black,-2px 0 5px black;
                         margin: 36%;
                         transform: rotateX(90deg);
-                        transition: 0.5s;
+                        transition:transform 0.5s;
                     }
 
                     .artist_albums_elem{
                         margin: 8%;
                         width: 85%;
                         float: left;
-                        border-radius: 10%;
-                        height: 25%;
+                        border-radius: 5%;
+                        height: 24%;
                         display: table;
-                        border: 1px solid gold;
+                        border: 1px solid #020202;
                         overflow: hidden;
-                        box-shadow: 0 0 3px 3px #000000, 0 0 10px 1px black inset;
+                        box-shadow: 0 0 10px 4px black, 0 0 20px 15px #222222 inset;
                     }
 
 
@@ -986,138 +995,464 @@
             .album_controls{
                 position: relative;
                 width: 100%;
-                height: 70%;
-                border: 1px solid red;
+                height: 69%;
+                backdrop-filter: blur(6px);
                 margin: 1%;
                 transform: translateX(135px);
             }
 
+
+
              .album_btn_play{
                  position: relative;
-             border-radius: 50%;
+                 border-radius: 50%;
                  display: block;
-                 margin: 9%;
+                 margin: 8%;
                  text-align: center;
                  color: red;
-                 height: 31%;
-                 width: 20%;
-                 border: 1px solid white;
+                 height: 32%;
+                 width: 19%;
              }
 
             .album_btn_add{
                 display: block;
                 margin: 7%;
-                height: 35%;
-                width: 35%;
-                border: 1px solid green;
+                height: 30%;
+                font-size: x-large;
+                width: 30%;
             }
             .album_titles{
                 position: relative;
                 float: left;
-                width: 129%;
+                width: 99%;
                 font-size: large;
                 font-family: 'Audiowide';
-                font-weight: bolder;
-                height: 27%;
+                text-align: center;
+                height: 20%;
                 color: wheat;
+                background: #000000b3;
             }
 
             .album_btn_icon{
-                font-size: x-large;
-                margin: 23%;
-                color: white;
+                font-size: xx-large;
+                margin: 13%;
+                font-weight: bold;
+                color: #ffffff;
             }
 
-            .art_cur_album_song_play_btn{
-                width: 8%;
-                color: red;
-                margin: 4%;
-                height: 55%;
-                border: 1px solid #b900a2;
-            }
 
-            .art_cur_album_song_title{
-                width: 53%;
-                text-align: center;
-                font-family: 'Audiowide';
-                color: red;
-                margin: 4%;
-                height: 60%;
+                        .art_cur_album_song_title{
+                            width: 68%;
+                            text-align: left;
+                            font-family: 'Audiowide';
+                            font-size: x-large;
+                            text-overflow: ellipsis;
+                            color: #00d390;
+                            overflow: hidden;
+                            height: 50%;
+                            transform: translateY(50%);
+                            transition: color .3s linear;
+                            white-space: nowrap;
 
-            }
-            .art_cur_album_song_duration{
-                width: 15%;
-                color: red;
-                margin: 4%;
-                height: 60%;
-                border: 1px solid #b900a2;
-            }
+                        }
 
-            .art_cur_album_song_options{
-                /*display: inline;*/
-                /*width: 15%;*/
-                /*height: 5%;*/
-                /*border: 1px solid red;*/
-                /*color: white;*/
-                /*text-align: center;*/
-            }
+                        .art_cur_album_song_options{
+                            width: 20%;
+                            color: red;
+                            height: 100%;
+                        }
 
             .artist_cur_album_song{
-                display: flex;
-                width: 101%;
-                height: 15%;
-                border: 1px solid gold;
-                flex-direction: row;
+                width: 100%;
+                display: -webkit-inline-box;
+                height: 13%;
+                overflow: hidden;
             }
+
 
 
 
             #cur_artist_album{
-                width: 95%;
-                margin: 2%;
-                overflow: hidden;
-                border: 1px solid red;
-                height: 81%;
+                width: 70%;
+                transition: transform 1s ease-out;
+                background: rgb(0 0 0 / 33%);
+                height: 80%;
                 position: absolute;
-                background: linear-gradient(45deg, black, #000000eb);
-                transform: translateY(-51px);
+           transform:  translateX(-150%) translateY(-2%);
             }
 
             #cur_artist_album_img_wrapper{
                 position: relative;
-                width: 30%;
-                height: 30%;
-                border: 1px solid red;
-                padding: 8%;
+                width: 37%;
+                overflow: hidden;
+                height: 56%;
                 float: right;
             }
 
             #cur_artist_album_img{
                 position: relative;
-                width: 80%;
-                height: 80%;
-                border: 1px solid red;
+                background-size: contain;
+                width: 100%;
+                height: 100%;
             }
+
+            #cur_artist_album_title{
+                width: 95%;
+                color: white;
+                height: 10%;
+                font-family: system-ui;
+                text-align: center;
+                font-size: xx-large;
+                white-space: nowrap;
+            }
+
 
             #cur_artist_album_tracks{
-                width: 58%;
+                width: 100%;
                 height: 100%;
+                position: relative;
+                overflow: hidden;
+                box-shadow: 0 0 5px 3px black;
                 overflow-y: scroll;
-                display: flow-root;
-                border: 1px solid white;
+                transition:transform 1s linear;
+                float: left;
+                background: linear-gradient(to bottom, transparent,black);
+            }
+
+            #cur_artist_album_tracks::-webkit-scrollbar {
+                display: none;
             }
             .art_cur_album_song_play_btn{
+                width: 12%;
+                color: rgba(0, 0, 0, 0);
+                border-radius: 50%;
+                height: 84%;
+                text-align: center;
+                font-size: x-large;
+                transition: color .3s linear;
+            }
+
+            .fa-solid fa-play{
+                margin: 40%;
+            }
+
+            .sel_container{width: 90px; height: 50px; overflow: hidden}
+
+            .song_options{
+                position: relative;
+                width: 2%;
+                color: red;
+                float: left;
+                text-align: center;
+                height: 100%;
+                transition: transform 0.3s;
+            }
+
+            .albumsTabElement{
+                position: relative;
+                width: 27%;
+                height: 20%;
+                transition: 0.5s linear;
+                box-shadow: 0 0 5px 1px #ffffff;
+                border-radius: 17%;
+                overflow: hidden;
+                float: left;
+                margin: 3%;
+            }
+
+            #alb_tab_cur_alb_tracks_wraper{
                 position: relative;
                 float: left;
-                width: 10%;
-                color: red;
-                margin: 4%;
-                height: 60%;
-                border: 1px solid #b900a2;
+                width: 43%;
+                height: 100%;
+                overflow-x: hidden;
+                overflow-y: scroll;
+                transition: 0.5s;
+            }
+
+            #alb_tab_cur_alb_tracks_img{
+                background-size: cover;
+                border-radius: 5%;
+                position: relative;
+                display: block;
+                width: 65%;
+                height: 50%;
+                box-shadow: 0 0 8px 4px black;
+                margin: 10% 15%;
+            }
+
+            #alb_tab_cur_alb_tracks{
+                position: relative;
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+
+            #alb_tab_albums_wraper{
+                position: relative;
+                width: 55%;
+                height: 100%;
+                float: left;
+                overflow-x: hidden;
+            }
+
+            .alb_tab_el_img{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-image: none;
+
+            }
+
+            .album_tab_elem_title{
+                position: relative;
+                height: 20%;
+                background: #000000ad;
+                width: 100%;
+                color: white;
+                font-size: x-large;
+                font-family: 'Audiowide';
+            }
+
+            .albumsTabElemButtons{
+                display: block;
+                width: 40%;
+                transform: translateX(-100%);
+                height: 80%;
+                transition:transform 0.5s;
+                background: #000000c2;
+                position: relative;
+                font-size: xx-large;
+                color: #00ff97;
+            }
+
+            .alb_title{
+                position: relative;
+                height: 100%;
+                text-overflow: unset;
+                white-space: nowrap;
+                text-align: left;
+                left: 9%;
+                float: left;
+            }
+
+            #album_info_and_img{
+                position: absolute;
+                width: 56%;
+                height: 100%;
+                display: none;
+                opacity: 0;
+                background: #161616f0;
+                transition: 0.5s;
+            }
+
+            #album_info{
+                position: relative;
+                float: left;
+                width: 100%;
+                height: 19%;
+                color: #00d390;
+                text-align: center;
             }
 
 
-        </style>
+            #album_artist_name{
+                font-size: xxx-large;
+                color: white;
+                text-shadow: 0 0 3px white, 0 5px 7px black;
+                font-family: 'Audiowide';
+            }
+            #selected_album_title{
+                font-size: xx-large;
+                color: #c70a00cc;
+                text-shadow: 0 0 2px #ff009b, 0 -3px 3px black;
+                font-family: 'Audiowide';
+            }
+
+            #xs{
+                position: absolute;
+                top: 3%;
+                left: 4%;
+                font-size: xx-large;
+            }
+
+
+
+            .selected_album_song{
+                width: 100%;
+                height: 15%;
+                float: left;
+                position: relative;
+            }
+
+            .play_btn_container{
+                text-align: center;
+                height: 100%;
+                width: 14%;
+                transform: translateY(35%) translateX(-50px);
+                position: relative;
+                float: left;
+                color: #fafafa;
+                font-size: x-large;
+            }
+
+
+            .song_title{
+                color: #ffffff;
+                transform: translateY(35%);
+                height: 92%;
+                position: relative;
+                float: left;
+                width: 65%;
+                font-family: 'Audiowide';
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                text-shadow: 0 0 3px;
+                font-size: x-large;
+            }
+
+            .selected_album_song_options_container{
+                text-align: center;
+                height: 95%;
+                float: right;
+                width: 20%;
+                display: flex;
+                position: relative;
+                color: #ffffff;
+                font-size: large;
+            }
+
+            .rollin_options{
+                transition: transform 1s;
+                width: 235px;
+                position: absolute;
+                height: 106%;
+                background: linear-gradient(45deg, black, #00000094);
+                color: cyan;
+                box-shadow: -50px 0 33px 7px black;
+                display: flex;
+            }
+
+
+
+            .rollin_options_element{
+                color: white;
+                position: relative;
+                width: 65%;
+                border-radius: 15%;
+                height: 35%;
+                font-size: x-large;
+                margin: 10% 2%;
+            }
+            .rol_opts_signs{
+                transform: translateY(60%);
+                text-shadow: 0 0 3px black;
+            }
+
+
+              #add_artist_button_wrapper{
+                  height: 15%;
+                  width: 10%;
+                  margin: 1%;
+                  position: relative;
+                  float: left;
+
+              }
+
+              #add_artist_button_container{
+                  position: relative;
+                  font-size: xx-large;
+                  transform: translateY(90%) translateX(50%);
+                  width: 55%;
+                  height: 45%;
+                  background: #141414;
+                  text-align: center;
+                  box-shadow: 0 0 3px 0 #fafafa, 0 0 1px 1px white;
+                  border-radius: 11%;
+
+              }
+              .add_artist_button_icons{
+                  color: #d9d9d9;
+                  text-shadow: 0px 0px 2px white;
+                  transform: translate(40%, 15%);
+                  /*float: left;*/
+                  display: inline-block;
+              }
+
+              .artist_element{
+                  position: relative;
+                  float: left;
+                  border: 1px solid #1e8d6d;
+                  width: 15%;
+                  margin: 2%;
+                  height: 20%;
+                  border-radius: 50%;
+                  overflow: hidden;
+                  box-shadow: 0 0 5px 1px black;
+              }
+              #myArtistsTab{
+                  position: absolute;
+                  width: 100%;
+                  height: 100%;
+                  background: #2a2a2a;
+                  z-index: 22333;
+              }
+
+              #my_artists_wrapper{
+                  position: relative;
+                  width: 100%;
+                  height: 100%;
+              }
+
+              .marks_bar{
+                  position: relative;
+                  width: 100%;
+                  display: flex;
+                  margin: -1%;
+                  height: 18px;
+              }
+
+              #mark_start{
+                  position: relative;
+                  display: flex;
+                  width: 20px;
+                  box-shadow: 0 0 8px 1px #00FFB1, 0 0 0 1px #00ffb1;
+                  height: 20px;
+                  left: 15%;
+                  margin: 5px;
+                  float: left;
+                  border-radius: 50%;
+                  z-index: 2;
+                  background: beige;
+              }
+
+              #mark_end{
+                  position: relative;
+                  border: 1px solid #00ffb3;
+                  width: 20px;
+                  margin: 5px;
+                  height: 20px;
+                  box-shadow: 0 0 8px 1px #00FFB1;
+
+                  border-radius: 50%;
+                  float: right;
+                  background: beige;
+              }
+
+
+              #mark_line {
+                  width: 82px;
+                  position: relative;
+                  height: 6px;
+                  background: #ffffff;
+                  margin-top: 30%;
+                  float: left;
+                  transition: 0.1s linear;
+              }
+
+
+</style>
     </head>
     <body>
     <div id="mainWrapper">
@@ -1141,7 +1476,6 @@
 
 
 
-    <audio src="" crossorigin="anonymous"></audio>
 
     <div id="canvasWrapper">
         <div id="can1wrapper">
@@ -1156,13 +1490,29 @@
                     <div id="progress"></div>
                 </div>
             </div>
+            <div class="marks_bar">
+                <div id="mark-setting-container">
+                    <span></span>
+                    <div id="mark_start">
+                    </div>
+
+                    <div id="mark_end">
+                        <div id="mark_line" style="transform: translateX(-99%)">
+                        </div>
+                        <div style="position: relative; transform: translateX(15px) translateY(-6px);  font-family: 'Audiowide'; color: #0fd182;  text-shadow: 0 0 1px, 0 0 2px; height: 23px; width: 45px; text-align: center;">00:00
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
-        <div id="can3wrapper">
-            <canvas id="can3"></canvas>
-        </div>
-        <div id="can4wrapper">
-            <canvas id="can4"></canvas>
-        </div>
+<!--        <div id="can3wrapper">-->
+<!--            <canvas id="can3"></canvas>-->
+<!--        </div>-->
+<!--        <div id="can4wrapper">-->
+<!--            <canvas id="can4"></canvas>-->
+<!--        </div>-->
 
     </div>
 
@@ -1186,7 +1536,6 @@
                 <!--            <div id="login">Sign in</div>-->
                 <!--            <canvas id="can3"></canvas>-->
                 <canvas id="canvas3"></canvas>
-
             </div>
             <div id="top" class="side"></div>
             <div id="bottom" class="side">
@@ -1194,7 +1543,6 @@
             </div>
             <div id="front" class="side">
                 <div id="timeBox">00:00 / 00:00</div>
-
             </div>
         </div>
     </div>
@@ -1203,23 +1551,53 @@
 
             <div id="currentArtistTab">
                 <div id="cur_artist_bg"></div>
+                <div id="add_artist_button_wrapper">
+                    <div id="add_artist_button_container">
+                        <i class="fa-solid fa-user add_artist_button_icons"></i>
+                        <i class="fa-solid fa-plus add_artist_button_icons" style="transform: translate(0%, 10%);font-size: x-large;color: white;text-shadow: -1px 1px 3px black, 1px 0 1px white;"></i>
+                    </div>
+                </div>
                 <div id="cur_artist_name_wrapper">
                     <div id="cur_artist_name"></div>
                     <div id="selector_wrapper">
-                        <div class="sel">Tracks</div>
+                        <div class="sel_container">
+                        <div class="sel" style="transform: translateX(100%); text-align: right">Tracks</div>
+                        </div>
                         <div class="sel">|</div>
-                        <div class="sel">Albums</div>
+                        <div class="sel_container">
+                        <div class="sel" style="transform: translateX(-100%);">Albums</div>
+                        </div>
                     </div>
                 </div>
-                <div id="cur_artist_tracklist"></div>
-                <div id="cur_artist_albums"></div>
-                <div id="cur_artist_album">
-                    <div id="cur_artist_album_img_wrapper">
-                        <img id="cur_artist_album_img" src="">
-                        <div id="cur_artist_album_title"></div>
-                    </div>
 
+                <div id="cur_artist_albums"></div>
+
+                <div id="cur_artist_album">
                     <div id="cur_artist_album_tracks"></div>
+                    <div id="cur_artist_album_img_wrapper" style="display: none">
+                        <img id="cur_artist_album_img" src="">
+                    </div>
+                    <div id="cur_artist_album_title" style="display: none"></div>
+                </div>
+
+                <div id="cur_artist_tracklist"></div>
+
+            </div>
+
+            <div id="my_albums_tab">
+                <div id="alb_tab_albums_wraper"></div>
+                <div id="alb_tab_cur_alb_tracks_wraper">
+                    <div id="alb_tab_cur_alb_tracks"></div>
+                </div>
+                <div id="album_info_and_img">
+                    <div id="alb_tab_cur_alb_tracks_img"></div>
+                    <div id="album_info">
+                        <div id="album_artist_name"></div>
+                        <div id="selected_album_title"></div>
+                    </div>
+                    <div id="xs">
+                        <i class="fa-solid fa-plus" style="transform: rotate(45deg); color: red"></i>
+                    </div>
                 </div>
             </div>
 
@@ -1247,20 +1625,28 @@
                 </div>
                 <div id="playlistsWraper"></div>
             </div>
+            <div id="myArtistsTab">
+                <div id="my_artists_wrapper"></div>
+            </div>
         </div>
 
-    <div id="menuButtonsWrapper">
-        <div id="content_hider"></div>
-      <div class="button_container"> <span class="material-symbols-outlined playlistsIcon">library_music</span>  <div id="tracklistButton" class="menuButtons">Tracklist</div></div>
-        <div class="button_container">  <i class="fa-solid fa-music playlistsIcon" ></i> <div id="playlistsButton" class="menuButtons">Playlists</div></div>
-        <div class="button_container"> <i class="fa-solid fa-thumbs-up playlistsIcon" ></i> <div id="LikedlistButton" class="menuButtons">Liked</div> </div>
-        <div class="button_container">  <i class="fa-solid fa-record-vinyl playlistsIcon" id="heart"></i> <div id="AlbumsListButton" class="menuButtons">Albums</div> </div>
-        <div class="button_container"> <span class="material-symbols-outlined playlistsIcon">person</span><div id="ArtistsListButton" class="menuButtons">Artists</div> </div>
-
-
-
-
-
+        <div id="menuButtonsWrapper">
+            <div id="content_hider"></div>
+            <div class="button_container"><span class="material-symbols-outlined playlistsIcon">library_music</span>
+                <div id="tracklistButton" class="menuButtons">Tracklist</div>
+            </div>
+            <div class="button_container"><i class="fa-solid fa-music playlistsIcon"></i>
+                <div id="playlistsButton" class="menuButtons">Playlists</div>
+            </div>
+            <div class="button_container"><i class="fa-solid fa-thumbs-up playlistsIcon"></i>
+                <div id="LikedlistButton" class="menuButtons">Liked</div>
+            </div>
+            <div class="button_container"><i class="fa-solid fa-record-vinyl playlistsIcon" id="heart"></i>
+                <div id="albumsListButton" class="menuButtons">Albums</div>
+            </div>
+            <div class="button_container"><span class="material-symbols-outlined playlistsIcon">person</span>
+                <div id="ArtistsListButton" class="menuButtons">Artists</div>
+            </div>
 
         </div>
 <!--    <div id="settingPane">-->
@@ -1286,7 +1672,7 @@
 <!--        </div>-->
 <!--    </div>-->
 
-
+        <audio id="audio_element" crossorigin="anonymous" hidden></audio>
     </div>
 
 
@@ -1299,6 +1685,9 @@
 
         let audioContext = null;
 
+        let src = null;
+    let audio1 = document.getElementById("audio_element");
+
 
         let canvas1 = document.getElementById("can1");
         let canvas2 = document.getElementById("can2");
@@ -1309,7 +1698,11 @@
         let can2_context = canvas2.getContext("2d");
 
         let WIDTH = canvas1.width;
-        let HEIGHT = canvas2.height;
+        let HEIGHT = canvas1.height;
+
+
+    let barWidth;
+    let barHeight;
 ///=/-/-/-/-/-/-/--/-/-/
 
 
@@ -1334,21 +1727,48 @@
 
         let dataArray;
         let source;
-        let startedAt = null;
         let duration = null;
 
     let play_pause_button = document.getElementById("play_pause");
         let play_pause_lbl = play_pause_button.children[0];
         let stop_btn;
 
-    let interval;
     let audioBuffers;
 
     let artistImage = document.getElementById("artistImage");
     let artistName = document.getElementById("artistName");
 
+    let my_albums = null;
 
-    window.onload = function(){audioBuffers = []; source = null;}
+    let add_artist_button = document.getElementById("add_artist_button_container");
+    add_artist_button.children[1].style.transition = ".5s linear";
+
+    let my_artists = null;
+    let my_artists_ids = null;
+
+    window.onload = function(){
+        let tracklist11 = {tracks : []};
+        let tracks_identificators1 = {identificators : []};
+        let playlists1 = {lists : []};
+        let playlists_titles1 = {titles : []};
+        let artists = {artists : []};
+        my_albums = {albums : []};
+        my_albums_identificators = {ids : []};
+        my_artists = {artists : []};
+        my_artists_ids = {identificators : []};
+
+        localStorage.setItem("tracklist", JSON.stringify(tracklist11));
+        localStorage.setItem("tracks_identificators", JSON.stringify(tracks_identificators1));
+        localStorage.setItem("playlists" ,JSON.stringify(playlists1));
+        localStorage.setItem("playlists_titles" ,JSON.stringify(playlists_titles1));
+        localStorage.setItem("my_albums" ,JSON.stringify(my_albums));
+        localStorage.setItem("my_artists", JSON.stringify(my_artists));
+        localStorage.setItem("my_artists_ids", JSON.stringify(my_artists_ids));
+
+
+
+        audioBuffers = []; source = null;
+    }
 
 
     let rate;
@@ -1365,7 +1785,6 @@ function  update_artistInfo(){
     if(current_tab_playing.id === "searchedTracksTab"){
         if(search_data.data.length === numba){numba = 0;}
         audio_url = search_data.data[numba].preview;
-
         artistImage.src = search_data.data[numba].artist.picture_medium;
         artistName.innerText = search_data.data[numba].artist.name;
     }else if(current_tab_playing.id === "tracklistTab"){
@@ -1378,196 +1797,205 @@ function  update_artistInfo(){
         audio_url = current_artist_tracks.data[numba].preview;
         artistImage.src = currentArtistTab.getAttribute("img_url");
         artistName.innerText =currentArtistTab.getAttribute("name");
+    }else if(current_tab_playing.id === "cur_artist_album_tracks"){
+        let cur_alb_number = parseInt(document.getElementById("cur_artist_album").getAttribute("alb_number"));
+        if(current_artist_albums.albums[cur_alb_number].songs.length=== numba){numba = 0;}
+        audio_url = current_artist_albums.albums[cur_alb_number].songs[numba].url;
 
-        console.log(current_artist_tracks + " ____CURRNT ART TRSCKS");
+        artistImage.src = currentArtistTab.getAttribute("img_url");
+        artistName.innerText =currentArtistTab.getAttribute("name");
+    }else if(current_tab_playing.id === "pl_tracks"){
+        let cur_pl_number = parseInt(testTab.getAttribute("playlist_number"));
+        // let cur_pl_track_number = parseInt(testTab.children[numba])
+        if(numba === playlists.lists[cur_pl_number].tracks.length){numba = 0}
 
+        artistImage.src = playlists.lists[cur_pl_number].tracks[numba].artist.picture_medium;
+        artistName.innerText = playlists.lists[cur_pl_number].tracks[numba].artist.name;
+        audio_url = playlists.lists[cur_pl_number].tracks[numba].preview;
+    }else if(current_tab_playing.id === cur_alb_tracks.id){
+        let cur_album_num = parseInt(my_albums_tab.getAttribute("cur_album_number"));
+        if(my_albums.albums[cur_album_num].songs.length === numba){numba = 0;}
 
+        artistImage.src = my_albums.albums[cur_album_num].img_url;
+        artistName.innerText = my_albums.albums[cur_album_num].songs[numba].title;
+        audio_url = my_albums.albums[cur_album_num].songs[numba].url;
     }
 }
 
 
 
-    async function load_and_decode() {
+    function load_and_decode() {
+        audioBuffers.push(audio_url);
+        console.log(audioBuffers.length);
+        audio1.src = audio_url;
         if(audioContext === null){
             audioContext = new AudioContext();
             analyzer = audioContext.createAnalyser();
-            analyzer.fftSize = 512;
             gainNode = audioContext.createGain();
-            gainNode.connect(analyzer);
+            src = audioContext.createMediaElementSource(audio1);
+            src.connect(analyzer);
             analyzer.connect(audioContext.destination);
-        }
 
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", audio_url);
-        xhr.responseType = "arraybuffer";
-        xhr.onload = await whenLoaded;
-        xhr.send();
-
-
-        function whenDecoded(audiobuffer){
-             audioBuffers.push(audiobuffer);
-             console.log(audioBuffers.length);
-
-         }
-        function decodingError(){
-
-             console.log('ERROR during data decoding');
-
-            if(isPlaying === true){
-                source.stop(); source.disconnect();   clearInterval(interval); interval = null;
-                progress.style.width = 0 + '%';
-                timeBox.innerText = '00:00/00:00';
-                playbackTime = null; rate = null; startedAt = null; duration = null;
-                isPlaying = false;
-            }
-
-            numba+=1; update_artistInfo();  load_and_decode();
+            analyzer.fftSize = 1024;
+            bufferLength = analyzer.frequencyBinCount;
+            dataArray = new Uint8Array(bufferLength);
+            barWidth = (WIDTH / bufferLength)/2;
 
         }
-
-        async function whenLoaded(e) {
-            let data = await xhr.response;
-            // await search_cache.add(new Request(audio_url));
-
-            if(audioContext === null){audioContext = new AudioContext();}
-            if (data === null) {alert('problem on load');}
-            else {
-                await audioContext.decodeAudioData(xhr.response, whenDecoded, decodingError);
-                play(numba);
-            }
-            console.log('numba  val'+ numba + 'after decoding');
-        }
-    }
+        bufferLength = analyzer.frequencyBinCount;
+        dataArray = new Uint8Array(bufferLength);
+        barWidth = (WIDTH / bufferLength);
+        play();
+}
 
     let rate_counter = null;
-    function change() {
-    console.log(rate);
-        if(rate === 100){
-            clearInterval(interval);
-            interval = null;
-            source.stop();
-            source.disconnect();
-            isPlaying = false;
-            progress.style.width = 0 + '%';
-            timeBox.innerText = '00:00/00:00';
-            playbackTime = null;
-            rate = null;
-            startedAt = null;
-            duration = null;
-            rate_counter = null;
-            document.getElementById(current_tab_playing.id).children[numba].children[0].children[0].classList.add('fa-play');
-            document.getElementById(current_tab_playing.id).children[numba].children[0].children[0].classList.remove('fa-pause');
-            numba+=1;
-
-            update_artistInfo();
-            load_and_decode(numba);
-        }
-        if(rate >=97 && rate_counter === null){
-            gainNode.gain.cancelScheduledValues(0.0);
-            gainNode.gain.setValueAtTime(0.01, audioContext.currentTime);
-
-            gainNode.gain.linearRampToValueAtTime(0.01,audioContext.currentTime+1);
-            rate_counter = 1;
-        }
-            playbackTime = Math.floor((Date.now() - startedAt) / 1000);
-            console.log(playbackTime + ' '  + startedAt);
-            rate = Math.floor((playbackTime * 100) / duration);
-            progress.style.width = rate + '%';
-            totalTime = smartTime(Math.floor(duration / 60)).toString() + ':' + smartTime(Math.floor(duration % 60)).toString();
-            currentTime = smartTime(Math.floor(playbackTime / 60).toString()) + ':' + smartTime(Math.floor(playbackTime % 60)).toString();
-            timeBox.innerText = totalTime + '/' + currentTime;
-    }
+    // function change() {
+    // console.log(rate);
+    //     if(audio.currentTime === 100){
+    //         isPlaying = false;
+    //         timeBox.innerText = '00:00/00:00';
+    //         playbackTime = null;
+    //         duration = null;
+    //         document.getElementById(current_tab_playing.id).children[numba].children[0].children[0].classList.add('fa-play');
+    //         document.getElementById(current_tab_playing.id).children[numba].children[0].children[0].classList.remove('fa-pause');
+    //
+    //         numba+=1;
+    //
+    //         console.log(current_tab_playing.childElementCount+ '    <<----- child el cnt');
+    //         console.log(current_tab_playing.children.length+ '    <<----- childrent');
+    //
+    //         if(numba === current_tab_playing.childElementCount){}
+    //         update_artistInfo();
+    //         load_and_decode(numba);
+    //     }
+    //     if(rate >=97 && rate_counter === null){}
+    // }
 
     function play() {
-        var playing_now;
-        if(numba === 0)
-        {playing_now = document.getElementById(current_tab_playing.id).children[numba];}
-        else
-        {playing_now = document.getElementById(current_tab_playing.id).children[numba-1];}
+        let playing_now;
 
-        var need_to_play_now = document.getElementById(current_tab_playing.id).children[numba];
+        if(numba === 0) {playing_now = document.getElementById(current_tab_playing.id).children[numba];}
+        else {playing_now = document.getElementById(current_tab_playing.id).children[numba-1];}
+
+        let need_to_play_now = document.getElementById(current_tab_playing.id).children[numba];
 
         if(isPlaying === true){//?!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!watch top
             playing_now.children[0].children[0].classList.add('fa-play');
             playing_now.children[0].children[0].classList.remove('fa-pause');
 
-             source.stop();
-             source.disconnect();
-             clearInterval(interval);
-             interval = null;
-             progress.style.width = 0 + '%';
-             timeBox.innerText = '00:00/00:00';
-             playbackTime = null; rate = null; startedAt = null; duration = null;
-             isPlaying = false;
-         }
-        source = audioContext.createBufferSource();
-        source.buffer = audioBuffers[[audioBuffers.length-1]];
-        console.log(source.buffer);
-        duration = source.buffer.duration;
-
-        source.connect(gainNode);//.connect(gainNode).connect(audioContext.destination);
+            progress.style.width = 0 + '%';
+            timeBox.innerText = '00:00/00:00';
+            isPlaying = false;
+        }
         bufferLength = analyzer.frequencyBinCount;
         dataArray = new Uint8Array(bufferLength);
-        startedAt = Date.now();
-
-        source.start();
-        interval = setInterval(change,500);
-
-        gainNode.gain.cancelScheduledValues(audioContext.currentTime);
-        gainNode.gain.setValueAtTime(0.01,audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(1.0, audioContext.currentTime+1.5);
         isPlaying = true;
+
         need_to_play_now.children[0].children[0].classList.add('fa-pause');
         need_to_play_now.children[0].children[0].classList.remove('fa-play');
+        audio1.play();
         renderFrame();
     }
 
+    let smartTime = function smartTime(time) {return time < 10 ? "0" + time.toString().trim() :  time;};
+
+    audio1.addEventListener("timeupdate", function(){
+        let currentMinutes, currentSeconds, totalMinutes, totalSeconds, currentTime, totalTime;
+
+        currentMinutes = smartTime(Math.floor(audio1.currentTime/60));
+        totalMinutes = smartTime(Math.floor(audio1.duration /60));
+
+        currentSeconds = smartTime(Math.floor(audio1.currentTime % 60));
+        totalSeconds = smartTime(Math.floor(audio1.duration % 60));
+
+        currentTime = currentMinutes + ":" + currentSeconds;
+        totalTime = totalMinutes + ":" + totalSeconds;
 
 
-
-
-    progressBar.addEventListener("click", function (e) {
-        clearInterval(interval);
-        var buf = source.buffer;
-
-        source.stop();
-        source.disconnect();
-
-        source = audioContext.createBufferSource();
-
-        source.buffer = buf;
-        source.connect(gainNode);
-
-        rate = Math.floor((e.clientX * 100) / progressBar.offsetWidth);
-        playbackTime = Math.floor(duration * rate) / 100;
-        startedAt = Math.floor(Date.now() - playbackTime    * 1000);
-        progress.style.width = rate + '%';
-
-        setTimeout(function () {progress.style.transition = "1s linear";}, 400);
-        progress.style.transition = "0.4s linear";
-        interval = setInterval(change, 500 );
-        gainNode.gain.cancelScheduledValues(audioContext.currentTime);
-        gainNode.gain.setValueAtTime(1.0, audioContext.currentTime);
-        gainNode.gain.setTargetAtTime(0.01,audioContext.currentTime+(duration-(playbackTime-2)), 2);
-
-        source.start(0, playbackTime, duration);
+        timeBox.innerHTML = currentTime + "/" + totalTime;
+        progress.style.width = ((audio1.currentTime / audio1.duration) * 100) + "%";
 
 
     });
 
-    let smartTime = function smartTime(time) {return time < 10 ? "0" + time.toString().trim() : time};
+     let marks_bar = document.querySelector(".marks_bar");
 
-let l = document.getElementById("left");
-let r =document.getElementById("right");
-let t = document.getElementById("top");
+    progressBar.addEventListener("click", function (e) {
+        let clickedPosition = e.clientX - e.target.offsetLeft;
+        audio1.currentTime = clickedPosition / progressBar.offsetWidth * audio1.duration;
+    });
+
+    progressBar.addEventListener("contextmenu", function (e){
+        audio1.pause();
+        isPlaying = false;
+        marks_bar.style.display = "flex";
+        mark_start.style.left = e.clientX+"px";
+        mark_end.style.left = e.clientX+500+"px"
+        line.style.width = mark_end.offsetLeft - 10 - mark_start.offsetLeft+"px";
+        mark_container.children[0].innerText = Math.floor(e.clientX /progressBar.offsetWidth * audio1.duration).toString();
+        mark_end.children[1].innerText = Math.floor(e.clientX /progressBar.offsetWidth * audio1.duration).toString();
+        setTimeout(function (){marks_bar.style.opacity = "1"},50);
+
+
+
+
+    })
+
+    let mark_container = document.getElementById("mark-setting-container");
+    let mark_start = document.getElementById("mark_start");
+    let line = document.getElementById("mark_line");
+    let g=  function (ee){
+        let clickedPosition = ee.clientX ;
+
+            mark_start.style.left = clickedPosition+"px";
+            // line.style.width = line.offsetWidth+mark_start.offsetLeft+"px";
+        line.style.width = mark_end.offsetLeft - 10 - mark_start.offsetLeft+"px";
+
+
+
+        // line.style.width =  mark_start.offsetLeft+"px";
+        mark_container.children[0].innerText = Math.floor(clickedPosition /progressBar.offsetWidth * audio1.duration).toString();
+    }
+
+    mark_start.addEventListener("mousedown",function(){marks_bar.addEventListener("mousemove", g);});
+    marks_bar.addEventListener("mouseup",function(){marks_bar.removeEventListener("mousemove", g);});
+
+    // let mark_end = document.getElementById("mark_end");
+    // marks_bar.addEventListener("contextmenu", function (e){
+    //     let clickedPosition =  e.clientX + mark_container.offsetLeft;
+    //
+    //     mark_container.setAttribute("cur_time",(clickedPosition /progressBar.offsetWidth * audio1.duration).toString());
+    //     // mark_container.children[0]
+    //     mark_end.style.position = "relative";
+    //     mark_end.style.left =  clickedPosition+"px";
+    //     line.style.width = mark_end.offsetLeft-mark_start.offsetLeft+"px";
+    //     mark_end.children[1].innerText = Math.floor(clickedPosition /progressBar.offsetWidth * audio1.duration).toString();
+    //
+    //
+    // });
+
+
+
+let f = function (ee){
+
+    let clickedPosition = ee.clientX+ mark_container.offsetLeft-50 ;
+
+    line.style.width = mark_end.offsetLeft-mark_start.offsetLeft+"px";
+    mark_end.style.left =  clickedPosition+"px";
+
+    line.style.transition = "0s ";
+    mark_end.children[1].innerText = Math.floor(clickedPosition /progressBar.offsetWidth * audio1.duration).toString();
+
+}
+
+
+    mark_end.addEventListener("mousedown",function () {marks_bar.addEventListener("mousemove", f);});
+    mark_end.addEventListener("mouseup", function (){ marks_bar.removeEventListener("mousemove", f)})
         let counter;
-
-
         function renderFrame() {
             requestAnimationFrame(renderFrame);
-            analyzer.getByteFrequencyData(dataArray)
-            let barWidth = (WIDTH / bufferLength);
-            let barHeight;
+            analyzer.getByteFrequencyData(dataArray);
+
 
             counter = 0;
 
@@ -1575,33 +2003,20 @@ let t = document.getElementById("top");
             can2_context.clearRect(0, 0, WIDTH, HEIGHT);
 
             for (var i = 0; i < bufferLength; i++) {
-
-
                 barHeight = dataArray[i];
 
                 can1_context.fillStyle = "#f60228";
-                can2_context.fillStyle = "#fafafa";
-                can1_context.lineCap = "round";
-                can2_context.lineCap = "round";
-                l.style.transform = "translateX(-" + dataArray[3]/2.2 +"px) rotateY(90deg)";
-                r.style.transform = "translateX(" + dataArray[3]/2.2 +"px) rotateY(90deg)";
-                t.style.transform = "translateY(-" + dataArray[3]/2.2 +"px) rotateX(90deg)";
+                can2_context.fillStyle = "#030303";
 
-
-
-
-                can1_context.fillRect(counter*1.8, HEIGHT - barHeight / 2, barWidth*1.9 , barHeight -70);
-                can2_context.fillRect(counter*1.8, HEIGHT - barHeight / 2, barWidth *2, barHeight-70);
-                counter += barWidth + 0.9;
+                can1_context.fillRect(counter*2, HEIGHT - barHeight / 2, barWidth/2, barHeight);
+                can2_context.fillRect(counter*2.5, HEIGHT - barHeight / 2, barWidth *3, barHeight);
+                counter += barWidth + 0.7;
 
             }
-
-
         }
         //---------------------------------------------------------------------------------------------------------------//
 
         play_pause_button.onclick = () => {
-            // source.start(0);
             play_pause_lbl.style.opacity = "0";
             setTimeout(function () {
                 play_pause_lbl.classList.add('fa-play');
@@ -1613,19 +2028,18 @@ let t = document.getElementById("top");
         ////////////////
 
 
-
-
-
-
-    /////////////
     let currentTab = null;
     let lastTab;
 
     let tracklistButton = document.getElementById("tracklistButton");
     let playlistsButton = document.getElementById("playlistsButton");
+    let albumsButton = document.getElementById("albumsListButton");
+    let artistsButton = document.getElementById("ArtistsListButton");
+
 
     let tracklistTab = document.getElementById("tracklistTab");
     let playlistsTab = document.getElementById("playListsPane");
+    let my_artists_tab = document.getElementById("myArtistsTab");
 
     let previous_button = null;
 
@@ -1634,10 +2048,24 @@ let t = document.getElementById("top");
         change_current_tab(tracklistTab);
         change_button(tracklistButton)
     });
+
     playlistsButton.addEventListener("click",function(){
         change_current_tab(playlistsTab);
         change_button(playlistsButton);
     });
+
+    albumsButton.addEventListener("click", function (){
+        change_current_tab(my_albums_tab);
+        change_button(albumsButton);
+    });
+
+    artistsButton.addEventListener("click", function (){
+        change_current_tab(my_artists_tab);
+        change_button(artistsButton);
+
+    })
+
+
 
 
 
@@ -1680,7 +2108,7 @@ let t = document.getElementById("top");
     let buttons = document.querySelectorAll(".button_container");
     buttons.forEach((e) => {
         e.addEventListener("mouseover", function (e) {
-            this.children[0].style.transition = "0.5s";
+            this.children[0].style.transition = ".5s";
             this.children[0].style.textShadow = "0px 0px 2px white, 0px 0px 1px #f7f7f7";
             this.children[1].style.textShadow = "0px 0px 2px white, 0px 0px 3px #f7f7f7";
         });
@@ -1720,7 +2148,7 @@ let t = document.getElementById("top");
             let resp = await fetch(new Request(uri+'/music?name=' + searchInput.value));
             searchTabChildNodes = searchedTracksTab.children;
             if (search_cache === null) {search_cache = await caches.open("audio_search_cache")}
-            // await search_cache.add(new Request(uri+'/music?name=' + searchInput.value));
+            await search_cache.add(new Request(uri+'/music?name=' + searchInput.value));
 
             search_data = await resp.json();
 
@@ -1765,16 +2193,12 @@ let t = document.getElementById("top");
         localStorage.setItem("playlists_titles", JSON.stringify(pl_titles));
     };
 
+    let update_local_albums =  function (){
+        localStorage.setItem("my_albums", JSON.stringify(my_albums));
+        localStorage.setItem("my_albums_identificators",JSON.stringify(my_albums_identificators))};
 
 
-
-
-
-
-
-
-
-let numba = 0;
+    let numba = 0;
     let current_tab_playing = null;
 
 
@@ -1832,39 +2256,39 @@ let numba = 0;
         el.children[0].children[0].addEventListener('click',  function (e) {
             if(isPlaying === true && current_tab_playing != null){
                 var ee = document.getElementById(current_tab_playing.id).children[numba];
-
                 ee.children[0].children[0].classList.add('fa-play');
                 ee.children[0].children[0].classList.remove('fa-pause');
-
             }
             var parent_elem= e.target.parentElement.parentElement.parentElement;
-            if(audioContext === null){
-                audioContext = new AudioContext();
-                analyzer = audioContext.createAnalyser();
-                analyzer.fftSize = 512;
-                gainNode = audioContext.createGain();
-                gainNode.connect(analyzer);
-                analyzer.connect(audioContext.destination);
-            }
+
 
              if ( parent_elem.id === 'searchedTracksTab') {
                 numba = parseInt(e.target.parentElement.children[1].children[0].getAttribute("number"));
                 audio_url = search_data.data[numba].preview;
                 console.log(numba + '    NUM');
                 current_tab_playing = parent_elem;
-
-
              }
             else if(parent_elem.id === "tracklistTab"){
                  numba = tracklist_tracks_identificarors.identificators.indexOf(parseInt(e.target.parentElement.children[1].children[0].getAttribute("id")));
                  audio_url = tracklist.tracks[numba].preview;
-
                  current_tab_playing = parent_elem;
-
              }
+            audio1.src = audio_url;
+            if(audioContext === null){
+                audioContext = new AudioContext();
+                analyzer = audioContext.createAnalyser();
+                analyzer.fftSize = 1024;
+                gainNode = audioContext.createGain();
+                src = audioContext.createMediaElementSource(audio1);
+                src.connect(gainNode);
+                gainNode.connect(analyzer);
+                analyzer.connect(audioContext.destination);
+                bufferLength = analyzer.frequencyBinCount;
+                dataArray = new Uint8Array(bufferLength);
+                barWidth = (WIDTH / bufferLength);
+            }
             update_artistInfo();
             load_and_decode();
-
         })
     }
 
@@ -1877,10 +2301,174 @@ let numba = 0;
     // controller = new AbortController();
 
 
+
+
+
+
+    let add_to_tracklist_v2 = function (in_album_number){
+        let song_for_add = null;
+        let album_number = null;
+        if(currentTab.id === "currentArtistTab") {
+            if (currentTab.getAttribute("current_state") === "albums") {
+                album_number = parseInt(document.getElementById("cur_artist_album").getAttribute("alb_number"));
+                song_for_add = current_artist_albums.albums[album_number].songs[in_album_number];
+                song_for_add.artist = {};
+                song_for_add.artist.name = currentArtistTab.getAttribute("name");
+                song_for_add.artist.id = currentArtistTab.getAttribute("artist_id");
+                song_for_add.artist_id =  currentArtistTab.getAttribute("artist_id");
+                song_for_add.preview = song_for_add.url;
+                song_for_add.artist_picture = currentArtistTab.getAttribute("img_url");
+                song_for_add.track_id = current_artist_albums.albums[album_number].songs[in_album_number].id;
+                song_for_add.timeMarks = [];
+                song_for_add.isLiked = false;
+
+            }
+        }else if(currentTab.id === "my_albums_tab"){
+            album_number = parseInt(my_albums_tab.getAttribute("cur_album_number"));
+            song_for_add = my_albums.albums[album_number].songs[in_album_number];
+            song_for_add.artist = my_albums.albums[album_number].artist;
+            song_for_add.preview = song_for_add.url;
+            song_for_add.artist_picture =my_albums.albums[album_number].img_url;
+            song_for_add.timeMarks = [];
+        }
+
+
+
+                if (song_for_add !== null && tracklist_tracks_identificarors.identificators.includes(song_for_add.id) === false) {
+                    tracklist.tracks.push(song_for_add);
+                    tracklist_tracks_identificarors.identificators.push(song_for_add.id);
+                    update_local_tracklist();
+                    update_local_tracks_ids();
+                    add_to_tracklist_request(song_for_add);
+
+                    let el = document.createElement("div");
+                    el.className = "tracklistElem";
+                    el.innerHTML =
+                        '<div class=\"buttons\"><i class=\"trackElementButton fa-solid fa-play\"></i>' +
+                        '<i class=\"playlistAddButton fa-solid fa-plus">' +
+                        '<ul class="addButtonMenu"\">' +
+                        '<li class=\"addBtnMenuElem\"><i class=\"addBtnMenuIcon fa-download\"></i><div class=\"addBtnMenuTitle\">download</div></li>' +
+                        '<li class=\"addBtnMenuElem\"><i class=\"addBtnMenuIcon fa-share\"></i><div class=\"addBtnMenuTitle\">share</div></li>' +
+                        '<li class=\"addBtnMenuElem\"><i class=\"plusLbl fa-plus\"></i><i class=\"addBtnMenuIcon fa-music\"></i><div class=\"addBtnMenuTitle\">add to playlist</div></li>' +
+                        '<li class=\"addBtnMenuElem\"><i class=\"plusLbl fa-plus\" style="transform: rotate(45deg)"></i><i class=\"addBtnMenuIcon fa-music\"></i><div class=\"addBtnMenuTitle\">remove from tracks</div></li>' +
+                        '</ul>' +
+                        '</i></div>' +
+                        '<div class=\"artistName\">' + current_artist_albums.albums[album_number].artist.name + '</div>' +
+                        '<div class=\"songName\">' + song_for_add.title + '</div>' +
+                        '<div class=\"trackSettings\"></div>';
+
+                    tracklistTab.appendChild(el);
+
+                    el.setAttribute("id", song_for_add.id);
+                    el.children[0].children[1].children[0].setAttribute("id",song_for_add.id);
+
+                    let ul = el.children[0].children[1].children[0];
+
+                    ul.children[3].addEventListener("click", function (){
+                        let index = tracklist_tracks_identificarors.identificators.indexOf(parseInt(ul.getAttribute("id")));
+                        let val ={"track_id" : ul.getAttribute("id")} ;
+                        if (tracklist.tracks.splice(index, 1).length === 1 && tracklist_tracks_identificarors.identificators.splice(index, 1).length === 1) {
+
+
+                            let del_el = document.getElementById(ul.getAttribute("id")).closest(".tracklistElem");
+                            del_el.style.height = "0%";
+                            setTimeout(function(){ del_el.remove();},800);
+                            remove_from_tracklist_request(val);
+
+                            console.log('deleted');
+
+                            update_local_tracklist();
+                            update_local_tracks_ids();
+                        }
+                    })
+
+                    el.addEventListener("mouseover", function () {
+                        el.children[0].style.transform = "translateX(15px)";
+                        el.children[0].style.opacity = "1";
+                        el.children[0].children[1].style.opacity = "1";
+                        el.style.color = "red";
+                    });
+
+                    el.addEventListener("mouseleave", function () {
+                        el.children[0].children[1].style.opacity = "0";
+                        el.children[0].style.transform = "translateX(-50px)";
+                        el.style.color = "#ccff0af9";
+                    });
+
+                    el.children[0].children[1].addEventListener("click", function (t) {
+                        el.children[0].children[1].style.color = "black";  // ИЛИ this
+                        ul.style.display = "inherit";
+                        setTimeout(function () {
+                            ul.style.width = "200px";
+                        }, 10);
+                        setTimeout(function () {
+                            ul.style.height = "170px";
+                            ul.style.opacity = "1";
+                        }, 100);
+                    });
+
+                    ul.addEventListener("mouseleave", function (e) {
+                        e.stopPropagation();
+
+                        setTimeout(function () {ul.style.width = "0px"}, 50);
+                        setTimeout(function () {ul.style.display = "none";}, 400);//<------
+
+                        ul.parentElement.style.color = "cyan";
+                        ul.style.height = "0px";
+                    });
+
+                    //add to playlist CLICK
+                    ul.children[2].addEventListener("click", function () {
+                        change_current_tab(selectPlaylistTab);
+                        track_for_playlist_adding = el.getAttribute("id");
+                    });
+
+                    el.children[0].children[0].addEventListener('click',  function (e) {
+                        if(isPlaying === true && current_tab_playing != null){
+                            var ee = document.getElementById(current_tab_playing.id).children[numba];
+                            ee.children[0].children[0].classList.add('fa-play');
+                            ee.children[0].children[0].classList.remove('fa-pause');
+
+                        }
+                        var parent_elem= e.target.parentElement.parentElement.parentElement;
+                        if(audioContext === null){
+                            audioContext = new AudioContext();
+                            analyzer = audioContext.createAnalyser();
+                            analyzer.fftSize = 512;
+                            gainNode = audioContext.createGain();
+                            gainNode.connect(analyzer);
+                            analyzer.connect(audioContext.destination);
+                        }
+
+
+                            numba = tracklist_tracks_identificarors.identificators.indexOf(parseInt(e.target.parentElement.children[1].children[0].getAttribute("id")));
+                            audio_url = tracklist.tracks[numba].preview;
+
+                            current_tab_playing = parent_elem;
+
+
+                        update_artistInfo();
+                        load_and_decode();
+
+                    })
+
+                }
+
+               console.log(song_for_add);
+
+
+            }
+
+
+
+
     let add_to_tracklist =  function(el){
 
         tracklist =  local_get_tracklist();
         tracklist_tracks_identificarors = local_get_tracks_ids();
+
+
+
 
         let ul = el.children[0].children[1].children[0];
         let num = ul.getAttribute("number");
@@ -1918,7 +2506,6 @@ let numba = 0;
             tracklistUl.children[3].children[2].innerText = "remove from tracklist";
             tracklistTab.appendChild(ele);
             initListeners(ele);
-            // ele.children[0].children[1].children[0].children[3].addEventListener('click',function(){remove_from_traklist(ele)},{once:true});
             add_to_tracklist_request(trackObject);
 
             tracklistUl.children[3].children[0].style.transform = "rotate(45deg)";
@@ -2067,8 +2654,59 @@ let change_button = function (button){
     let currentArtistTab = document.getElementById("currentArtistTab");
     let cur_artist_tracklist = document.getElementById("cur_artist_tracklist");
     let select_wraper = document.getElementById("selector_wrapper");
-    select_wraper.onmouseover = function(){select_wraper.style.width = "0%"}
-    select_wraper.onmouseleave = function(){select_wraper.style.width = "70%"}
+
+    let sel_tracks= select_wraper.children[0].children[0];
+    let sel_albums = select_wraper.children[2].children[0];
+
+    sel_tracks.addEventListener("click", function (){
+        currentArtistTab.setAttribute("current_state","tracks");
+        select_wraper.setAttribute("val", "0");
+        sel_tracks.style.textShadow = "0 0 3px white";
+        sel_albums.style.textShadow = "0 0 0 white";
+
+        setTimeout(function (){cur_artist_tracklist.style.transform = "translateX(20px) translateY(10%)";},1000);
+
+        document.getElementById("cur_artist_albums").style.transform = "translateY(-125%) translateX(809px)";
+        document.getElementById("cur_artist_album").style.transform = "translateX(-155%) translateY(2%)";
+
+        })
+
+    sel_albums.addEventListener("click",function (){
+        currentArtistTab.setAttribute("current_state","albums");
+        select_wraper.setAttribute("val","1");
+        sel_tracks.style.textShadow = "0 0 0 white";
+        sel_albums.style.textShadow = "0 0 3px white";
+
+        setTimeout(function (){
+            document.getElementById("cur_artist_albums").style.transform = "translateY(-20%) translateX(809px)";
+            document.getElementById("cur_artist_album").style.transform = "translateX(0%) translateY(-7%)";
+        },1000);
+        cur_artist_tracklist.style.transform  = "translateX(20px) translateY(120%)";
+    });
+
+
+    select_wraper.onmouseover = function(e){
+
+        if(e.target.className === "sel" || e.target.className === "sel_container"){}
+
+        sel_tracks.style.transform = "translateX(0%)";
+        sel_albums.style.transform = "translateX(0%)";
+    }
+    select_wraper.onmouseleave = function(e){
+        e.stopPropagation();
+        let atr = select_wraper.getAttribute("val")
+        if(e.target.className === "sel" || e.target.className === "sel_container"){}
+        if(atr === "0"){
+            sel_albums.style.transform = "translateX(-100%)";
+        }
+        else if(atr === "1"){
+            sel_tracks.style.transform = "translateX(100%)";
+        }else{
+            sel_albums.style.transform = "translateX(-100%)";
+            sel_tracks.style.transform = "translateX(100%)";
+        }
+
+    }
 
     let testTab = document.getElementById("test");
 
@@ -2078,31 +2716,96 @@ let change_button = function (button){
     let current_artist_albums = null;
 
     let create_playlist_song_element = async function () {
-        // console.log('create_playlist_song_element()' + '   pl_number  ' + pl_number);
-
         let div = document.createElement("div");
         div.className = "playlistElement";
         div.innerHTML =
-            //'<div class=\"pl_elem_play_btn\"><i class=\"pl_play_icon fa-solid fa-play\"></i></div>' +
+            "<div class=\"pl_elem_play_btn\"><i class=\"pl_play_icon fa-solid fa-play\"></i></div>" +
             "<div class=\"music_info\">" +
             "<div class=\"pl_songName\"></div>" +
-            "<div class=\"pl_artistName\" pl_song_number=\"null\"></div>" +
+            "<div class=\"pl_artistName\"></div>" +
+            "</div>"+
+            "<div class=\"song_options\">" +
+            "<i class=\"fa-solid fa-gear\" style=\"transform: translateY(160%); transition: 0.3s ease-out\"></i>" +
+            '<ul class="addButtonMenu" style=\"position: absolute; display: flow-root; font-family: FontAwesome; font-size: larger\">' +
+            '<li class=\"addBtnMenuElem\" style=\"display: flex\"><i class=\"addBtnMenuIcon fa-download\"></i><div class=\"addBtnMenuTitle\">download</div></li>' +
+            '<li class=\"addBtnMenuElem\"><i class=\"addBtnMenuIcon fa-share\"></i><div class=\"addBtnMenuTitle\">share</div></li>' +
+            '<li class=\"addBtnMenuElem\"><i class=\"plusLbl fa-plus\" style=\"position: relative; float: left\"></i><i class=\"addBtnMenuIcon fa-music\"></i><div class=\"addBtnMenuTitle\">add to playlist</div></li>' +
+            '<li class=\"addBtnMenuElem\"><i class=\"plusLbl fa-plus\" style=\"transform: rotate(45deg); position: relative; float: left\"></i><i class=\"addBtnMenuIcon fa-music\"></i><div class=\"addBtnMenuTitle\">remove from playlist</div></li>' +
+            '</ul>' +
             "</div>";
 
         await testTab.children[2].appendChild(div);
-        let track_number = testTab.children[2].children.length-1;
+        // let track_number = testTab.children[2].children.length-1;
+        //
+        // await div.setAttribute("pl_song_number",track_number.toString());
 
-        await div.children[0].children[1].setAttribute("pl_song_number",track_number.toString());
-       div.children[0].children[1].addEventListener("click",async function (){
-           let current_playlist_track =  playlists.lists[current_pl_number].tracks[track_number];
+        div.addEventListener("mouseover", function (){div.children[0].style.transform = "rotateX(0deg)"});
+        div.addEventListener("mouseleave", function (){
+            div.children[0].style.transform = "rotateX(90deg)";
+            div.children[2].children[1].style.height = "0px";
+            setTimeout(function (){div.children[2].children[1].style.width = "0px";},300);});
+
+        div.children[2].children[0].addEventListener("click", function (){
+            setTimeout(function (){div.children[2].children[1].style.height = "150px";},300);
+            div.children[2].children[1].style.width = "180px";
+        });
+
+        div.children[2].children[1].children[2].addEventListener("click", function (e) {
+
+            track_for_playlist_adding = playlists.lists[parseInt(testTab.getAttribute("playlist_number"))].tracks[Array.from(document.getElementById("pl_tracks").children).indexOf(this.closest(".playlistElement"))];
+            console.log('xxx');
+
+            change_current_tab(selectPlaylistTab);
+        });
+
+
+        div.children[2].children[1].children[3].addEventListener("click",async function (e) {
+            let track_for_deleting = {
+                track_id : playlists.lists[parseInt(testTab.getAttribute("playlist_number"))].tracks[Array.from(document.getElementById("pl_tracks").children).indexOf(this.closest(".playlistElement"))].id,
+                playlist_number : parseInt(testTab.getAttribute("playlist_number"))
+            }
+
+            let index = Array.from(document.getElementById("pl_tracks").children).indexOf(this.closest(".playlistElement"));
+               if(playlists.lists[parseInt(testTab.getAttribute("playlist_number"))].tracks.splice(index,1).length === 1){
+                   await update_local_playlists();
+                   div.style.height = "0px";
+                   div.style.transition = "0.5s linear";
+                   setTimeout(function (){document.getElementById("pl_tracks").children[index].remove()},500);
+                   remove_from_playlist_request(track_for_deleting);
+               }
+
+        });
+
+
+
+        div.children[0].addEventListener("click", function (){
+            if (isPlaying === true && current_tab_playing != null) {
+                var cur_playing = document.getElementById(current_tab_playing.id).children[numba];
+                cur_playing.children[0].children[0].classList.add("fa-play");
+                cur_playing.children[0].children[0].classList.remove("fa-pause");
+            }
+            current_tab_playing = testTab.children[2];
+            numba = Array.from(document.getElementById("pl_tracks").children).indexOf(this.closest(".playlistElement"));
+            audio_url = playlists.lists[parseInt(testTab.getAttribute("playlist_number"))].tracks[numba].preview;
+            current_tab_playing.setAttribute("active_song", (numba).toString());
+            update_artistInfo();
+            load_and_decode();
+        });
+
+
+        div.children[1].children[1].addEventListener("click",async function (){
+           let current_playlist_track =  playlists.lists[current_pl_number].tracks[Array.from(document.getElementById("pl_tracks").children).indexOf(this.closest(".playlistElement"))];
            currentArtistTab.setAttribute("artist_id", current_playlist_track.artist.id);
            currentArtistTab.setAttribute("img_url", current_playlist_track.artist.picture_medium);
            currentArtistTab.setAttribute("name", current_playlist_track.artist.name);
 
-           let tracks_data =await get_artist_tracklist_request(current_playlist_track.artist.id);
+           let tracks_data =await get_artist_tracklist_request(current_playlist_track.artist.id);///это можно объединить в один на сервере
+
            let albums_data = await get_artist_albums_request(current_playlist_track.artist.id);
+
            current_artist_tracks = tracks_data;
            current_artist_albums = albums_data;
+
            let song_elements_count = cur_artist_tracklist.children.length;
            let albums_elements_count = document.getElementById("cur_artist_albums").children.length;
 
@@ -2131,9 +2834,7 @@ let change_button = function (button){
                }
            }
 
-           ////
            if (albums_elements_count === 0) {
-
                current_artist_albums.albums.forEach((data) => {console.log(data);create_artist_albums_element(data);});
            } else {
                if (albums_elements_count > albums_data.albums.length) {
@@ -2155,10 +2856,152 @@ let change_button = function (button){
            }
 
            currentArtistTab.children[0].style.backgroundImage = "url(\'"+ current_playlist_track.artist.picture_medium+"\')";
-           currentArtistTab.children[1].children[0].innerText =  tracks_data.data[0].artist.name;
+           currentArtistTab.children[2].children[0].innerText =  tracks_data.data[0].artist.name;
+
+
+                my_artists = JSON.parse(localStorage.getItem("my_artists"));
+                my_artists_ids = JSON.parse(localStorage.getItem("my_artists_ids"));
+
+                let artist_id = parseInt(currentArtistTab.getAttribute("artist_id"));
+                if(my_artists_ids.identificators.includes(artist_id)){
+                    add_artist_button.className = "included";
+                    add_artist_button.children[1].style.transform = "translate(0%, 10%) rotate(45deg)";
+                    add_artist_button.children[1].style.color = "red";
+
+
+                }else{
+                    add_artist_button.className = "not_included";
+                    add_artist_button.children[1].style.transform = "translate(0%, 10%)";
+                    add_artist_button.children[1].style.color = "green";
+                }
+
            await change_current_tab(currentArtistTab);
 
-       })
+       });
+    }
+
+
+
+    add_artist_button.addEventListener("click", function (){
+        let artist_id = parseInt(currentArtistTab.getAttribute("artist_id"));
+        if(add_artist_button.className === "included"){
+            my_artists_tab.children[0].children[my_artists_ids.identificators.indexOf(artist_id)].remove();
+
+            my_artists_ids.identificators.splice(my_artists_ids.identificators.indexOf(artist_id), 1);
+            localStorage.setItem("my_artists_ids", JSON.stringify( my_artists_ids));
+
+            remove_artist_request(artist_id);
+
+
+            add_artist_button.className = "not_included";
+            add_artist_button.children[1].style.transform = "translate(0%, 10%)";
+            add_artist_button.children[1].style.color = "green";
+        }else{
+            my_artists_ids.identificators.push(artist_id);
+            localStorage.setItem("my_artists_ids", JSON.stringify( my_artists_ids));
+            add_artist_request(artist_id);
+            add_artist_button.className = "included";
+            add_artist_button.children[1].style.transform = "translate(0%, 10%) rotate(45deg)";
+            add_artist_button.children[1].style.color = "red";
+            create_my_artists_tab_element(artist_id);
+
+            //add_to_my_artists_request(artist_id);
+
+        }
+    });
+
+    function create_my_artists_tab_element(artist_id){
+        let artist_element = document.createElement("div");
+        console.log('sozanie');
+        artist_element.innerHTML =
+                '<div class="artist_element_bg_container" style="width: 100%; height: 100%; position:relative;"><div class="artist_alement_bg" style="background-size: cover; width: 100%; height: 100%; position:relative;"></div></div>' +
+                '<div class="artist_name_wraper"><div class="artist_element_name"></div></div>';
+        artist_element.className = "artist_element";
+
+        artist_element.setAttribute("id",artist_id);
+        document.getElementById("myArtistsTab").children[0].appendChild(artist_element);
+        artist_element.children[0].children[0].style.backgroundImage = "url(\'"+current_artist_albums.albums[0].artist.image_url+"\')";
+        artist_element.children[1].children[0].innerText = current_artist_albums.albums[0].artist.name;
+
+        artist_element.addEventListener("click",async function (){
+            current_artist_albums = await get_artist_albums_request(artist_element.getAttribute("id"))
+            current_artist_tracks =await get_artist_tracklist_request(artist_element.getAttribute("id"));
+
+
+            //////
+            currentArtistTab.setAttribute("artist_id", current_artist_albums.albums[0].artist.id);
+            currentArtistTab.setAttribute("img_url", current_artist_albums.albums[0].artist.image_url);
+            currentArtistTab.setAttribute("name", current_artist_albums.albums[0].artist.name);
+
+
+            let song_elements_count = cur_artist_tracklist.children.length;
+            let albums_elements_count = document.getElementById("cur_artist_albums").children.length;
+
+            let counter = null;
+            let album_counter = null;
+
+            if (song_elements_count === 0) {
+                current_artist_tracks.data.forEach((data) => {console.log(data);create_artist_tracklist_song_element(data);});
+            } else {
+                if (song_elements_count > current_artist_tracks.data.length) {
+                    counter = song_elements_count - current_artist_tracks.data.length;
+                    for (let j = 0; j < counter; j++) {await cur_artist_tracklist.lastElementChild.remove();}
+                } else if(song_elements_count < current_artist_tracks.data.length){
+                    counter = current_artist_tracks.data.length - song_elements_count;
+                    for (let j = 0; j <counter; j++) {
+                        console.log(cur_artist_tracklist.children.length + ' ``````````` '+ current_artist_tracks.data.length);
+                        await create_artist_tracklist_song_element(current_artist_tracks.data[j]);
+                    }
+                }else {}
+                for(let v=0;v<cur_artist_tracklist.children.length; v++){
+                    let current =  cur_artist_tracklist.children[v];
+                    current.children[0].style.backgroundImage = "url(\'"+current_artist_tracks.data[v].album.cover_small+"\')";
+                    current.children[1].innerText = current_artist_tracks.data[v].title;
+                    current.children[2].innerText = current_artist_tracks.data[v].album.title;
+                    current.children[3].innerText = current_artist_tracks.data[v].duration;
+                }
+            }
+
+            if (albums_elements_count === 0) {
+                current_artist_albums.albums.forEach((data) => {console.log(data);create_artist_albums_element(data);});
+            } else {
+                if (albums_elements_count > current_artist_albums.albums.length) {
+                    album_counter = albums_elements_count - current_artist_albums.albums.length;
+                    for (let j = 0; j < album_counter; j++) {await document.getElementById("cur_artist_albums").lastElementChild.remove();}
+                } else if(albums_elements_count < current_artist_albums.albums.length){
+                    album_counter = current_artist_albums.albums.length - albums_elements_count;
+                    for (let j = 0; j <album_counter; j++) {
+                        console.log(document.getElementById("cur_artist_albums").children.length + ' ``````````` '+ current_artist_albums.albums.length);
+                        await create_artist_albums_element(current_artist_albums.albums[j]);
+                    }
+                }else {}
+                for(let v=0;v<document.getElementById("cur_artist_albums").children.length; v++){
+                    let current =  document.getElementById("cur_artist_albums").children[v];
+                    current.style.backgroundImage = "url(\'"+current_artist_albums.albums[v].img_url+"\')";
+                    current.children[1].innerText = current_artist_albums.albums[v].title;
+                    current.setAttribute("album_number", v.toString());
+                }
+            }
+
+            currentArtistTab.children[0].style.backgroundImage = "url(\'"+ current_artist_albums.albums[0].artist.image_url+"\')";
+            currentArtistTab.children[2].children[0].innerText =  current_artist_albums.albums[0].artist.name;
+
+
+            my_artists = JSON.parse(localStorage.getItem("my_artists"));
+            my_artists_ids = JSON.parse(localStorage.getItem("my_artists_ids"));
+
+            let artist_id = parseInt(currentArtistTab.getAttribute("artist_id"));
+            if(my_artists_ids.identificators.includes(artist_id)){
+                add_artist_button.className = "included";
+            }else{
+                add_artist_button.className = "not_included";
+            }
+            await change_current_tab(currentArtistTab);
+
+
+
+            //////
+        })
     }
 
             addNewPlaylistButton.addEventListener("click", async function () {
@@ -2223,8 +3066,8 @@ let change_button = function (button){
 
 
 
-                    await playlists.lists.push(newPlaylist);
-                    await pl_titles.titles.push(newPlaylist.title);
+                     playlists.lists.push(newPlaylist);
+                     pl_titles.titles.push(newPlaylist.title);
                     await update_local_playlists();
                     console.log('3.1 localstorage PLAYLISTS + PLAYLISTS_titles UPDATED');
                     console.log('3.2 playlist object with number : _' + number + '_ + added to localstorage(playlists/+titles)');
@@ -2241,7 +3084,7 @@ let change_button = function (button){
 
                     await playlist_tab_el.addEventListener('click',async function (){
                         playlists = await  local_get_playlists();
-                        current_pl_number = parseInt(playlist_tab_el.getAttribute("number"),10); //playlists.lists[parseInt(playlist_tab_el.getAttribute("number"),10)];
+                        current_pl_number = parseInt(playlist_tab_el.getAttribute("number"),10);
                         console.log('3.7   переменная current_pl_number проинициализирована значение....'+ current_pl_number+'... элемента ВЫБОРА плейлиста  ');
 
 
@@ -2270,23 +3113,23 @@ let change_button = function (button){
 
                             }
                         }else{
-                            for(let i = 0; i < tracks_number_in_playlist; i++){
-                                await create_playlist_song_element(current_pl_number);
-                            }
+                            for(let i = 0; i < tracks_number_in_playlist; i++){ await create_playlist_song_element(current_pl_number); }
                         }
 
                         console.log(tracks_number_in_playlist + '      ' +cur_playlist_pane_tracks_number + '   ' + count_value  );
 
                         for(let i=0; i <testTab.children[2].children.length; i++) {
-                            console.log(i);
+                            console.log(playlists.lists[current_pl_number].tracks[i]);
 
-                            testTab.children[2].children[i].children[0].children[0].innerText = playlists.lists[current_pl_number].tracks[i].title;
-                            testTab.children[2].children[i].children[0].children[1].innerText = playlists.lists[current_pl_number].tracks[i].artist.name;
-                            // testTab.children[2].children[i].children[0].children[1].setAttribute("pl_song_number", i.toString());
+                            testTab.children[2].children[i].children[1].children[0].innerText = playlists.lists[current_pl_number].tracks[i].title;
+                            testTab.children[2].children[i].children[1].children[1].innerText = playlists.lists[current_pl_number].tracks[i].artist.name;
+                            //testTab.children[2].children[i].children[0].children[1].setAttribute("pl_song_number", i.toString());
                         }
                         if(playlists.lists[current_pl_number].image !== null){
                             testTab.children[0].children[0].style.backgroundImage = "url(\'"+ playlists.lists[current_pl_number].image + "\')";
                         }
+                        testTab.setAttribute("playlist_number", current_pl_number);
+
                         change_current_tab(testTab);
                     });
                 }else{alert('playlist существуеь');}
@@ -2294,11 +3137,33 @@ let change_button = function (button){
 
 
 
-    //!!!!!!!ATTTENTION
+    //<!--!!!!!!!ATTTENTION
+
+
+    let my_albums_tab = document.getElementById("my_albums_tab");
 
 let cur_artist_album_tracks = document.getElementById("cur_artist_album_tracks");
 
 let cur_artist_album_img =  document.getElementById("cur_artist_album_img");
+
+let close_but = document.getElementById("xs");
+
+let alb_info_img = document.getElementById("album_info_and_img");
+
+    let cur_alb_tracks = document.getElementById("alb_tab_cur_alb_tracks");
+    let cur_alb_tracks_wrapper = document.getElementById("alb_tab_cur_alb_tracks_wraper");
+
+
+    close_but.addEventListener("click", function (){
+    setTimeout(function (){
+        alb_info_img.style.display = "none";
+        cur_alb_tracks_wrapper.style.display = "none";
+
+    },500);
+    alb_info_img.style.opacity = "0";
+        cur_alb_tracks_wrapper.style.opacity = "0";
+        cur_alb_tracks_wrapper.style.transform = "rotateY(180deg) rotateX(90deg)";
+});
 
 
     let create_artist_albums_element = function (album_data) {
@@ -2312,21 +3177,181 @@ let cur_artist_album_img =  document.getElementById("cur_artist_album_img");
             "<div class=\"album_titles\"></div>";
 
         document.getElementById("cur_artist_albums").appendChild(album);
-        album.setAttribute("album_number", document.getElementById("cur_artist_albums").children.length.toString());
+        album.setAttribute("album_number", (document.getElementById("cur_artist_albums").children.length - 1).toString());
 
         album.children[1].innerText = album_data.title;
         album.style.backgroundImage = "url(\'" + album_data.img_url + "\')";
 
+        album.children[0].children[1].addEventListener("click",async function (e){
+            e.stopPropagation();
+            if(!my_albums_identificators.ids.includes(current_artist_albums.albums[parseInt(album.getAttribute("album_number"))].id)){
+                my_albums.albums.push(current_artist_albums.albums[parseInt(album.getAttribute("album_number"))]);
+                my_albums_identificators.ids.push(current_artist_albums.albums[parseInt(album.getAttribute("album_number"))].id);
+               await update_local_albums();
+                await add_album_request(album_data.id);
+
+
+                let alb_elem = document.createElement("div");
+                alb_elem.className = "albumsTabElement";
+
+                alb_elem.innerHTML =
+                    '<div class=\"alb_tab_el_img\"></div>'+
+                    '<div class=\"albumsTabElemButtons\">' +
+                    '<i class=\"fa-solid fa-play\" style="display: block; padding: 10px"></i>' +
+                    '<i class=\"fa-solid fa-remove\" style="display: block; padding: 10px"></i>'+
+                    '</div>'+
+                    '<div class=\"album_tab_elem_title\">' +
+                    '<div class="alb_title"></div>' +
+                    '</div>';
+
+                    alb_elem.children[0].style.backgroundImage = "url('"+ current_artist_albums.albums[parseInt(album.getAttribute("album_number"))].img_url +"')";
+                alb_elem.children[2].children[0].innerText = current_artist_albums.albums[parseInt(album.getAttribute("album_number"))].title;
+
+                alb_elem.setAttribute("id", current_artist_albums.albums[parseInt(album.getAttribute("album_number"))].id);
+                alb_elem.setAttribute("title", current_artist_albums.albums[parseInt(album.getAttribute("album_number"))].title);
+                alb_elem.setAttribute("artist_id", current_artist_albums.albums[parseInt(album.getAttribute("album_number"))].artist.id);
+
+                my_albums_tab.children[0].appendChild(alb_elem);
+
+                alb_elem.addEventListener("mouseover", function (){alb_elem.children[1].style.transform = "translateX(0%)";});
+                alb_elem.addEventListener("mouseleave", function (){alb_elem.children[1].style.transform = "translateX(-100%)";});
+                alb_elem.addEventListener("click", function (){
+                    // let ind = my_albums_identificators.ids.indexOf(alb_elem.getAttribute("id"));
+                    my_albums_tab.setAttribute("cur_album_number", (Array.from(document.getElementById("alb_tab_albums_wraper").children).indexOf(alb_elem)).toString());
+
+                    let ind = parseInt(my_albums_tab.getAttribute("cur_album_number"));
+
+
+                    my_albums_tab.children[2].style.display = "block";
+                    cur_alb_tracks_wrapper.style.display = "block";
+                    my_albums_tab.children[2].children[0].style.backgroundImage = "url(\'"+my_albums.albums[ind].img_url+"\')";
+                    my_albums_tab.children[2].children[1].children[0].innerText = my_albums.albums[ind].artist.name;
+                    my_albums_tab.children[2].children[1].children[1].innerText = my_albums.albums[ind].title;
+                    setTimeout(function(){
+                        my_albums_tab.children[2].style.opacity = "1";
+                        cur_alb_tracks_wrapper.style.opacity = "1";
+                        cur_alb_tracks_wrapper.style.transform = "none";
+                        cur_alb_tracks_wrapper.style.transform = "none";
+                        cur_alb_tracks_wrapper.style.transform = "none"
+                    },500);
+
+                    let count = 0;
+
+                    let children = cur_alb_tracks.children.length;
+                    let songs = my_albums.albums[ind].songs.length;
+
+                    if(children< songs){
+                        count = songs - children;
+
+                        for(let i =0; i<count; i++){
+                            //метод создающий элементы для треков текущего альбома на основе my_albums.albums[ind].songs.forEach((e)=>{}--- МЕТОД)
+
+                            let elem = document.createElement("div");
+                            elem.innerHTML =
+                                '<div class="play_btn_container" >' +
+                                    '<i class="fa-solid fa-play"></i>' +
+                                '</div>' +
+                                '<div class="song_title"><div></div></div>' +
+                                '<div class="selected_album_song_options_container"><div style="position: relative; height: 100%;width: 100%;float: left;"><i class="fa-solid fa-gear" style="transform: translateY(150%)"></i></div>' +
+                                '<div class="rollin_options">' +
+                                '<div class="rollin_options_element"><i class="rol_opts_signs fa-solid fa-download"></i></div>' +
+                                ' <div class="rollin_options_element"><i class="rol_opts_signs fa-solid fa-share"></i></div>' +
+                                '<div class="rollin_options_element">' +
+                                    '<i class="rol_opts_signs fa-solid fa-plus" style="transform: translateX(5px); font-size: small"></i>' +
+                                    '<i class="rol_opts_signs fa-solid fa-music"></i>' +
+                                '</div>' +
+                                '<div class="rollin_options_element">' +
+                                    '<i class="rol_opts_signs fa-solid fa-plus" style="transform: translateX(0px)"></i>' +
+                                    '<i class="rol_opts_signs fa-solid fa-list"></i>' +
+                                '<div>' +
+                                '</div>';
+
+                            elem.className = "selected_album_song";
+                            elem.setAttribute("in_album_number", i.toString());
+
+                            elem.children[2].children[0].addEventListener("click", function (){
+                                elem.children[2].children[0].children[0].style.transition = "1s linear";
+                                elem.children[2].children[0].children[0].style.transform = "translateY(200%) rotate(360deg)";
+                                elem.children[2].children[1].style.transform = "translateX(-135px)";
+                            });
+
+                            //add to playlist!
+                            elem.children[2].children[1].children[2].addEventListener("click", function (){
+                                change_current_tab(selectPlaylistTab);
+                                let album_number =parseInt(my_albums_tab.getAttribute("cur_album_number"))
+                                track_for_playlist_adding = my_albums.albums[album_number].songs[parseInt(elem.getAttribute("in_album_number"))];
+                                track_for_playlist_adding.artist = {};
+                                track_for_playlist_adding.artist.name = my_albums.albums[album_number].artist.name;
+                                track_for_playlist_adding.artist.id = my_albums.albums[album_number].artist.id;
+                                track_for_playlist_adding.track_id = track_for_playlist_adding.id;
+                                track_for_playlist_adding.artist.picture_medium = my_albums.albums[album_number].artist.image_url;
+                                track_for_playlist_adding.album = {};
+                                track_for_playlist_adding.album.id = my_albums.albums[album_number].id;
+
+                                track_for_playlist_adding.album.title = my_albums.albums[album_number].title;
+                                track_for_playlist_adding.album.img_url = my_albums.albums[album_number].img_url;
+                            });
+
+                            //add to tracklist
+                            elem.children[2].children[1].children[3].addEventListener("click", function (){
+                                add_to_tracklist_v2(parseInt(elem.getAttribute("in_album_number")));
+                            });
+
+
+
+                            elem.children[0].addEventListener("click", function (){
+                                if (isPlaying === true && current_tab_playing != null) {
+                                    var cur_playing = cur_alb_tracks.children[numba];
+                                    cur_playing.children[0].children[0].classList.add("fa-play");
+                                    cur_playing.children[0].children[0].classList.remove("fa-pause");
+                                }
+                                current_tab_playing =cur_alb_tracks;
+                                numba = parseInt(elem.getAttribute("in_album_number"));
+                                audio_url = my_albums.albums[parseInt(my_albums_tab.getAttribute("cur_album_number"))].songs[numba].url;
+                                current_tab_playing.setAttribute("active_song", (numba).toString());
+                                update_artistInfo();
+                                load_and_decode();
+                            });
+
+                            elem.addEventListener("mouseleave", function (){
+                                elem.children[2].children[1].style.transform = "translateX(100%)";
+                                elem.children[2].children[0].children[0].style.transform = "translateY(200%) rotate(0deg)";
+                                elem.children[0].style.transform = "translateY(35%) translateX(-50px)";
+                            });
+                            elem.addEventListener("mouseover", function (){elem.children[0].style.transform = "translateY(35%)";});
+
+                            cur_alb_tracks.appendChild(elem);
+                        }
+                    }
+                    else if(children > songs ){
+                        count = children - songs;
+                        for(let i=0;i<count;i++){cur_alb_tracks.lastElementChild.remove();}
+                    }
+                    else{}
+                        for(let i=0; i<cur_alb_tracks.children.length; i++){
+                        cur_alb_tracks.children[i].children[1].children[0].innerText = my_albums.albums[ind].songs[i].title;
+                        console.log("fffffffff-->>. TITLE   "+  my_albums.albums[ind].songs[i].title);
+                    }
+                });
+            }else{
+                console.log("already_contains");
+            }
+
+        })
+
         album.addEventListener("click", function () {
             let current_album = current_artist_albums.albums[parseInt(album.getAttribute("album_number"))];
+
+            document.getElementById("cur_artist_album").setAttribute("alb_number", album.getAttribute("album_number"))   //ТУТ МЕНЯL!!!!!!!!!!!!!!!!!!!!!!
+            document.getElementById("cur_artist_album").children[2].innerText = current_album.title;
+            // let current_album = current_artist_albums.albums[parseInt(album.getAttribute("album_number"))];
+
             console.log(current_artist_albums);
+
             let cur_art_alb_tracks_elems = cur_artist_album_tracks.children;
 
             if (cur_art_alb_tracks_elems.length === 0) {
-                current_album.songs.forEach((song) => {
-                    let el = create_artist_album_song_element();
-                    // el.setAttribute("n", current_album.songs[cur_art_alb_tracks_elems.length - 1].url);
-                })
+                current_album.songs.forEach((song) => {let el = create_artist_album_song_element();})
             }
             if (cur_art_alb_tracks_elems.length > current_album.songs.length) {
                 let counter = cur_art_alb_tracks_elems.length - current_album.songs.length;
@@ -2340,26 +3365,133 @@ let cur_artist_album_img =  document.getElementById("cur_artist_album_img");
                 }
             }
             for (let i = 0; i < cur_art_alb_tracks_elems.length; i++) {
+                if(tracklist_tracks_identificarors.identificators.includes(current_album.songs[i].id)){
+                    console.log('include+');
+                    //cur_art_alb_tracks_elems[i].children[2].children[0].children[2].addEventListener("click",/* DELETE FROM PL FUNCTION*/);
+                    cur_art_alb_tracks_elems[i].children[2].children[0].children[2].children[0].style.transform = "rotate(45deg)";
+                    cur_art_alb_tracks_elems[i].children[2].children[0].children[2].children[0].style.color = "red";
+                    cur_art_alb_tracks_elems[i].children[2].children[0].children[2].children[2].innerText = "remove from playlist"
+                     cur_art_alb_tracks_elems[i].children[2].children[0].children[3].children[0].style.transform = "rotate(45deg)";
+                     cur_art_alb_tracks_elems[i].children[2].children[0].children[3].children[0].style.color = "red";
+                                         cur_art_alb_tracks_elems[i].children[2].children[0].children[3].children[2].innerText = "remove from tracklist";
+
+                }
+                else{
+                    console.log('not include-');
+
+                    // children[2].children[0].children[2].addEventListener("click",/* ADD TO PL FUNCTION*/);
+                    cur_art_alb_tracks_elems[i].children[2].children[0].children[2].children[0].style.transform = "rotate(0deg)";
+                    cur_art_alb_tracks_elems[i].children[2].children[0].children[2].children[0].style.color = "white";
+
+                }
                 cur_artist_album_tracks.children[i].setAttribute("in_album_number", i.toString());
                 cur_artist_album_tracks.children[i].children[1].innerText = current_album.songs[i].title;
-                cur_artist_album_tracks.children[i].children[2].innerText = current_album.songs[i].duration;
             }
 
+
+            document.getElementById("cur_artist_album_img").setAttribute("src", current_album.img_url);
         })
 
     }
 
-let create_artist_album_song_element = function (){
+let create_artist_album_song_element = function () {
+
+    let cur_art_alb = document.getElementById("cur_artist_album");
+
+
     let el = document.createElement("div");
     el.className = "artist_cur_album_song";
     el.innerHTML =
-        "<div class=\"art_cur_album_song_play_btn\"><i class=\"fa-solid fa-play\"</i></div>" +
+        "<div class=\"art_cur_album_song_play_btn\"><i class=\"fa-solid fa-play\" style=\"transform: translateX(10%) translateY(100%); cursor: pointer\"></i></div>" +
         "<div class=\"art_cur_album_song_title\"></div>" +
-        "<div class=\"art_cur_album_song_duration\"></div>"+
-        "<div class=\"art_cur_album_song_options\"></div>";
+        "<div class=\"art_cur_album_song_options\">" +
+        "<ul class=\"addButtonMenu\" style=\"transform:translateY(-3%) translateX(-44%); position: absolute; font-family: 'FontAwesome', monospace; font-size: x-large; z-index:1\" >" +
+        "<li class=\"addBtnMenuElem\"><i class=\"addBtnMenuIcon fa-download\"></i>" +
+        "<div class=\"addBtnMenuTitle\">download</div>" +
+        "</li>" +
+        "<li class=\"addBtnMenuElem\"><i class=\"addBtnMenuIcon fa-share\"></i>" +
+        "<div class=\"addBtnMenuTitle\">share</div>" +
+        "</li>" +
+        "<li class=\"addBtnMenuElem\"><i class=\"plusLbl fa-plus\"></i><i class=\"addBtnMenuIcon fa-music\"></i>" +
+        "<div class=\"addBtnMenuTitle\">add to playlist</div>" +
+        "</li>" +
+        "<li class=\"addBtnMenuElem\"><i class=\"plusLbl fa-plus\"></i><i class=\"addBtnMenuIcon fa-music\"></i>" +
+        "<div class=\"addBtnMenuTitle\">add to tracks</div>" +
+        "</li>" +
+        "</ul>" +
+        "<i class=\"fa-solid fa-ellipsis\" style=\"color:rgba(0, 0, 0, 0); font-size: x-large; transform: translateX(350%) translateY(100%); transition:color .5s linear; z-index: 2; cursor: pointer\"></i>" +
+        "</div>";
     cur_artist_album_tracks.appendChild(el);
-    return el;
-}
+
+    el.children[2].children[0].children[2].addEventListener("click",async function () {
+        let album_number = parseInt(cur_art_alb.getAttribute("alb_number"));
+        current_artist_albums = await get_artist_albums_request(parseInt(currentArtistTab.getAttribute("artist_id")));
+        track_for_playlist_adding = current_artist_albums.albums[album_number].songs[parseInt(el.getAttribute("in_album_number"))];
+       console.log(track_for_playlist_adding);
+        track_for_playlist_adding.artist = {} ;
+        track_for_playlist_adding.album = {};
+        track_for_playlist_adding.album.title = current_artist_albums.albums[album_number].title;
+        track_for_playlist_adding.album.img_url = current_artist_albums.albums[album_number].img_url;
+
+        track_for_playlist_adding.artist.name = currentArtistTab.getAttribute("name");
+        track_for_playlist_adding.artist.id = currentTab.getAttribute("artist_id");
+        track_for_playlist_adding.artist.picture_medium = current_artist_albums.albums[album_number].artist.image_url;
+        track_for_playlist_adding.preview = current_artist_albums.albums[album_number].songs[parseInt(el.getAttribute("in_album_number"))].url;
+        console.log('////////');
+
+
+        change_current_tab(selectPlaylistTab);
+    });
+
+    el.children[2].children[0].children[3].addEventListener("click", function () {
+        add_to_tracklist_v2(parseInt(el.getAttribute("in_album_number")));
+        console.log("poidee added");
+    });
+
+
+        el.addEventListener("mouseover", function () {
+            el.style.boxShadow = "1px 0 1px 0px white";
+            el.children[0].style.color = "#00e592";
+            el.children[1].style.color = "#fafafa";
+            el.children[2].children[1].style.color = "#00e592"
+
+        })
+
+        el.addEventListener("mouseleave", function () {
+            el.style.boxShadow = "none";
+            el.children[0].style.color = "rgba(0, 0, 0, 0)";
+            el.children[1].style.color = "#00d390";
+            el.children[2].children[1].style.color = "rgba(0, 0, 0, 0)";
+            el.children[2].children[0].style.height = "0px";
+            setTimeout(function () {el.children[2].children[0].style.width = "0px";}, 200);
+            setTimeout(function () {el.children[2].children[0].style.display = "none";}, 400);
+        })
+
+        el.children[0].addEventListener("click", function () {
+
+            if (isPlaying === true && current_tab_playing != null) {
+                var cur_playing = document.getElementById(current_tab_playing.id).children[numba];
+                cur_playing.children[0].children[0].classList.add("fa-play");
+                cur_playing.children[0].children[0].classList.remove("fa-pause");
+            }
+            current_tab_playing = el.parentElement;
+            numba = parseInt(el.getAttribute("in_album_number"));
+            audio_url = current_artist_albums.albums[parseInt(cur_art_alb.getAttribute("alb_number"))].songs[numba].url;
+            current_tab_playing.setAttribute("active_song", (numba).toString());
+            update_artistInfo();
+            load_and_decode();
+        });
+
+        el.children[2].children[1].addEventListener("click", function () {
+            el.children[2].children[0].style.display = "inherit";
+            setTimeout(function () {el.children[2].children[0].style.width = "190px";}, 10);
+            setTimeout(function () {el.children[2].children[0].style.height = "160px";}, 300);
+        });
+        return el;
+    }
+
+
+
     let create_artist_tracklist_song_element =  function (data){
                 let song = document.createElement("div");
                 song.className = "artist_songs";
@@ -2405,9 +3537,7 @@ let create_artist_album_song_element = function (){
                     load_and_decode();
                 });
 
-                song.children[2].addEventListener("click", function (){
-
-                })
+                song.children[2].addEventListener("click", function (){})
 
         document.getElementById("cur_artist_tracklist").appendChild(song);
     }
@@ -2427,9 +3557,14 @@ let  add_listener_to_select_pl_el = function (el){
         let track;
         let payload;
 
-        if(lastTab.id === "tracklistTab"){
+        if(lastTab.id === "currentArtistTab"){
+            track = track_for_playlist_adding;
+            payload = {track_id:track.id, number : pl_number};
+        }
+        else if(lastTab.id === "tracklistTab" ){
             track_index = tracklist_tracks_identificarors.identificators.indexOf(parseInt(track_for_playlist_adding, 10), 0);
             track = tracklist.tracks[track_index];
+            track.preview = track.url;
             payload = {track_id:track.id, number : pl_number};   ///был просто number без pl_
             console.log('-----'+track_index + '    index of track in tracklist(tracklistTab)');
 
@@ -2444,13 +3579,19 @@ let  add_listener_to_select_pl_el = function (el){
                     // get_artist_tracklist_request(track.id);
                 }
             }
-        }
+        }else if(lastTab.id === "test"){
+            track = track_for_playlist_adding;
+            payload = {track_id:track.id, number : pl_number};
+        }else if(lastTab.id === "my_albums_tab"){
+            track = track_for_playlist_adding;
+            payload = {track_id : track.id, number : pl_number}
 
+        }
 
         console.log(track.id+ '       <<----- трэк добавляемый в плейлист номер ->  '+ pl_number);
 
         playlists.lists[pl_number].tracks.push(track);
-       await update_local_playlists();
+        await update_local_playlists();
         console.log('3.5 ТРЭК с id :  '+ track.id + ' добавлен в localstorage_____исполнитель:  '+ track.artist.name);
 
 
@@ -2462,73 +3603,103 @@ let  add_listener_to_select_pl_el = function (el){
         track = null;
         payload = null;
         track_index = null;
-        console.log('3.7  переменные track, track_index и payload проинициализированы null\'ом');
-       await console.log('3.8 вызван change_current_tab(lastTab)...где lastTab : '+ lastTab.id.toString());
+        console.log('3.7  переменные track, track_index и payload проинициализированы null\'ом');console.log('3.8 вызван change_current_tab(lastTab)...где lastTab : '+ lastTab.id.toString());
        await change_current_tab(lastTab);
-
-
     });
 }
 
-/////////////
+/////////////-
 
 
-    let uri = 'https://f2e7-217-107-126-46.ngrok.io';
+    let uri = 'https://5f85-213-24-133-13.ngrok.io';
     let audio_url = null;
 
-    let add_to_tracklist_request =  function(arg){
-      let resp =   fetch(uri+'/json?method=add_to_tracklist',{method:'POST',body:JSON.stringify(arg)})
+    let add_artist_request = function (arg){
+        fetch(uri+'/json?method=add_artist&val='+arg,{method:'GET'})
+            .then(response => response.json())
+            .then(data => {console.log(data.result)});
+    };
+    let remove_artist_request = function (arg){
+        fetch(uri+'/json?method=remove_artist&val='+arg,{method:'GET'})
+            .then(response => response.json())
+            .then(data => {console.log(data.result)});
+    };
+    let add_album_request = function (arg){
+        fetch(uri+'/json?method=add_album&val='+arg,{method:'GET'})
+            .then(response => response.json())
+            .then(data => {console.log(data.result)});
+    }
+    let remove_album_request = function (arg){
+        fetch(uri+'/json?method=remove_album&val='+arg,{method:'GET'})
+            .then(response => response.json())
+            .then(data => {console.log(data.result)});
+    };
+
+    let add_to_tracklist_request = function(arg){
+      let resp =   fetch(uri+'/json?method=add_to_tracklist',{method:'POST',body:JSON.stringify(arg),headers:{'Connection':'keep-alive'}})
           .then(response => response.json())
-          .then(data => {console.log(data.result);});
+          .then(data => {console.log(data.result)});
           // let data =   resp.json();
           // console.log(data.data.albums[0].id);
     };
 
     let remove_from_tracklist_request = function (arg){
-        fetch(uri+'/json?method=remove_from_tracklist',{method:'POST',body:JSON.stringify(arg)})
+        fetch(uri+'/json?method=remove_from_tracklist',{method:'POST',body:JSON.stringify(arg),headers:{'Connection':'keep-alive'}})
             .then(response => response.json())
             .then(data => {console.log(data.result);});
     }
 
 
+    let remove_from_playlist_request = function (arg){
+        fetch(uri+'/json?method=remove_from_playlist',{method:'POST',body:JSON.stringify(arg)})
+            .then(response => response.json())
+            .then(data => console.log(JSON.parse(data)));
+    }
+
     let create_playlist_request = function (arg){
-        fetch(uri+'/json?method=create_playlist',{method:'POST',body:JSON.stringify(arg)})
+        fetch(uri+'/json?method=create_playlist',{method:'POST',body:JSON.stringify(arg),headers:{'Connection':'keep-alive'}})
             .then(response => response.json())
             .then(data => {console.log(data.result)});
     }
 
-
-
     let add_to_playlist_request = function (arg){
-        fetch(uri+'/json?method=add_to_playlist',{method:'POST',body:JSON.stringify(arg)})
+        fetch(uri+'/json?method=add_to_playlist',{method:'POST',body:JSON.stringify(arg),headers:{'Connection':'keep-alive'}})
             .then(response => response.json())
             .then(data => {console.log(data.result)});
     }
 
     let get_artist_albums_request = async function(arg){
-        let req = new Request(uri+'/json?method=a'+arg.toString(), {method:'GET'});
-        let resp =  await  caches.open("artist_albums").then((cache) =>  cache.match(req));
-        if(resp !== undefined){ resp = resp.json()}
-        else{
-            resp = await (fetch(req));
-            await caches.open("artist_albums").then((cache) => cache.put(req,resp));
-            resp =  await (fetch(req).then((response) => response.clone().json()));
-        }
+        let req = new Request(uri+'/json?method=a'+arg.toString(), {method:'GET',headers:{'Connection':'keep-alive'}});
+        // let resp =  await  caches.open("artist_albums").then((cache) =>  cache.match(req));
+        // if(resp !== undefined){ resp = resp.json()}
+        // else{
+        //     resp = await (fetch(req));
+        //     await caches.open("artist_albums").then((cache) => cache.put(req,resp));
+        //     resp =  await (fetch(req).then((response) => response.clone().json()));
+        // }
+        let resp = await fetch(req);
 
-        return resp;
+        return resp.json();
     }
-    let get_artist_tracklist_request = async function  (arg){
-        console.log('artist_id='+arg);
-        let req = new Request(uri + '/music?artist_tracklist=' + arg.toString(), {method: 'GET'});
+    let get_artist_tracklist_request = async function (arg) {
+        // console.log('artist_id=' + arg);
+        let req = new Request(uri + '/music?artist_tracklist=' + arg.toString(), {method: 'GET',});
 
 
         let response = await (fetch(req))
-      let c = await caches.open("audio_search_cache");
-        await c.add(req);
-        //   response = await response.json();
-         console.log(response);
+        // let c = await caches.open("audio_search_cache");
+        // await c.add(req);
+        console.log(response);
 
-         return response.json();
+        return response.json();
+        // let response;
+        // let c = await caches.open("audio_search_cache");
+        //
+        // response = (await fetch(req, {cache: "default"})).clone();await c.put(req,response);
+        //
+        //
+        // return  response.json();
+
     }
 
 

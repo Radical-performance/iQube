@@ -21,6 +21,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "album")
 @NamedQuery(name = "Album.findById", query = "SELECT a FROM Album a WHERE a.id = :id")
+@NamedQuery(name = "Album.findByArtistId", query = "select a.id from Album  a where  a.id = :artist_id")
 public class Album {
     @Id
     private int id;

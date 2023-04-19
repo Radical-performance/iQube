@@ -1,7 +1,6 @@
 package com.radical.iqube.controller.filters;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
