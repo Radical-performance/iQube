@@ -1,0 +1,124 @@
+<html lang="ru">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+
+
+    <style>
+        body{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        #auth{
+            position: relative;
+            width: 150px;
+            height: 150px;
+            top: 45%;
+            left: 45%;
+            border: 1px solid black;
+        }
+        #nickname{
+            position: relative;
+            float: left;
+            width: 130px;
+            height: 30px;
+            padding: 2px;
+            border: 1px solid red;
+        }
+        #email{
+            position: relative;
+            float: left;
+            width: 130px;
+            height: 30px;
+            padding: 2px;
+            border: 1px solid red;
+        }
+        #login{
+            position: relative;
+            float: left;
+            width: 130px;
+            height: 30px;
+            padding: 2px;
+            border: 1px solid red;
+        }
+        #password{
+            position: relative;
+            float: left;
+            width: 130px;
+            height: 30px;
+            padding: 2px;
+            border: 1px solid red;
+        }  #loginreg{
+               position: relative;
+               float: left;
+               width: 130px;
+               height: 30px;
+               padding: 2px;
+               border: 1px solid red;
+           }
+        #passwordreg{
+            position: relative;
+            float: left;
+            width: 130px;
+            height: 30px;
+            padding: 2px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <div id="auth">
+        <input id="login" placeholder="login"/>
+        <input id="password" placeholder="password">
+        <input type="button" id="loginButton">
+    </div>
+
+    <div id="reg">
+        <input id="loginreg" placeholder="login"/>
+        <input id="passwordreg" placeholder="Password"/>
+        <input id="nickname" placeholder="nicknamegin"/>
+        <input id="email" placeholder="email"/>
+        <input type="button" id="regButton">
+
+    </div>
+
+    <script type="text/javascript">
+
+        // if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+        //     alert(navigator.userAgent.toString());
+        //
+        //
+        //     alert("Вы используете мобильное устройство (телефон или планшет).")
+        //
+        //
+        // } else alert("Вы используете ПК.");
+        // alert(navigator.userAgent);
+        window.onload = function (){
+            let login = document.getElementById("login");
+            let password = document.getElementById("password");
+
+
+
+            let loginBut = document.getElementById("loginButton");
+            loginBut.addEventListener("click", function (){
+
+                let credentials = {
+                    'login': login.value,
+                    'password': password.value
+
+                }
+
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'https://50a0-81-177-127-253.ngrok.io/auth');
+                xhr.setRequestHeader("Content-Type", "text/html");
+                xhr.send(JSON.stringify(credentials));
+                xhr.onload = function(){location.reload();}
+            });
+        }
+
+
+
+    </script>
+</body>

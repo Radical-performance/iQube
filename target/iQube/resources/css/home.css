@@ -1,0 +1,10 @@
+body{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-size: cover;
+    perspective: 2500px;
+    background: black;
+    z-index: 100;
+}

@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonParser;
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -14,9 +17,13 @@ import com.mongodb.client.result.UpdateResult;
 import com.radical.iqube.model.hibernate.Album;
 import com.radical.iqube.model.hibernate.Artist;
 import com.radical.iqube.model.hibernate.Song;
+import org.bson.BsonDocument;
+import org.bson.BsonElement;
+import org.bson.BsonValue;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -24,6 +31,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.print.Doc;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,34 +41,35 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class JsonServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 //        String body = req.getReader().lines().reduce()>?????????????????
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        Cookie [] cookies = req.getCookies();
+        Cookie[] cookies = req.getCookies();
 
 
         Query query;
         EntityManagerFactory factory = (EntityManagerFactory) getServletContext().getAttribute("EntityManagerFactory");
         PrintWriter writer = resp.getWriter();
 
-        resp.setHeader("Content-Type","application/json; charset=utf-8");
+        resp.setHeader("Content-Type", "application/json; charset=utf-8");
         resp.setHeader("Connection", "keep-alive");
         resp.setHeader("Cache-Control", "no-cache");
 
         if (req.getParameter("method").equals("add_artist")) {
-            boolean res = addToArtist(cookies[0].getValue(),req.getParameter("val"));
-        }else if(req.getParameter("method").equals("remove_artist")){
-            boolean res = removeFromArtists(req.getParameter("val"),cookies[0].getValue());
-        }else if(req.getParameter("method").equals("add_album")){
-            boolean res = addToAlbums(cookies[0].getValue(),req.getParameter("val"));
-        }else if(req.getParameter("method").equals("remove_album")){
+            boolean res = addToArtist(cookies[0].getValue(), req.getParameter("val"));
+        } else if (req.getParameter("method").equals("remove_artist")) {
+            boolean res = removeFromArtists(req.getParameter("val"), cookies[0].getValue());
+        } else if (req.getParameter("method").equals("add_album")) {
+            boolean res = addToAlbums(cookies[0].getValue(), req.getParameter("val"));
+        } else if (req.getParameter("method").equals("remove_album")) {
             boolean res = removeFromAlbums(cookies[0].getValue(), req.getParameter("val"));
-        }
-        else if (req.getParameter("method").startsWith("a")) {
+        } else if (req.getParameter("method").startsWith("a")) {
             String sub = req.getParameter("method").substring(1);
             System.out.println("ARTIST ALBUMS REQUEST         " + sub);
 
@@ -73,7 +82,7 @@ public class JsonServlet extends HttpServlet {
             m.put("albums", a.getAlbums().toArray());
             String parsedMap = ow.writeValueAsString(m);
 
-            resp.setHeader("Content-Type","application/json; charset=utf-8");
+            resp.setHeader("Content-Type", "application/json; charset=utf-8");
             resp.setHeader("Connection", "keep-alive");
             resp.setHeader("Cache-Control", "public,max-age=3600");
 
@@ -89,7 +98,7 @@ public class JsonServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+        ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         EntityManagerFactory factory = (EntityManagerFactory) getServletContext().getAttribute("EntityManagerFactory");
@@ -98,29 +107,31 @@ public class JsonServlet extends HttpServlet {
         URL url = null;
         JSONObject data = null;
         PrintWriter writer = null;
-        Cookie [] cookies = req.getCookies();
+        Cookie[] cookies = req.getCookies();
 ///// 1
         data = controller.parse(req.getInputStream());
         System.out.println(data);
 
-        if(req.getParameter("method").equals("add_to_tracklist")){
+        if (req.getParameter("method").equals("add_to_tracklist")) {
             try {
                 //Parsed Request Body
-                boolean isAdded = addTrackToTracklist(data,cookies[0].getValue());
+                boolean isAdded = addTrackToTracklist(data, cookies[0].getValue());
 
-                System.out.println("IS ADDED----------->  "+   isAdded);
+                System.out.println("IS ADDED----------->  " + isAdded);
 
                 writer = resp.getWriter();
                 url = new URL("https://api.deezer.com/artist/" + data.getInt("artist_id") + "/albums");
-            } catch (IOException e){e.printStackTrace();}
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-            int [] identificators = new Controller().fetchAlbumsDataByArtistIdThenGetEachId(url);
+            int[] identificators = new Controller().fetchAlbumsDataByArtistIdThenGetEachId(url);
 
             ArrayList<Song> songs;
             Album album;
             ArrayList<Album> albums = new ArrayList<>();
 
-            if(data != null && !data.isEmpty()) {
+            if (data != null && !data.isEmpty()) {
                 query = factory.createEntityManager().createNamedQuery("Artist.findById");
                 query.setParameter("id", data.getInt("artist_id"));
                 try {
@@ -130,8 +141,8 @@ public class JsonServlet extends HttpServlet {
 //                       System.out.println(album1.getSongs().size());
 //                   });!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-                    boolean isAdded = addTrackToTracklist(data,cookies[0].getValue());//////////////////////////////////////////////
-                    System.out.println("IS ADDED----------->  "+   isAdded);
+//                    boolean isAdded = addTrackToTracklist(data,cookies[0].getValue());//////////////////////////////////////////////
+//                    System.out.println("IS ADDED----------->  "+   isAdded);
                 } catch (NoResultException e) {  /// если getSingleResult == null
                     Artist artist = Artist.builder()
                             .id(data.getInt("artist_id"))
@@ -142,8 +153,11 @@ public class JsonServlet extends HttpServlet {
                             .build();
 
                     for (int cur : identificators) {
-                        try {url = new URL("https://api.deezer.com/album/" + cur);}
-                        catch (MalformedURLException x) {x.printStackTrace();}
+                        try {
+                            url = new URL("https://api.deezer.com/album/" + cur);
+                        } catch (MalformedURLException x) {
+                            x.printStackTrace();
+                        }
 
                         songs = new ArrayList<>();
                         JSONObject object = controller.fetchData(url);
@@ -178,13 +192,15 @@ public class JsonServlet extends HttpServlet {
                     map.put("artist", artist);
 
                     resp.setHeader("Content-Type", "application/json; charset=utf-8");
-                    resp.setHeader("Cache-Control","public,max-age=3600");
-                    resp.addHeader("Connection","keep-alive");
+                    resp.setHeader("Cache-Control", "public,max-age=3600");
+                    resp.addHeader("Connection", "keep-alive");
 
                     String jsonString = null;
-                    try {jsonString = ow.writeValueAsString(map2);}
-                    catch (JsonProcessingException ex) {throw new RuntimeException(ex);}
-                    finally {
+                    try {
+                        jsonString = ow.writeValueAsString(map2);
+                    } catch (JsonProcessingException ex) {
+                        throw new RuntimeException(ex);
+                    } finally {
                         if (writer != null) {
                             if (jsonString != null && jsonString.length() != 0) {
                                 writer.print(jsonString);
@@ -195,7 +211,6 @@ public class JsonServlet extends HttpServlet {
                     }
 
 
-
                     EntityManager manager = factory.createEntityManager();
                     manager.getTransaction().begin();
                     manager.persist(artist);
@@ -204,44 +219,107 @@ public class JsonServlet extends HttpServlet {
                     manager.close();
                 }
             }
-        }else if(req.getParameter("method").equals("remove_from_tracklist")){
-            boolean wasRemoved = removeTrackFromTracklist(data.getInt("track_id"),cookies[0].getValue());
-            System.out.println("was removed ---->   " +wasRemoved);
+        } else if (req.getParameter("method").equals("remove_from_tracklist")) {
+            boolean wasRemoved = removeTrackFromTracklist(data.getInt("track_id"), cookies[0].getValue());
+            System.out.println("was removed ---->   " + wasRemoved);
             writer = resp.getWriter();
-            HashMap<String,String>result = new HashMap<>();
+            HashMap<String, String> result = new HashMap<>();
             result.put("deleting_result", String.valueOf(wasRemoved));
             writer.print(mapper.writeValueAsString(result));
             writer.flush();
             writer.close();
-        }else if(req.getParameter("method").equals("create_playlist")){
+        } else if (req.getParameter("method").equals("create_playlist")) {
             boolean wasCreated = controller.createPlaylist(data.getString("title"), Integer.parseInt(cookies[0].getValue()));
-            HashMap<String,String>result = new HashMap<>();
+            HashMap<String, String> result = new HashMap<>();
             result.put("playlist_creating_result", String.valueOf(wasCreated));
             writer = resp.getWriter();
             writer.print(mapper.writeValueAsString(result));
             writer.flush();
             writer.close();
-        }else if(req.getParameter("method").equals("add_to_playlist")){
-            System.out.println( data.getInt("track_id") + data.getInt("number"));
+        } else if (req.getParameter("method").equals("add_to_playlist")) {
+            System.out.println(data.getInt("track_id") + data.getInt("number"));
             boolean wasAddedToPlaylist = addTrackToPlaylist(
                     data.getInt("track_id"),
                     data.getInt("number"),
                     cookies[0].getValue()
             );
 
-            HashMap<String,String>result = new HashMap<>();
+            HashMap<String, String> result = new HashMap<>();
             result.put("result", String.valueOf(wasAddedToPlaylist));
             writer = resp.getWriter();
             writer.print(mapper.writeValueAsString(result));
             writer.flush();
             writer.close();
-        }else if(req.getParameter("method").equals("remove_from_playlist")){
-            boolean wasDeleted = removeTrackFromPlaylist(data.getInt("track_id"),data.getInt("playlist_number"),cookies[0].getValue());
+        } else if (req.getParameter("method").equals("remove_from_playlist")) {
+            boolean wasDeleted = removeTrackFromPlaylist(data.getInt("track_id"), data.getInt("playlist_number"), cookies[0].getValue());
+            System.out.println("track was deleted from playlist???   " + wasDeleted);
+        } else if (req.getParameter("method").equals("marks")) {
+            addTrackAndMarks(data, cookies[0].getValue());
         }
     }
 
 
-    protected boolean uploadAudioTrack(){return true;};
+    protected boolean uploadAudioTrack() {
+        return true;
+    }
+
+    ;
+
+    protected void updateMarks(JSONObject trackObject, String user_id) {
+        MongoClient client = (MongoClient) getServletContext().getAttribute("MongoClient");
+        MongoDatabase database = client.getDatabase("song_marks");
+        MongoCollection<Document> collection = database.getCollection("marks");
+
+        Bson filter = Filters.and(
+                Filters.eq("user_id", user_id),
+                Filters.eq("tracks.track_id", trackObject.get("id"))
+        );
+
+
+        Bson update = Updates.set("tracks.$", new Document("track_id", trackObject.get("id")).append("time_marks", trackObject.get("time_marks")));
+        UpdateResult result = collection.updateOne(filter, update);
+        boolean isModified = result.getModifiedCount() > 1;
+        System.out.println("заменен объект трека ?  " + isModified);
+
+
+    }
+
+    protected void addTrackAndMarks(JSONObject trackObject, String user_id) {
+        MongoClient client = (MongoClient) getServletContext().getAttribute("MongoClient");
+        MongoDatabase database = client.getDatabase("song_marks");
+        MongoCollection<Document> collection = database.getCollection("marks");
+
+        ArrayList<Object> arr = (ArrayList<Object>) trackObject.getJSONArray("time_marks").toList();
+        Document filter = new Document("user_id", user_id);
+
+        // Создание нового объекта трека
+        Document newTrack = new Document("track_id", trackObject.getString("id")).append("time_marks", arr);
+
+        // Получение списка треков из исходного документа
+        List<Document> tracks = collection.find(filter)
+                .projection(new Document("tracks", 1))
+                .first()
+                .getList("tracks", Document.class);
+
+
+        int isExists = 0;
+        // Находим трек с track_id = "961348062" и заменяем его на новый трек
+        for (int i = 0; i < tracks.size(); i++) {
+            if (tracks.get(i).getString("track_id").equals(trackObject.getString("id"))) {
+                tracks.set(i, newTrack);
+                isExists = 1;
+                break;
+            }else if(
+                    i == (tracks.size()-1) &&
+                    !tracks.get(i).getString("track_id").equals(trackObject.getString("id")))
+            {
+                tracks.add(newTrack);
+            }
+        }
+
+        // Обновляем документ в коллекции
+        collection.updateOne(filter, Updates.set("tracks", tracks));
+    }
 
 
     protected boolean addTrackToPlaylist(int track_id,int playlist_number,String user_id) {
@@ -298,11 +376,18 @@ public class JsonServlet extends HttpServlet {
         MongoClient client = (MongoClient) getServletContext().getAttribute("MongoClient");
         MongoDatabase database = client.getDatabase("users_tracklists");
         MongoCollection<Document> collection = database.getCollection("tracklists");
-
-        Document newTrack = new Document()
-                .append("track_id",data.getInt("track_id"))
-                .append("time_marks",data.get("timeMarks"))
-                .append("uLike?", data.get("isLiked"));
+        Document newTrack;
+try {
+     newTrack= new Document()
+            .append("track_id", data.get("track_id"))
+            .append("time_marks", data.get("timeMarks"))
+            .append("uLike?", data.get("isLiked"));
+}catch (JSONException e){
+     newTrack = new Document()
+            .append("track_id", data.getInt("id"))
+            .append("time_marks", data.get("timeMarks"))
+            .append("uLike?", data.get("isLiked"));
+}
 
         Bson filter = Filters.eq("user_id",user_id);
         Bson update = Updates.addToSet("tracks",newTrack);
@@ -372,6 +457,8 @@ public class JsonServlet extends HttpServlet {
 
     private class Controller{
 
+
+
         protected boolean createPlaylist(String title,int user_id){
             MongoClient client = (MongoClient) getServletContext().getAttribute("MongoClient");
             MongoDatabase database = client.getDatabase("users_playlists");
@@ -386,6 +473,8 @@ public class JsonServlet extends HttpServlet {
             return result.getModifiedCount() >=1;
 
         }
+
+
 
 
         protected int[] fetchAlbumsDataByArtistIdThenGetEachId(URL url)  {

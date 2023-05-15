@@ -1,0 +1,8 @@
+SQL Error: 1054, SQLState: 42S22
+Unknown column 'artitId' in 'field list'
+SQL Error: 1054, SQLState: 42S22
+Unknown column 'artitId' in 'field list'
+SQL Error: 1054, SQLState: 42S22
+Unknown column 'artitId' in 'field list'
+SQL Error: 1062, SQLState: 23000
+Duplicate entry '289652202' for key 'album.PRIMARY'

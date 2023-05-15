@@ -19,16 +19,6 @@
     <dependencies>
 
 
-        <!-- https://mvnrepository.com/artifact/junit/junit -->
-
-
-        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>4.8.0</version>
-        </dependency>
-
 
 
 
@@ -80,7 +70,7 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20210307</version>
+            <version>20220320</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
@@ -97,6 +87,7 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.4.0.Final</version>
         </dependency>
+
 
 
         <dependency>
@@ -137,12 +128,6 @@
             <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.junit.jupiter</groupId>-->
-<!--            <artifactId>junit-jupiter</artifactId>-->
-<!--            <version></version>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
 
     </dependencies>
 

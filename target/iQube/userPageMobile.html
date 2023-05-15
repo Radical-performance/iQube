@@ -1,0 +1,61 @@
+<html lang="en">
+    <head>
+        <title>gotovo</title>
+<!--        <link rel="stelesheet" href="/resources/css/userPageMobile.css" media="handheld">-->
+        <style>
+            html,body{
+                background-color: #1c1c1c;
+                transition: 1s ease-out;
+                width: 100%;
+                height: 100%;
+            }
+            #nandled{
+                position: relative;
+                width: 10px;
+                height: 10px;
+                box-shadow: 0px 0px 3px 1px black;
+                top: 48%;
+                left: 48%;
+
+            }
+            #line{
+                position: absolute;
+                width: 15px;
+                height: 100vh;
+                box-shadow: 0px 0px 2px 1px;
+                left: 49%;
+                background-color: #fafafa;
+                animation: 10s rotate linear infinite;
+            }
+            @keyframes rotate{
+                from{
+                    transform: rotateX(0deg);
+                }
+                to{
+                    transform: rotateX(360deg);
+                }
+            }
+        </style>
+    </head>
+    <body>
+    <div id="line"></div>
+
+    <div id="nandled"></div>
+    <script>
+        window.onload = function () {
+
+
+            // document.body.addEventListener("touchstart", handleStart, false);
+            document.body.addEventListener("touchstart", function () {
+                document.body.addEventListener("touchend", handleEnd, false);
+
+                function handleEnd() {
+                    document.body.style.background = "#fafafa";
+                    document.body.boxShadow = "0px 110px 173px 22px inset #f9f9f9";
+
+                }
+            });
+        }
+    </script>
+    </body>
+</html>
